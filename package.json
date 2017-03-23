@@ -6,11 +6,19 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "babel": "^6.23.0",
+    "babel-preset-latest": "^6.24.0",
     "body-parser": "~1.16.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.0",
     "express": "~4.14.1",
-    "express-less": "^0.1.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-clean-css": "^3.0.4",
+    "gulp-less": "^3.3.0",
+    "gulp-minify": "0.0.15",
+    "gulp-sequence": "^0.4.6",
+    "less": "^2.7.2",
     "morgan": "~1.7.0",
     "pug": "~2.0.0-beta10",
     "serve-favicon": "~2.3.2"
