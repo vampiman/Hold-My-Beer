@@ -4,16 +4,15 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const expressLess = require('express-less');
 
 const index = require('./routes/index');
 
 const app = express();
 
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -22,6 +21,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/stylesheets', expressLess(path.join(__dirname, 'stylesheets'), {
+  compress: true,
+  cache: true,
+  debug: app.get('env') === 'development'
+}));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
