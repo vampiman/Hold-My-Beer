@@ -18,10 +18,11 @@ gulp.task('watch', () => {
   gulp.watch(cssGlob, ['build-css']);
 });
 
-gulp.task('start-server', () => {
-  cp.spawn('npm', ['start'], {
+gulp.task('start-server', done => {
+  cp.spawn('node', ['./bin/www'], {
     stdio: 'inherit'
   });
+  done();
 });
 
 gulp.task('build', ['build-js', 'build-css']);
