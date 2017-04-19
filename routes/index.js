@@ -9,7 +9,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/login', (req, res, next) => {
-  res.sendFile(path.join(__dirname, '../views/login.html'));
+  res.sendFile(path.join(__dirname, '../views/log-in.html'));
 });
 
 module.exports = router;
