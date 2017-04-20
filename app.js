@@ -14,7 +14,7 @@ const app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'images', 'logo.png')));
 
 app.use(morgan('combined', {
   stream: fs.createWriteStream(path.join(__dirname, 'logs', 'morgan.log'), {flags: 'a'})
