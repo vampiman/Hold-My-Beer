@@ -4,6 +4,27 @@
 const app = require('../app');
 const debug = require('debug')('hold-my-beer:server');
 const http = require('http');
+const fs = require('fs');
+
+const hasDBAvailable = global.hasDBAvailable = Boolean(process.env.DB);
+
+if (hasDBAvailable) {
+  const pgConfig = {
+    host: 'localhost',
+    user: 'hmbserver',
+    password: fs.readFileSync('db-password', {encoding: 'utf8'}),
+    database: 'hmb'
+  };
+
+  process.on('unhandledRejection', error => {
+    const msg = `${Date.now()} ${error.message} ${error.stack}`;
+    console.error(msg);
+    fs.appendFile('db.log', msg);
+  });
+
+  const Pool = require('pg').Pool;
+  global.pgPool = new Pool(pgConfig);
+}
 
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
