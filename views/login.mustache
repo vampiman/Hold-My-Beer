@@ -3,32 +3,45 @@
   <head>
     <title>{{title}}</title>
     {{>headComponent}}
+    <link rel="stylesheet" href="/stylesheets/login.css">
   </head>
   <body>
     {{>navbarComponent}}
 
-<!-- FIXME indentation, form ids -->
-<div class="forms">
-<form action="/login" method="post" class="form-horizontal">
-  <div class="form-group">
-    <label class="control-label col-sm-2" for="email">Email:</label>
-    <div class="col-sm-3">
-      <input type="email" class="form-control" id="email" placeholder="Enter email">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label col-sm-2" for="pwd">Password:</label>
-    <div class="col-sm-3"> 
-      <input type="password" class="form-control" id="pwd" placeholder="Enter password">
-    </div>
-  </div>
-   
-  <div class="form-group"> 
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">Submit</button>
-    </div>
-  </div>
-</form>
+<!-- FIXME indentation, form ids, label names, form methods -->
+<div class="container-fluid">
+    <div class="row">
+        <form action="/login" class="col-md-3">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+            </div>
+    
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+    
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+
+        <form action="/register" class="col-md-3">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Username</label>
+                <input type="Username" class="form-control" id="exampleInputEmail1" placeholder="Enter your username">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+    
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
 </div>
 
   </body>
