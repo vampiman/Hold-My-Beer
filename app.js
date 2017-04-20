@@ -6,11 +6,16 @@ const favicon = require('serve-favicon');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const compression = require('compression');
 const fs = require('fs');
 
 const index = require('./routes/index');
 
 const app = express();
+
+app.use(compression({
+  threshold: 0
+}));
 
 app.set('views', path.join(__dirname, 'views'));
 
