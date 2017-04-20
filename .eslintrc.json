@@ -3,6 +3,11 @@
     "node": true,
     "es6": true
   },
+  "globals": {
+    "logger": false,
+    "hasDBAvailable": false,
+    "pgPool": false
+  },
   "extends": "eslint:recommended",
   "rules": {
     "indent": ["error", 2, {"SwitchCase": 1}],

@@ -5,25 +5,45 @@ const app = require('../app');
 const debug = require('debug')('hold-my-beer:server');
 const http = require('http');
 const fs = require('fs');
+const path = require('path');
+const winston = require('winston');
 
-const hasDBAvailable = global.hasDBAvailable = Boolean(process.env.DB);
+global.logger = new (winston.Logger)({
+  transports: [
+    new (winston.transports.Console)({level: 'debug'}),
+    new (winston.transports.File)({
+      level: 'error',
+      filename: path.join(__dirname, '..', 'logs', 'app.log')
+    })
+  ]
+});
+
+global.hasDBAvailable = Boolean(process.env.DB);
 
 if (hasDBAvailable) {
   const pgConfig = {
     host: 'localhost',
-    user: 'hmbserver',
-    password: fs.readFileSync('db-password', {encoding: 'utf8'}),
-    database: 'hmb'
+    user: process.env.PGUSER || 'hmbserver',
+    password: process.env.PGPASSWORD || fs.readFileSync('db-password', {encoding: 'utf8'}),
+    database: process.env.PGDATABASE || 'hmb'
   };
 
   process.on('unhandledRejection', error => {
-    const msg = `${Date.now()} ${error.message} ${error.stack}`;
-    console.error(msg);
-    fs.appendFile('db.log', msg);
+    logger.error('Unhandled rejection', {
+      errorMsg: error.message,
+      errorStack: error.stack
+    });
   });
 
   const Pool = require('pg').Pool;
   global.pgPool = new Pool(pgConfig);
+  pgPool.on('error', (err, client) => {
+    logger.error('Idle psql client error', {
+      errorMsg: err.message,
+      errorStack: err.stack,
+      client
+    });
+  });
 }
 
 const port = normalizePort(process.env.PORT || '3000');
