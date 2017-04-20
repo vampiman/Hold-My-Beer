@@ -7,6 +7,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const compression = require('compression');
+const Mustache = require('mustache');
 const fs = require('fs');
 
 const index = require('./routes/index');
@@ -18,6 +19,20 @@ app.use(compression({
 }));
 
 app.set('views', path.join(__dirname, 'views'));
+
+app.locals.renderPage = function (res, viewName) {
+  const renderedPage = Mustache.render(
+    app.locals.views[viewName],
+    app.locals.languages.en,
+    app.locals.components
+  );
+  res.set({
+    'Content-Language': 'en', // TODO
+    'Cache-Control': `max-age=${2 * 60}`,
+    'Content-Type': 'text/html'
+  });
+  res.send(renderedPage);
+};
 
 app.use(favicon(path.join(__dirname, 'images', 'logo.png')));
 

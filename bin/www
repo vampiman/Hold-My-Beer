@@ -18,9 +18,9 @@ global.logger = new (winston.Logger)({
   ]
 });
 
-global.hasDBAvailable = Boolean(process.env.DB);
+app.locals.hasDBAvailable = Boolean(process.env.DB);
 
-if (hasDBAvailable) {
+if (app.locals.hasDBAvailable) {
   const pgConfig = {
     host: 'localhost',
     user: process.env.PGUSER || 'hmbserver',
@@ -36,8 +36,8 @@ if (hasDBAvailable) {
   });
 
   const Pool = require('pg').Pool;
-  global.pgPool = new Pool(pgConfig);
-  pgPool.on('error', (err, client) => {
+  app.locals.pgPool = new Pool(pgConfig);
+  app.locals.pgPool.on('error', (err, client) => {
     logger.error('Idle psql client error', {
       errorMsg: err.message,
       errorStack: err.stack,
@@ -45,6 +45,32 @@ if (hasDBAvailable) {
     });
   });
 }
+
+// Load templates
+
+app.locals = Object.assign(app.locals, {
+  components: {},
+  views: {},
+  languages: {}
+});
+
+const componentsPath = path.join(__dirname, '..', 'components');
+fs.readdirSync(componentsPath).forEach(template => {
+  app.locals.components[`${template.split('.')[0]}Component`] =
+    fs.readFileSync(path.join(componentsPath, template), {encoding: 'utf8'});
+});
+
+const viewsPath = path.join(__dirname, '..', 'views');
+fs.readdirSync(viewsPath).forEach(viewTemplate => {
+  app.locals.views[viewTemplate.split('.')[0]] =
+    fs.readFileSync(path.join(viewsPath, viewTemplate), {encoding: 'utf8'});
+});
+
+const languagesPath = path.join(__dirname, '..', 'text');
+fs.readdirSync(languagesPath).forEach(language => {
+  app.locals.languages[language.split('.')[0]] =
+    JSON.parse(fs.readFileSync(path.join(languagesPath, language), {encoding: 'utf8'}));
+});
 
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
