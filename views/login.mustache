@@ -34,22 +34,22 @@
             </form>
         <br>
         <div class="col-md-2"></div>
-        <form action="/register" class=" col-md-3">
+        <form action="/register" method="POST" class="col-md-3">
             <div class="register-title">Register</div>
             <br>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
-                <input type="text" class="form-control" placeholder="Your Email Adress" aria-describedby="basic-addon1">
+                <input type="text" name="email" class="form-control" placeholder="Your Email Adress" aria-describedby="basic-addon1">
             </div>
             <br>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
-                <input type="text" class="form-control" placeholder="Your Username" aria-describedby="basic-addon1">
+                <input type="text" name="username" class="form-control" placeholder="Your Username" aria-describedby="basic-addon1">
             </div>
             <br>
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Your Password">
+                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Your Password">
             </div>
             <br>
             <div class="input-group">
