@@ -49,10 +49,7 @@ router.post('/register', (req, res, next) => {
       throw err;
     })
     .then(insertResult => {
-      logger.info('Successsful registration', {
-        username: req.body.username,
-        email: req.body.email
-      });
+      logger.info('Successsful registration', req.body.username, req.body.email);
       sendData(res, null, '/');
     }, err => {
       // FIXME send better errors like "email already exists"

@@ -19,10 +19,7 @@ global.logger = new (winston.Logger)({
 });
 
 process.on('unhandledRejection', error => {
-  logger.error('Unhandled rejection', {
-    errorMsg: error.message,
-    errorStack: error.stack
-  });
+  logger.error('Unhandled rejection', error);
 });
 
 const queries = require('../database/queries');
