@@ -18,33 +18,7 @@ global.logger = new (winston.Logger)({
   ]
 });
 
-app.locals.hasDBAvailable = Boolean(process.env.DB);
-
-if (app.locals.hasDBAvailable) {
-  const pgConfig = {
-    host: 'localhost',
-    user: process.env.PGUSER || 'hmbserver',
-    password: process.env.PGPASSWORD || fs.readFileSync('db-password', {encoding: 'utf8'}),
-    database: process.env.PGDATABASE || 'hmb'
-  };
-
-  process.on('unhandledRejection', error => {
-    logger.error('Unhandled rejection', {
-      errorMsg: error.message,
-      errorStack: error.stack
-    });
-  });
-
-  const Pool = require('pg').Pool;
-  app.locals.pgPool = new Pool(pgConfig);
-  app.locals.pgPool.on('error', (err, client) => {
-    logger.error('Idle psql client error', {
-      errorMsg: err.message,
-      errorStack: err.stack,
-      client
-    });
-  });
-}
+const queries = require('../database/queries');
 
 // Load templates
 

@@ -25,6 +25,7 @@
     "morgan": "~1.7.0",
     "mustache": "^2.3.0",
     "pg": "^6.1.5",
+    "pg-escape": "^0.2.0",
     "pug": "~2.0.0-beta10",
     "serve-favicon": "~2.3.2",
     "winston": "^2.3.1"
