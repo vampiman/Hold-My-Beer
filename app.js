@@ -10,8 +10,6 @@ const compression = require('compression');
 const Mustache = require('mustache');
 const fs = require('fs');
 
-const index = require('./routes/index');
-
 const app = express();
 
 app.use(compression({
@@ -42,10 +40,11 @@ app.use(morgan('combined', {
 if (app.get('env') === 'development') app.use(morgan('dev'));
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
 // Routes
+const index = require('./routes/index');
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/', index);
