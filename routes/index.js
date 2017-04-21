@@ -3,15 +3,16 @@
 const express = require('express');
 const path = require('path');
 const router = express.Router();
-const queries = require('../database/queries.js');
+const queries = require('../database/queries');
+const render = require('../render');
 const bcrypt = require('bcryptjs');
 
 router.get('/', (req, res, next) => {
-  res.app.locals.renderPage(res, 'index');
+  render.sendPage(res, 'index', 'en');
 });
 
 router.get('/login', (req, res, next) => {
-  res.app.locals.renderPage(res, 'login');
+  render.sendPage(res, 'login', 'en');
 });
 
 function sendData(res, err, redirect) {

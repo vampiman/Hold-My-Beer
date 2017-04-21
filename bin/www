@@ -23,32 +23,7 @@ process.on('unhandledRejection', error => {
 });
 
 const queries = require('../database/queries');
-
-// Load templates
-
-app.locals = Object.assign(app.locals, {
-  components: {},
-  views: {},
-  languages: {}
-});
-
-const componentsPath = path.join(__dirname, '..', 'components');
-fs.readdirSync(componentsPath).forEach(template => {
-  app.locals.components[`${template.split('.')[0]}Component`] =
-    fs.readFileSync(path.join(componentsPath, template), {encoding: 'utf8'});
-});
-
-const viewsPath = path.join(__dirname, '..', 'views');
-fs.readdirSync(viewsPath).forEach(viewTemplate => {
-  app.locals.views[viewTemplate.split('.')[0]] =
-    fs.readFileSync(path.join(viewsPath, viewTemplate), {encoding: 'utf8'});
-});
-
-const languagesPath = path.join(__dirname, '..', 'text');
-fs.readdirSync(languagesPath).forEach(language => {
-  app.locals.languages[language.split('.')[0]] =
-    JSON.parse(fs.readFileSync(path.join(languagesPath, language), {encoding: 'utf8'}));
-});
+const render = require('../render');
 
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
