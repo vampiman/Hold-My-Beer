@@ -32,7 +32,7 @@ function sendPage(res, viewName, langName) {
   res.send(renderedPage);
 }
 
-function sendError(res, errorKey, langName) {
+function sendError(res, errorKey, errorStatus, langName) {
   const renderedError = Mustache.render(views.error, Object.assign(languages[langName], {
     errorMessage: languages[langName].errorTexts[errorKey]
   }), components);
@@ -41,6 +41,7 @@ function sendError(res, errorKey, langName) {
     'Cache-Control': `max-age=${60 * 60 * 24}`, // These should not change very often
     'Content-Type': 'text/html'
   });
+  res.status(errorStatus);
   res.send(renderedError);
 }
 

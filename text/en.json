@@ -2,6 +2,6 @@
   "title": "Hold My Beer",
   "account": "Login/Register",
   "errorTexts": {
-    "serverValidationError": "Oops. Looks like something went wrong receiving the data."
+    "serverValidation": "Oops. Looks like something went wrong receiving the data."
   }
 }
