@@ -34,7 +34,9 @@ function insertUser(username, email, passwordHash) {
     escape.string(username),
     escape.string(email),
     passwordHash
-  ]);
+  ]).catch(err => {
+    throw attachKind(err, 'pg-query');
+  });
 }
 
 module.exports = {

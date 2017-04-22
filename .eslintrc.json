@@ -5,25 +5,30 @@
   },
   "globals": {
     "logger": false,
-    "hasDBAvailable": false,
-    "pgPool": false
+    "attachKind": false
   },
+  "parserOptions": {
+    "ecmaVersion": 8
+  },
+  "plugins": ["async-await"],
   "extends": "eslint:recommended",
   "rules": {
+    "async-await/space-after-async": 2,
+    "async-await/space-after-await": 2,
     "indent": ["error", 2, {"SwitchCase": 1}],
     "brace-style": ["error", "1tbs", {"allowSingleLine": true}],
     "linebreak-style": ["error", "unix"],
     "quotes": ["warn", "single"],
     "semi": ["warn", "always"],
     "comma-style": ["error", "last"],
-    "space-before-blocks": ["error", "always"],
+    "space-before-blocks": ["warn", "always"],
     "space-infix-ops": ["error"],
     "keyword-spacing": ["error", {"before": true, "after": true}],
     "no-whitespace-before-property": ["error"],
     "padded-blocks": ["warn", "never"],
     "no-unused-vars": ["off"],
     "no-console": ["off"],
-    "eqeqeq": ["warn", "smart"],
+    "eqeqeq": ["error", "smart"],
     "no-floating-decimal": ["error"],
     "no-new-wrappers": ["error"],
     "no-with": ["error"],

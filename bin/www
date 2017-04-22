@@ -18,6 +18,12 @@ global.logger = new (winston.Logger)({
   ]
 });
 
+// Util func for attaching a kind to an error
+global.attachKind = (err, kind) => {
+  err.kind = kind;
+  return err;
+};
+
 process.on('unhandledRejection', error => {
   logger.error('Unhandled rejection', error);
 });
