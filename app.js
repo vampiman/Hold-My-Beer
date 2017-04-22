@@ -31,9 +31,16 @@ app.use(cookieParser());
 
 // Routes
 const index = require('./routes/index');
-app.use(express.static(path.join(__dirname, 'dist')));
-app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/', index);
+app.use('/scripts', express.static(path.join(__dirname, 'dist', 'scripts'), {
+  maxage: '12 hours'
+}));
+app.use('/stylesheets', express.static(path.join(__dirname, 'dist', 'stylesheets'), {
+  maxage: '24 hours'
+}));
+app.use('/images', express.static(path.join(__dirname, 'images'), {
+  maxage: '7 days'
+}));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -47,10 +54,9 @@ app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  render.sendPage(res, 'error', 'en');
+  
+  const errKey = err.status === 404 ? 'notFound' : 'internalServerError';
+  render.sendError(res, errKey, err.status || 500, 'en');
 });
 
 module.exports = app;

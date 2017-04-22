@@ -38,7 +38,7 @@ function sendError(res, errorKey, errorStatus, langName) {
   }), components);
   res.set({
     'Content-Language': langName,
-    'Cache-Control': `max-age=${60 * 60 * 24}`, // These should not change very often
+    'Cache-Control': `max-age=${60 * 60 * 24 * 7}`, // These should not change very often
     'Content-Type': 'text/html'
   });
   res.status(errorStatus);
