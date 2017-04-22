@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 const escape = require('pg-escape');
 
 const hasDBAvailable = Boolean(process.env.DB);
@@ -10,10 +11,11 @@ if (!hasDBAvailable) {
   return;
 }
 
+const pgPass = fs.readFileSync(path.join(__dirname, 'db-password'), {encoding: 'utf8'});
 const pgConfig = {
   host: 'localhost',
   user: process.env.PGUSER || 'hmbserver',
-  password: process.env.PGPASSWORD || fs.readFileSync('db-password', {encoding: 'utf8'}),
+  password: process.env.PGPASSWORD || pgPass,
   database: process.env.PGDATABASE || 'hmb'
 };
 
