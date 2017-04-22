@@ -26,15 +26,28 @@ function sendPage(res, viewName, langName) {
   const renderedPage = Mustache.render(views[viewName], languages[langName], components);
   res.set({
     'Content-Language': langName,
-    'Cache-Control': `max-age=${2 * 60}`,
+    'Cache-Control': `max-age=${60 * 2}`,
     'Content-Type': 'text/html'
   });
   res.send(renderedPage);
+}
+
+function sendError(res, errorKey, langName) {
+  const renderedError = Mustache.render(views.error, Object.assign(languages[langName], {
+    errorMessage: languages[langName].errorTexts[errorKey]
+  }), components);
+  res.set({
+    'Content-Language': langName,
+    'Cache-Control': `max-age=${60 * 60 * 24}`, // These should not change very often
+    'Content-Type': 'text/html'
+  });
+  res.send(renderedError);
 }
 
 module.exports = {
   components,
   views,
   languages,
-  sendPage
+  sendPage,
+  sendError
 };
