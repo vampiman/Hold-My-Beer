@@ -16,10 +16,15 @@ gulp.task('default', sequence('build', 'start-server', 'watch'));
 gulp.task('watch', () => {
   gulp.watch(jsSrcGlob, ['build-js']);
   gulp.watch(cssGlob, ['build-css']);
+  gulp.watch(['./components/*', './views/*', './text/*'], ['start-server']);
 });
 
+let serverChild = null;
 gulp.task('start-server', done => {
-  cp.spawn('node', ['./bin/www'], {
+  if (serverChild !== null) {
+    serverChild.kill();
+  }
+  serverChild = cp.spawn('node', ['./bin/www'], {
     stdio: 'inherit'
   });
   done();
