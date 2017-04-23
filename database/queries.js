@@ -48,7 +48,6 @@ function insertUser(username, email, passwordHash) {
 
 module.exports = {
   hasDBAvailable,
-  pgPool,
   pgSession,
   insertUser
 };
