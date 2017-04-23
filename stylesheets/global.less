@@ -13,7 +13,7 @@ body {
 }
 
 .navbar {
-  padding: 15px 0;
+  padding: 15px;
   border: 0;
   border-radius: 0;
   letter-spacing: 1px;
@@ -24,8 +24,19 @@ body {
     color: @color-accent;
   }
   
-  #logo {
-    height: 50px;
-    border-radius: 100%;
+  div.navbar-header {
+    header {
+      color: @color-text;
+      display: inline;
+    }
+    
+    #logo {
+      height: 50px;
+      border-radius: 100%;
+    }
+    
+    a:hover, a:focus {
+      text-decoration: none;
+    }
   }
 }
