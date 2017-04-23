@@ -33,13 +33,13 @@ app.use(cookieParser());
 const index = require('./routes/index');
 app.use('/', index);
 app.use('/scripts', express.static(path.join(__dirname, 'dist', 'scripts'), {
-  maxage: '12 hours'
+  maxage: '14 days'
 }));
 app.use('/stylesheets', express.static(path.join(__dirname, 'dist', 'stylesheets'), {
-  maxage: '24 hours'
+  maxage: '14 days'
 }));
 app.use('/images', express.static(path.join(__dirname, 'images'), {
-  maxage: '7 days'
+  maxage: '28 days'
 }));
 
 // catch 404 and forward to error handler
