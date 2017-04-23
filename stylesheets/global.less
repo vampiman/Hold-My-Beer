@@ -13,31 +13,38 @@ body {
 }
 
 .navbar {
-  padding: 15px;
+  @navbar-padding: 15px;
+  @navbar-content-height: 50px;
+  // Has top and bottom padding
+  height: @navbar-padding + @navbar-content-height + @navbar-padding;
+  padding: @navbar-padding;
   border: 0;
   border-radius: 0;
   letter-spacing: 1px;
   font-size: 1.5em;
   background-color: rgba(0, 0, 0, 0.8);
   
-  .navbar-nav > li > a:hover {
-    color: @color-accent;
+  header {
+    color: @color-text;
+    display: inline;
   }
   
-  div.navbar-header {
-    header {
-      color: @color-text;
-      display: inline;
+  #logo {
+    width: 50px;
+    height: @navbar-content-height;
+    border-radius: 100%;
+  }
+  
+  a {
+    height: @navbar-content-height;
+    line-height: @navbar-content-height;
+    color: @color-text;
+    &.right {
+      float: right;
     }
-    
-    #logo {
-      width: 50px;
-      height: 50px;
-      border-radius: 100%;
-    }
-    
-    a:hover, a:focus {
+    &:hover, &:focus {
       text-decoration: none;
+      color: @color-accent;
     }
   }
 }
