@@ -12,12 +12,15 @@ body {
   flex-direction: column;
 }
 
-.navbar {
+#navbar {
   @navbar-padding: 15px;
   @navbar-content-height: 50px;
-  // Has top and bottom padding
-  height: @navbar-padding + @navbar-content-height + @navbar-padding;
   padding: @navbar-padding;
+  height: @navbar-padding + @navbar-content-height + @navbar-padding;
+  @media screen and (max-width: 767px) {
+    // The search box overflows, so let the height figure itself out
+    height: auto;
+  }
   border: 0;
   border-radius: 0;
   letter-spacing: 1px;
@@ -27,6 +30,10 @@ body {
   header {
     color: @color-text;
     display: inline;
+    @media screen and (max-width: 425px) {
+      // Takes up too much space on small mobile screens
+      display: none;
+    }
   }
   
   #logo {
@@ -39,12 +46,42 @@ body {
     height: @navbar-content-height;
     line-height: @navbar-content-height;
     color: @color-text;
+    
     &.right {
       float: right;
     }
+    &.left {
+      float: left;
+    }
+    
     &:hover, &:focus {
       text-decoration: none;
       color: @color-accent;
+    }
+  }
+  
+  form {
+    display: flex;
+    flex-wrap: nowrap;
+    height: @navbar-content-height;
+    
+    @media screen and (max-width: 767px) {
+      padding: 0;
+      // Push searchbar on next line
+      margin-top: @navbar-padding + @navbar-content-height;
+    }
+    @media screen and (min-width: 768px) {
+      float: left;
+      padding: 0 @navbar-padding;
+    }
+    
+    input {
+      height: inherit;
+    }
+    
+    button {
+      height: inherit;
+      margin-left: 5px;
     }
   }
 }

@@ -1,11 +1,11 @@
-<nav class="navbar navbar-default">
-  <a href="/" class="navbar-left">
+<nav id=navbar>
+  <a href="/" class="left">
     <img id="logo" src="/images/logo.png">
     <header>{{title}}</header>
   </a>
   <a href="/login" class="right">{{account}}</a>
-  <form class="navbar-form navbar-left">
-    <input type="text" class="form-control" placeholder="{{searchPlaceholder}}">
+  <form action="/search" method="POST">
+    <input name="query" type="text" class="form-control" placeholder="{{searchPlaceholder}}">
     <button type="submit" class="btn btn-default">
       <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
     </button>
