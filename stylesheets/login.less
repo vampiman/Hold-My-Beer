@@ -1,3 +1,5 @@
+@import "color.less";
+
 body {
   background-image: url("/images/Free-Tileable-Black-Wood-Textures-Patterns-For-3D-Mappin.jpg") !important;
 }
@@ -16,15 +18,19 @@ body {
     padding: 0 10%;
     flex-grow: 1;
     text-align: center;
-    & > * {
-      // All direct children of a form have some space under them
-      margin-bottom: 10px;
-    }
     header {
       font-size: 3em;
       // FIXME font usage without @import
       font-family: 'Passion One', cursive;
-      color: white;
+      color: @color-text;
+    }
+    button {
+      background-color: @color-accent;
+      color: @color-text;
+    }
+    & > * {
+      // All direct children of a form have some space under them
+      margin-bottom: 10px;
     }
   }
 }
