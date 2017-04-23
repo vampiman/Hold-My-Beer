@@ -1,17 +1,30 @@
 body {
-  background-image: url("/images/Free-Tileable-Black-Wood-Textures-Patterns-For-3D-Mappin.jpg");
+  background-image: url("/images/Free-Tileable-Black-Wood-Textures-Patterns-For-3D-Mappin.jpg") !important;
 }
 
-.log-in-title {
-  font-size: 30px;
-  // FIXME font usage without @import
-  font-family: 'Passion One', cursive;
-  color:white;
-}
-
-.register-title {
-  font-size: 30px;
-  // FIXME font usage without @import
-  font-family: 'Passion One', cursive;
-  color:white;
+#auth-container {
+  flex-grow: 1;
+  margin-top: 5%;
+  display: flex;
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+  }
+  @media screen and (min-width: 1025px) {
+    flex-direction: row;
+  }
+  form.auth-side {
+    padding: 0 10%;
+    flex-grow: 1;
+    text-align: center;
+    & > * {
+      // All direct children of a form have some space under them
+      margin-bottom: 10px;
+    }
+    header {
+      font-size: 3em;
+      // FIXME font usage without @import
+      font-family: 'Passion One', cursive;
+      color: white;
+    }
+  }
 }

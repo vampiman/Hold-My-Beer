@@ -1,6 +1,12 @@
 {
   "title": "Hold My Beer",
   "account": "Login/Register",
+  "loginFormTitle": "Login",
+  "registerFormTitle": "Register",
+  "emailPlaceholder": "Email",
+  "passwordPlaceholder": "Password",
+  "passwordConfirmPlaceholder": "Confirm Password",
+  "usernamePlaceholder": "Username",
   "errorTexts": {
     "serverValidation": "Oops. Looks like something went wrong receiving the data.",
     "internalServerError": "The server failed to complete the request, sorry. Please try again.",
