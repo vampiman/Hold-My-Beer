@@ -16,7 +16,7 @@ router.get('/login', (req, res, next) => {
 
 router.get('/account', (req, res, next) => {
   // FIXME add account page
-  res.sendError(res, 'notFound', 501, 'en');
+  render.sendError(res, 'notFound', 501, 'en');
 });
 
 router.post('/login', auth.authenticateUser);
