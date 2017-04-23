@@ -3,6 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 const escape = require('pg-escape');
+const PGSession = require('connect-pg-simple')(require('express-session'));
+const pg = require('pg');
 
 const hasDBAvailable = Boolean(process.env.DB);
 
@@ -11,7 +13,7 @@ if (!hasDBAvailable) {
   return;
 }
 
-const pgPass = fs.readFileSync(path.join(__dirname, 'db-password'), {encoding: 'utf8'});
+const pgPass = fs.readFileSync(path.join(__dirname, 'password'), {encoding: 'utf8'});
 const pgConfig = {
   host: 'localhost',
   user: process.env.PGUSER || 'hmbserver',
@@ -19,14 +21,19 @@ const pgConfig = {
   database: process.env.PGDATABASE || 'hmb'
 };
 
-const Pool = require('pg').Pool;
-const pgPool = new Pool(pgConfig);
+const pgPool = new pg.Pool(pgConfig);
 pgPool.on('error', (err, client) => {
   logger.error('Idle psql client error', {
     errorMsg: err.message,
     errorStack: err.stack,
     client
   });
+});
+
+const pgSession = new PGSession({
+  pg,
+  conString: pgConfig,
+  tableName: 'user_sessions'
 });
 
 function insertUser(username, email, passwordHash) {
@@ -42,5 +49,6 @@ function insertUser(username, email, passwordHash) {
 module.exports = {
   hasDBAvailable,
   pgPool,
+  pgSession,
   insertUser
 };

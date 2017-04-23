@@ -7,10 +7,14 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const compression = require('compression');
+const session = require('express-session');
+const queries = require('./database/queries');
 const fs = require('fs');
 const render = require('./render');
 
 const app = express();
+
+const secret = fs.readFileSync(path.join(__dirname, 'database', 'secret'), {encoding: 'utf8'});
 
 app.use(compression({
   threshold: 0
@@ -27,7 +31,21 @@ if (app.get('env') === 'development') app.use(morgan('dev'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(cookieParser());
+app.use(cookieParser(secret));
+
+if (queries.isDBAvailable) {
+  app.use(session({
+    secret,
+    store: queries.pgSession,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      sameSite: true,
+      secure: false, // FIXME set to true after adding https
+    }
+  }));
+}
 
 // Routes
 const index = require('./routes/index');
