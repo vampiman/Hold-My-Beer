@@ -7,11 +7,16 @@ const render = require('../render');
 const auth = require('../auth');
 
 router.get('/', (req, res, next) => {
-  render.sendPage(res, 'index', 'en');
+  render.sendPage(req, res, 'index', 'en');
 });
 
 router.get('/login', (req, res, next) => {
-  render.sendPage(res, 'login', 'en');
+  render.sendPage(req, res, 'login', 'en');
+});
+
+router.get('/account', (req, res, next) => {
+  // FIXME add account page
+  res.sendError(res, 'notFound', 501, 'en');
 });
 
 router.post('/login', auth.authenticateUser);

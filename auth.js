@@ -92,7 +92,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await queries.getUserById(id);
-    done(null, user);
+    done(null, user.rows[0]);
   } catch (e) {
     logger.error('Cannot find user id', id, e);
     done(e, null);

@@ -22,8 +22,16 @@ const components = templatesObj('components', false, filename => `${filename.spl
 const views = templatesObj('views', false, filename => `${filename.split('.')[0]}`);
 const languages = templatesObj('text', true, filename => `${filename.split('.')[0]}`);
 
-function sendPage(res, viewName, langName) {
-  const renderedPage = Mustache.render(views[viewName], languages[langName], components);
+function sendPage(req, res, viewName, langName) {
+  const lang = languages[langName];
+  if (req.user) {
+    lang.profileText = req.user.name;
+    lang.profileUrl = '/account';
+  } else {
+    lang.profileText = lang.loginOrRegister;
+    lang.profileUrl = '/login';
+  }
+  const renderedPage = Mustache.render(views[viewName], lang, components);
   res.set({
     'Content-Language': langName,
     'Cache-Control': `max-age=${60 * 2}`,

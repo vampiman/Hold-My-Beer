@@ -1,6 +1,6 @@
 {
   "title": "Hold My Beer",
-  "account": "Login/Register",
+  "loginOrRegister": "Login/Register",
   "loginFormTitle": "Login",
   "registerFormTitle": "Register",
   "emailPlaceholder": "Email",
