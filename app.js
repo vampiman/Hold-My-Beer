@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const session = require('express-session');
+const passport = require('passport');
 const queries = require('./database/queries');
 const fs = require('fs');
 const render = require('./render');
@@ -33,7 +34,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser(secret));
 
-if (queries.isDBAvailable) {
+if (queries.hasDBAvailable) {
   app.use(session({
     secret,
     store: queries.pgSession,
@@ -45,6 +46,8 @@ if (queries.isDBAvailable) {
       secure: false, // FIXME set to true after adding https
     }
   }));
+  app.use(passport.initialize());
+  app.use(passport.session());
 }
 
 // Routes
@@ -72,6 +75,7 @@ app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+  console.log(err);
   
   const errKey = err.status === 404 ? 'notFound' : 'internalServerError';
   render.sendError(res, errKey, err.status || 500, 'en');

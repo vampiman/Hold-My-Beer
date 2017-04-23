@@ -46,8 +46,26 @@ function insertUser(username, email, passwordHash) {
   });
 }
 
+function getUser(email) {
+  return pgPool.query('select * from users where users.email = $1', [
+    escape.string(email)
+  ]).catch(err => {
+    throw attachKind(err, 'pg-query');
+  });
+}
+
+function getUserById(id) {
+  return pgPool.query('select * from users where users.id = $1', [
+    escape.string(id)
+  ]).catch(err => {
+    throw attachKind(err, 'pg-query');
+  });
+}
+
 module.exports = {
   hasDBAvailable,
   pgSession,
-  insertUser
+  insertUser,
+  getUser,
+  getUserById
 };
