@@ -15,7 +15,7 @@ const render = require('./render');
 
 const app = express();
 
-const secret = fs.readFileSync(path.join(__dirname, 'database', 'secret'), {encoding: 'utf8'});
+const secret = fs.readFileSync(path.join(__dirname, 'database', 'secret'), {encoding: 'utf8'}) || 'iamsecret';
 
 app.use(compression({
   threshold: 0
