@@ -31,6 +31,10 @@ gulp.task('start-server', done => {
   done();
 });
 
+process.on('uncaughtException', err => {
+  if (serverChild !== null) serverChild.kill();
+});
+
 gulp.task('build', ['build-js', 'build-css']);
 
 gulp.task('build-js', () =>
