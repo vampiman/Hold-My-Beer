@@ -81,6 +81,15 @@ function validateUsername(form, whichInput) {
   return true;
 }
 
+function sendPost(form) {
+  $.post($(form).attr('action'), $(form).serialize(), json => {
+    location.assign('/');
+  }, 'json').fail(response => {
+    // FIXME handle auth errors
+    console.error(response);
+  });
+}
+
 const loginForm = $('form[action="/login"]');
 loginForm.submit(event => {
   event.preventDefault();
@@ -88,12 +97,7 @@ loginForm.submit(event => {
   isValid &= validateEmail(loginForm, 0);
   isValid &= validatePassword(loginForm, 1);
   if (!isValid) return false;
-  $.post($(loginForm).attr('action'), $(loginForm).serialize(), json => {
-    location.assign('/');
-  }, 'json').fail(response => {
-    // FIXME handle auth errors
-    console.error(response);
-  });
+  sendPost(loginForm);
   return false;
 });
 
@@ -113,11 +117,6 @@ registerForm.submit(event => {
   }
   // Don't post if input is not valid
   if (!isValid) return false;
-  $.post($(registerForm).attr('action'), $(registerForm).serialize(), json => {
-    location.assign('/');
-  }, 'json').fail(response => {
-    // FIXME handle auth errors
-    console.error(response);
-  });
+  sendPost(registerForm);
   return false;
 });
