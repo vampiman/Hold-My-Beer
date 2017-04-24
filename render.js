@@ -24,6 +24,7 @@ const languages = templatesObj('text', true, filename => `${filename.split('.')[
 
 function sendPage(req, res, viewName, langName) {
   const lang = languages[langName];
+  lang.clientJSON = JSON.stringify(lang.clientText);
   if (req.user) {
     lang.profileText = req.user.name;
     lang.profileUrl = '/account';

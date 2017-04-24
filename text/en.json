@@ -16,5 +16,13 @@
     "serverValidation": "Oops. Looks like something went wrong receiving the data.",
     "internalServerError": "The server failed to complete the request, sorry. Please try again.",
     "notFound": "We couldn't find the requested page."
+  },
+  "clientText": {
+    "notEmail": "Not an email",
+    "passShort": "Min 5 characters",
+    "passLong": "Max 500 characters",
+    "passNoMatch": "Password mismatch",
+    "userShort": "Min 4 characters",
+    "userLong": "Max 15 characters"
   }
 }

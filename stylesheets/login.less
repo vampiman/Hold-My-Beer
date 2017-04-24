@@ -16,19 +16,25 @@ body {
   @media screen and (min-width: 1025px) {
     flex-direction: row;
   }
-  form.auth-side {
-    padding: 0 10%;
-    flex-grow: 1;
-    flex-basis: 50%;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-  }
 }
 
+@input-field-height: 40px;
+
 form.auth-side {
+  padding: 0 10%;
+  flex-grow: 1;
+  flex-basis: 50%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  @child-margin: 10px;
+  @header-size: 42px;
+  @header-margin: 2 * @child-margin;
   header {
-    font-size: 3em;
+    font-size: @header-size;
+    line-height: @header-size;
+    margin-bottom: @header-margin;
     // FIXME font usage without @import
     font-family: 'Passion One', cursive;
     color: @color-text;
@@ -43,16 +49,55 @@ form.auth-side {
       .glow-shadow(@color-shade, 1px, 5px);
       transition: box-shadow 0.2s;
     }
+    &.validation-error {
+      background-color: @color-error;
+      border-color: @color-error;
+    }
+  }
+  .error-popup {
+    // Start hidden
+    opacity: 0;
+    transition: opacity 0.2s;
+    // Show up on error
+    &[data-show="true"] {
+      opacity: 1;
+      transition: opacity 0.2s;
+    }
+    display: block;
+    position: absolute;
+    top: @header-size + @header-margin;
+    right: 15px;
+    width: 15%;
+    @popup-height: 40px;
+    height: @popup-height;
+    line-height: @popup-height;
+    background-color: @color-error;
+    color: @color-text;
+    white-space: nowrap;
+    &::after {
+      @triangle-size: 20px;
+      display: block;
+      position: relative;
+      margin-top: -@triangle-size;
+      top: -50%;
+      left: -@triangle-size;
+      content: ' ';
+      width: 0;
+      height: 0;
+      border-top: @triangle-size solid transparent;
+      border-bottom: @triangle-size solid transparent;
+      border-right: @triangle-size solid @color-error;
+    }
   }
   & > * {
     // All direct children of a form should have some space under them
-    margin-bottom: 10px;
+    margin-bottom: @child-margin;
   }
 }
 
 div.input-field {
   display: flex;
-  height: 40px;
+  height: @input-field-height;
   span.glyphicon {
     top: 0px;
     width: 50px;
