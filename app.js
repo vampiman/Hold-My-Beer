@@ -15,7 +15,13 @@ const render = require('./render');
 
 const app = express();
 
-const secret = fs.readFileSync(path.join(__dirname, 'database', 'secret'), {encoding: 'utf8'}) || 'iamsecret';
+let secret;
+
+try {
+  secret = fs.readFileSync(path.join(__dirname, 'database', 'secret'), {encoding: 'utf8'});
+} catch (e) {
+  secret = 'iamsecret';
+}
 
 app.use(compression({
   threshold: 0
