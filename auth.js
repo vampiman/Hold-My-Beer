@@ -27,7 +27,7 @@ async function registerUser(req, res) {
       case 'pg-query': logger.error('Cannot insert user', req.body.username, e); break;
       default: logger.error('Unknown error', e);
     }
-    render.sendError(res, 'serverValidation', 400, 'en');
+    res.status(500).json({register: 'error'});
   }
 }
 

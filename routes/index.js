@@ -23,14 +23,14 @@ router.get('/account', (req, res, next) => {
 router.post('/login', auth.authenticateUser);
 
 router.post('/register', (req, res, next) => {
-  if (req.body.username === undefined) return render.sendError(res, 'serverValidation', 400, 'en');
-  if (req.body.username.length < 4) return render.sendError(res, 'serverValidation', 400, 'en');
-  if (req.body.username.length > 15) return render.sendError(res, 'serverValidation', 400, 'en');
-  if (req.body.password === undefined) return render.sendError(res, 'serverValidation', 400, 'en');
-  if (req.body.password.length < 5) return render.sendError(res, 'serverValidation', 400, 'en');
-  if (req.body.password.length > 500) return render.sendError(res, 'serverValidation', 400, 'en');
-  if (req.body.email === undefined) return render.sendError(res, 'serverValidation', 400, 'en');
-  if (!/\S+@\S+\.\S+/.test(req.body.email)) return render.sendError(res, 'serverValidation', 400, 'en');
+  if (req.body.username === undefined) return res.status(400).json({login: 'no user'});
+  if (req.body.username.length < 4) return res.status(400).json({login: 'short user'});
+  if (req.body.username.length > 15) return res.status(400).json({login: 'long user'});
+  if (req.body.password === undefined) return res.status(400).json({login: 'no pass'});
+  if (req.body.password.length < 5) return res.status(400).json({login: 'short pass'});
+  if (req.body.password.length > 500) return res.status(400).json({login: 'long pass'});
+  if (req.body.email === undefined) return res.status(400).json({login: 'no email'});
+  if (!/\S+@\S+\.\S+/.test(req.body.email)) return res.status(400).json({login: 'not an email'});
   auth.registerUser(req, res);
 });
 
