@@ -4,8 +4,10 @@ function isEmailValid(email) {
 }
 
 const loginForm = $('form[action="/login"]');
-loginForm.submit(() => {
-  if (!isEmailValid($('form[action="/login"] input[name="email"]')[0].value)) {
+loginForm.submit(event => {
+  event.preventDefault();
+  const emailInput = $('form[action="/login"] input[name="email"]')[0];
+  if (!isEmailValid(emailInput.value)) {
     // FIXME show user something
     return false;
   }
