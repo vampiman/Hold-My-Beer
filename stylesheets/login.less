@@ -23,48 +23,49 @@ body {
     text-align: center;
     display: flex;
     flex-direction: column;
-    header {
-      font-size: 3em;
-      // FIXME font usage without @import
-      font-family: 'Passion One', cursive;
-      color: @color-text;
-    }
-    button {
-      background-color: @color-accent;
-      border-color: @color-accent;
-      color: @color-text;
-      .input-focus-action(@color-shade);
-      transition: box-shadow 0.2s;
-      &:hover {
-        .glow-shadow(@color-shade, 1px, 5px);
-        transition: box-shadow 0.2s;
-      }
-    }
-    & > * {
-      // All direct children of a form should have some space under them
-      margin-bottom: 10px;
-    }
   }
 }
 
-form {
-  div.input-field {
+form.auth-side {
+  header {
+    font-size: 3em;
+    // FIXME font usage without @import
+    font-family: 'Passion One', cursive;
+    color: @color-text;
+  }
+  button {
+    background-color: @color-accent;
+    border-color: @color-accent;
+    color: @color-text;
+    .input-focus-action(@color-shade);
+    transition: box-shadow 0.2s;
+    &:hover {
+      .glow-shadow(@color-shade, 1px, 5px);
+      transition: box-shadow 0.2s;
+    }
+  }
+  & > * {
+    // All direct children of a form should have some space under them
+    margin-bottom: 10px;
+  }
+}
+
+div.input-field {
+  display: flex;
+  height: 40px;
+  span.glyphicon {
+    top: 0px;
+    width: 50px;
     display: flex;
-    height: 40px;
-    span {
-      top: 0px;
-      width: 50px;
-      display: flex;
-      height: inherit;
-      color: @color-grey-text;
-      background-color: @color-grey-bg;
-      &:before {
-        width: 100%;
-        align-self: center;
-      }
-    }
-    input {
+    height: inherit;
+    color: @color-grey-text;
+    background-color: @color-grey-bg;
+    &:before {
       width: 100%;
+      align-self: center;
     }
+  }
+  input {
+    width: 100%;
   }
 }
