@@ -1,4 +1,6 @@
 @import "color.less";
+@import "properties.less";
+@import "input.less";
 
 html {
   height: 100%;
@@ -12,18 +14,24 @@ body {
   flex-direction: column;
 }
 
+button {
+  cursor: pointer;
+  display: block;
+  font-size: @input-element-font-size;
+  padding: @input-element-padding;
+  .user-select-any(none);
+  .input-border;
+  .input-focus-action(@color-accent);
+}
+
 input {
   display: block;
-  font-size: 14px;
   background-color: @color-text;
   color: @color-grey-text;
-  border: 1px solid @color-shade;
-  border-radius: 1px;
-  padding: 8px;
-  &:focus {
-    outline: solid 1px fade(@color-accent, 80%);
-    outline-offset: 0;
-  }
+  font-size: @input-element-font-size;
+  padding: @input-element-padding;
+  .input-border;
+  .input-focus-action(@color-accent);
 }
 
 #navbar {

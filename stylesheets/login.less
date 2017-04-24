@@ -1,4 +1,5 @@
 @import "color.less";
+@import "input.less";
 
 body {
   background-image: url("/images/Free-Tileable-Black-Wood-Textures-Patterns-For-3D-Mappin.jpg") !important;
@@ -18,6 +19,8 @@ body {
     padding: 0 10%;
     flex-grow: 1;
     text-align: center;
+    display: flex;
+    flex-direction: column;
     header {
       font-size: 3em;
       // FIXME font usage without @import
@@ -26,7 +29,9 @@ body {
     }
     button {
       background-color: @color-accent;
+      border-color: @color-accent;
       color: @color-text;
+      .input-focus-action(@color-shade);
     }
     & > * {
       // All direct children of a form should have some space under them
