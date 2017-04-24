@@ -11,7 +11,8 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/login', (req, res, next) => {
-  render.sendPage(req, res, 'login', 'en');
+  if (req.user) res.redirect('/account');
+  else render.sendPage(req, res, 'login', 'en');
 });
 
 router.get('/account', (req, res, next) => {
