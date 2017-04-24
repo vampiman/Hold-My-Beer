@@ -27,7 +27,7 @@ async function registerUser(req, res) {
       case 'pg-query': logger.error('Cannot insert user', req.body.username, e); break;
       default: logger.error('Unknown error', e);
     }
-    res.status(500).json({register: 'error'});
+    res.status(500).json({err: 'internal error'});
   }
 }
 
@@ -46,8 +46,13 @@ passport.use(new LocalStrategy({
   passwordField: 'password'
 }, async (email, password, done) => {
   try {
+    const query = await queries.getUser(email);
+    if (query.rowCount === 0) {
+      logger.info('No such email', email);
+      return done(null, false, {message: 'no such email'});
+    }
     // There can only be one row because emails are unique
-    const user = (await queries.getUser(email)).rows[0];
+    const user = query.rows[0];
     const doesMatch = await bcrypt.compare(password, user.hash);
     if (doesMatch) {
       logger.debug('Passwords match', email);
@@ -69,15 +74,18 @@ passport.use(new LocalStrategy({
 
 function authenticateUser(req, res, next) {
   return passport.authenticate('local', (err, user, info) => {
-    if (err) return next(err);
+    if (err) {
+      logger.error('Auth err', err);
+      return res.status(500).json({err: 'internal error'});
+    }
     if (!user) {
       logger.info('Login attempt failed', user, info.message);
       res.status(401);
-      return res.json({login: info.message});
+      return res.json({err: info.message});
     }
     loginUser(req, user).then(successResponse => {
       res.status(200);
-      res.json({login: successResponse});
+      res.send('');
     }, err => {
       logger.error('Login error', err);
       return next(err);
