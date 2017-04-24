@@ -1,4 +1,5 @@
 @import "color.less";
+@import "properties.less";
 @import "input.less";
 
 body {
@@ -33,6 +34,11 @@ body {
       border-color: @color-accent;
       color: @color-text;
       .input-focus-action(@color-shade);
+      transition: box-shadow 0.2s;
+      &:hover {
+        .glow-shadow(@color-shade, 1px, 5px);
+        transition: box-shadow 0.2s;
+      }
     }
     & > * {
       // All direct children of a form should have some space under them

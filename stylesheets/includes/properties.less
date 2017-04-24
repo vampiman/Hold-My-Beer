@@ -4,3 +4,6 @@
   -ms-user-select: @how;
   user-select: @how;
 }
+.glow-shadow(@color, @size, @glow) {
+  box-shadow: @color @size @size @glow, @color -@size -@size @glow;
+}
