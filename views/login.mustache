@@ -10,33 +10,33 @@
     <div id="auth-container">
       <form action="/login" method="POST" class="auth-side">
         <header>{{loginFormTitle}}</header>
-        <div class="input-group">
-          <span class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
-          <input type="text" name="email" class="form-control" placeholder="{{emailPlaceholder}}">
+        <div class="input-field">
+          <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+          <input type="text" name="email" placeholder="{{emailPlaceholder}}">
         </div>
-        <div class="input-group">
-          <span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
-          <input type="password" name="password" class="form-control" placeholder="{{passwordPlaceholder}}">
+        <div class="input-field">
+          <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+          <input type="password" name="password" placeholder="{{passwordPlaceholder}}">
         </div>
         <button type="submit" class="btn">{{loginFormTitle}}</button>
       </form>
       <form action="/register" method="POST" class="auth-side">
         <header>{{registerFormTitle}}</header>
-        <div class="input-group">
-          <span class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
-          <input type="text" name="email" class="form-control" placeholder="{{emailPlaceholder}}">
+        <div class="input-field">
+          <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+          <input type="text" name="email" placeholder="{{emailPlaceholder}}">
         </div>
-        <div class="input-group">
-          <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
-          <input type="text" name="username" class="form-control" placeholder="{{usernamePlaceholder}}">
+        <div class="input-field">
+          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+          <input type="text" name="username" placeholder="{{usernamePlaceholder}}">
         </div>
-        <div class="input-group">
-          <span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
-          <input type="password" name="password" class="form-control" placeholder="{{passwordPlaceholder}}">
+        <div class="input-field">
+          <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+          <input type="password" name="password" placeholder="{{passwordPlaceholder}}">
         </div>
-        <div class="input-group">
-          <span class="input-group-addon"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></span>
-          <input type="password" class="form-control" placeholder="{{passwordConfirmPlaceholder}}">
+        <div class="input-field">
+          <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+          <input type="password" placeholder="{{passwordConfirmPlaceholder}}">
         </div>
         <button type="submit" class="btn">{{registerFormTitle}}</button>
       </form>

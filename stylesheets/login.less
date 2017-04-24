@@ -29,8 +29,30 @@ body {
       color: @color-text;
     }
     & > * {
-      // All direct children of a form have some space under them
+      // All direct children of a form should have some space under them
       margin-bottom: 10px;
+    }
+  }
+}
+
+form {
+  div.input-field {
+    display: flex;
+    height: 40px;
+    span {
+      top: 0px;
+      width: 50px;
+      display: flex;
+      height: inherit;
+      color: @color-grey-text;
+      background-color: @color-grey-bg;
+      &:before {
+        width: 100%;
+        align-self: center;
+      }
+    }
+    input {
+      width: 100%;
     }
   }
 }

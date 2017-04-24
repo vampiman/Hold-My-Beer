@@ -12,6 +12,20 @@ body {
   flex-direction: column;
 }
 
+input {
+  display: block;
+  font-size: 14px;
+  background-color: @color-text;
+  color: @color-grey-text;
+  border: 1px solid @color-shade;
+  border-radius: 1px;
+  padding: 8px;
+  &:focus {
+    outline: solid 1px fade(@color-accent, 80%);
+    outline-offset: 0;
+  }
+}
+
 #navbar {
   @navbar-padding: 15px;
   @navbar-content-height: 50px;
@@ -25,7 +39,7 @@ body {
   border-radius: 0;
   letter-spacing: 1px;
   font-size: 1.5em;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: @color-bg;
   
   header {
     color: @color-text;
