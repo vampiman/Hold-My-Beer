@@ -4,6 +4,7 @@ create table users (
   email citext unique not null,
   avatar varchar(32), -- MD5 hash of the image for deduping and storage on filesystem
   hash varchar(60) not null, -- bcrypt hash
+  creation timestamp default current_timestamp not null,
   id serial primary key
 );
 create table user_sessions (
