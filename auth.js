@@ -20,7 +20,7 @@ async function registerUser(req, res) {
     const hash = await hashPassword(req.body.password);
     const insertResult = await queries.insertUser(req.body.username, req.body.email, hash);
     logger.info('Successsful registration', req.body.username, req.body.email);
-    res.redirect('/');
+    res.status(200).json({});
   } catch (e) {
     switch (e.kind) {
       case 'bcrypt': logger.error('Cannot hash password', req.body.password, e); break;
