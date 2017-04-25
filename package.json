@@ -24,6 +24,7 @@
     "gulp-minify": "0.0.15",
     "gulp-rename": "^1.2.2",
     "gulp-sequence": "^0.4.6",
+    "jquery": "^3.2.1",
     "less": "^2.7.2",
     "morgan": "~1.7.0",
     "mustache": "^2.3.0",

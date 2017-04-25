@@ -35,7 +35,7 @@ process.on('uncaughtException', err => {
   if (serverChild !== null) serverChild.kill();
 });
 
-gulp.task('build', ['build-js', 'build-css']);
+gulp.task('build', ['build-js', 'build-css', 'copy-deps']);
 
 gulp.task('build-js', () =>
   gulp.src(jsSrcGlob)
@@ -44,6 +44,11 @@ gulp.task('build-js', () =>
     .pipe(rename(path => {
       path.basename = path.basename.split('-min')[0];
     }))
+    .pipe(gulp.dest('./dist/scripts/'))
+);
+
+gulp.task('copy-deps', () =>
+  gulp.src('node_modules/jquery/dist/jquery.min.js')
     .pipe(gulp.dest('./dist/scripts/'))
 );
 
