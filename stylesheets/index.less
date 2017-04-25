@@ -1,0 +1,44 @@
+@import "color.less";
+
+main.content-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  padding: 0 20%;
+  @media screen and (max-width: 768px) {
+    padding: 0 10%;
+  }
+  padding-top: 50px;
+}
+
+section.challenge {
+  color: @color-text;
+  background-color: @color-bg;
+  min-height: 15%;
+  margin-bottom: 15px;
+  border-radius: 2px;
+  header {
+    font-size: 3em;
+    margin: 16px;
+    word-break: break-all;
+  }
+  div.content {
+    font-size: 1.25em;
+    margin: 16px;
+    word-break: break-all;
+    overflow: hidden;
+  }
+  footer {
+    margin: 16px;
+    img.avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 100%;
+      margin-right: 8px;
+    }
+    a.author {
+      font-size: 1em;
+    }
+  }
+}
