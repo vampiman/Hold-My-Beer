@@ -85,7 +85,7 @@ function authenticateUser(req, res, next) {
     }
     loginUser(req, user).then(successResponse => {
       res.status(200);
-      res.send('');
+      res.json({});
     }, err => {
       logger.error('Login error', err);
       return next(err);
