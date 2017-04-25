@@ -20,6 +20,11 @@ router.get('/account', (req, res, next) => {
   render.sendError(res, 'notFound', 501, 'en');
 });
 
+router.get('/user/*', (req, res, next) => {
+  // FIXME add users page
+  render.sendError(res, 'notFound', 501, 'en');
+});
+
 router.post('/login', auth.authenticateUser);
 
 router.post('/register', (req, res, next) => {
