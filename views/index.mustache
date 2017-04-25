@@ -7,40 +7,34 @@
   <body>
     {{>navbarComponent}}
     
-    <!-- FIXME indentation -->
+    <!-- FIXME aria labeledby -->
     <div class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <!-- FIXME no html escape sequences -->
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <!-- FIXME placeholder id/text -->
-        <h4 class="modal-title" id="gridSystemModalLabel">{{welcomeHeader}}</h4>
-      </div>
-      <div class="modal-body">
-        <!-- FIXME placeholder id/text -->
-        <div class="row">
-        <div class="col-sm-offset-1 col-sm-10"<p>{{welcomeText}}</p>
-        </div>
-        
-        
-        
-      </div>
-      <div class="modal-footer">
-        <div class="row">
-        <button type="button" class="btn btn-default col-sm-offset-1 col-sm-3" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary col-sm-4">Log In</button>
-        <button type="button" class="btn btn-primary col-sm-3">Create an account</button>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <!-- FIXME aria label -->
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <!-- FIXME id -->
+            <h4 class="modal-title" id="gridSystemModalLabel">{{welcomeHeader}}</h4>
           </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-offset-1 col-sm-10"><p>{{welcomeText}}</p></div>
+            </div>
+            <div class="modal-footer">
+              <div class="row">
+                <button type="button" class="btn btn-default col-sm-offset-1 col-sm-3" data-dismiss="modal">{{closeText}}</button>
+                <button type="button" class="btn btn-primary col-sm-4">{{loginFormTitle}}</button>
+                <button type="button" class="btn btn-primary col-sm-3">{{registerFormTitle}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
     
-    <div class="container-fluid bg-1 text-center">
-
-    </div>
     <!-- FIXME inline script -->
     <script>$('.modal').modal('show');</script>
+    <script src="/scripts/index.js"></script>
   </body>
 </html>

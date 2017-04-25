@@ -1,5 +1,6 @@
 {
   "title": "Hold My Beer",
+  "closeText": "Close",
   "loginOrRegister": "Login/Register",
   "loginFormTitle": "Login",
   "loginFormSubmit": "Login",
