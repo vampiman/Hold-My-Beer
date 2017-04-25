@@ -19,7 +19,7 @@ router.get('/account', (req, res, next) => {
   render.sendError(res, 'notFound', 501, 'en');
 });
 
-router.get('/user/*', (req, res, next) => {
+router.get('/user/:name', (req, res, next) => {
   // FIXME add users page
   render.sendError(res, 'notFound', 501, 'en');
 });
@@ -37,5 +37,7 @@ router.post('/register', (req, res, next) => {
   if (!/\S+@\S+\.\S+/.test(req.body.email)) return res.status(400).json({err: 'not an email'});
   auth.registerUser(req, res);
 });
+
+router.use('/content', require('./content'));
 
 module.exports = router;
