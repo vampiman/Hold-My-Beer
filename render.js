@@ -23,16 +23,18 @@ const views = templatesObj('views', false, filename => `${filename.split('.')[0]
 const languages = templatesObj('text', true, filename => `${filename.split('.')[0]}`);
 
 function sendPage(req, res, viewName, langName) {
-  const lang = languages[langName];
-  lang.clientJSON = JSON.stringify(lang.clientText);
+  const text = languages[langName];
+  text.clientJSON = JSON.stringify(text.clientText);
   if (req.user) {
-    lang.profileText = req.user.name;
-    lang.profileUrl = '/account';
+    text.profileText = req.user.name;
+    text.profileUrl = '/account';
+    text.isLoggedIn = 'true';
   } else {
-    lang.profileText = lang.loginOrRegister;
-    lang.profileUrl = '/login';
+    text.profileText = text.loginOrRegister;
+    text.profileUrl = '/login';
+    text.isLoggedIn = 'false';
   }
-  const renderedPage = Mustache.render(views[viewName], lang, components);
+  const renderedPage = Mustache.render(views[viewName], text, components);
   res.set({
     'Content-Language': langName,
     'Cache-Control': `max-age=${60 * 2}`,
