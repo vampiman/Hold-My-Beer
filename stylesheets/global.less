@@ -36,17 +36,19 @@ input {
 
 a {
   color: @color-text;
+  text-decoration: none;
   &:hover, &:focus {
-    text-decoration: none;
+    text-decoration: none; // FIXME remove
     color: @color-accent;
   }
 }
 
 #navbar {
+  box-sizing: initial; // FIXME remove
   @navbar-padding: 15px;
   @navbar-content-height: 50px;
   padding: @navbar-padding;
-  height: @navbar-padding + @navbar-content-height + @navbar-padding;
+  height: @navbar-content-height;
   @media screen and (max-width: 767px) {
     // The search box overflows, so let the height figure itself out
     height: auto;
@@ -62,6 +64,7 @@ a {
       // Takes up too much space on small mobile screens
       display: none;
     }
+    margin-left: 10px;
   }
   
   #logo {
@@ -71,6 +74,7 @@ a {
   }
   
   a {
+    display: flex;
     height: @navbar-content-height;
     line-height: @navbar-content-height;
     &.right {
