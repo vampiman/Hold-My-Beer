@@ -1,13 +1,13 @@
 'use strict';
-const ErrorPopup = (function() {
+const ErrorPopup = (function () {
   const errorPopups = {};
-  const obj = {};
   // Remove stored popup from DOM and delete it from the map
   function deletePopup(formAction, whichInput) {
     errorPopups[formAction][whichInput].remove();
     delete errorPopups[formAction][whichInput];
   }
-  obj.create = function (form, whichInput, text) {
+  const self = {};
+  self.create = function (form, whichInput, text) {
     const popup = document.createElement('div');
     // 40px input height + 10px input margin
     popup.style.marginTop = `${whichInput * (40 + 10)}px`;
@@ -27,13 +27,13 @@ const ErrorPopup = (function() {
     // Store new popup in the map
     errorPopups[formAction][whichInput] = popup;
   };
-  obj.remove = function (form, whichInput) {
+  self.remove = function (form, whichInput) {
     const formAction = $(form).attr('action');
     if (!errorPopups[formAction]) return;
     if (!errorPopups[formAction][whichInput]) return;
     deletePopup(formAction, whichInput);
   };
-  return obj;
+  return self;
 })();
 
 // Show error UI elements to user
