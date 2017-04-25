@@ -16,6 +16,7 @@
   "errorTexts": {
     "serverValidation": "Oops. Looks like something went wrong receiving the data.",
     "internalServerError": "The server failed to complete the request, sorry. Please try again.",
+    "noContent": "We couldn't load the content. Sorry!",
     "notFound": "We couldn't find the requested page."
   },
   "clientText": {

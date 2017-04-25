@@ -3,6 +3,9 @@
 main.content-container {
   flex-grow: 1;
   display: flex;
+  &[data-error="true"] {
+    display: none;
+  }
   flex-direction: column;
   overflow-y: scroll;
   padding: 0 20%;
@@ -40,5 +43,24 @@ section.challenge {
     a.author {
       font-size: 1em;
     }
+  }
+}
+
+aside.error-no-content {
+  flex-grow: 1;
+  display: none;
+  &[data-show="true"] {
+    display: flex;
+  }
+  padding: 10% 20%;
+  color: @color-text;
+  background-color: @color-bg;
+  text-align: center;
+  font-size: 5em;
+  @media screen and (max-width: 768px) {
+    font-size: 3em;
+  }
+  @media screen and (max-width: 425px) {
+    font-size: 2em;
   }
 }
