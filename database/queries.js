@@ -46,6 +46,16 @@ function insertUser(username, email, passwordHash) {
   });
 }
 
+function insertChallenge(title, desc, userId) {
+  return pgPool.query('insert into challenges values($1, $2, $3)', [
+    escape.string(title),
+    escape.string(desc),
+    escape.literal(userId)
+  ]).catch(err => {
+    throw attachKind(err, 'pg-query');
+  });
+}
+
 function getUser(email) {
   return pgPool.query('select * from users where users.email = $1', [
     escape.string(email)
@@ -66,6 +76,7 @@ module.exports = {
   hasDBAvailable,
   pgSession,
   insertUser,
+  insertChallenge,
   getUser,
   getUserById
 };
