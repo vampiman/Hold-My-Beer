@@ -10,10 +10,10 @@ body {
   flex-grow: 1;
   margin-top: 5%;
   display: flex;
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 1200px) {
     flex-direction: column;
   }
-  @media screen and (min-width: 1025px) {
+  @media screen and (min-width: 1201px) {
     flex-direction: row;
   }
 }
@@ -34,10 +34,14 @@ form.auth-side {
   header {
     font-size: @header-size;
     line-height: @header-size;
+    @media screen and (max-width: 768px) {
+      font-size: @header-size / 2;
+    }
     margin-bottom: @header-margin;
     // FIXME font usage without @import
     font-family: 'Passion One', cursive;
     color: @color-text;
+    white-space: nowrap;
   }
   button {
     background-color: @color-accent;
@@ -67,7 +71,15 @@ form.auth-side {
     position: absolute;
     top: @header-size + @header-margin;
     right: 15px;
-    width: 15%;
+    width: 20%;
+    font-size: 1em;
+    @media screen and (max-width: 768px) {
+      width: 30%;
+      font-size: 0.75em;
+    }
+    @media screen and (max-width: 320px) {
+      font-size: 0.6em;
+    }
     @popup-height: 40px;
     height: @popup-height;
     line-height: @popup-height;
@@ -75,6 +87,9 @@ form.auth-side {
     color: @color-text;
     white-space: nowrap;
     &::after {
+      @media screen and (max-width: 320px) {
+        display: none;
+      }
       @triangle-size: 20px;
       display: block;
       position: relative;
