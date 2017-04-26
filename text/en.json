@@ -1,7 +1,7 @@
 {
   "title": "Hold My Beer",
   "closeText": "Close",
-  "loginOrRegister": "Login/Register",
+  "loginOrRegister": "Login / Register",
   "loginFormTitle": "Login",
   "loginFormSubmit": "Login",
   "registerFormTitle": "Create a new account",
@@ -11,6 +11,7 @@
   "passwordConfirmPlaceholder": "Confirm Password",
   "usernamePlaceholder": "Username",
   "searchPlaceholder": "Search…",
+  "newChallengeText": "New Challenge",
   "language": "Language",
   "english": "English",
   "romanian": "Romanian",
