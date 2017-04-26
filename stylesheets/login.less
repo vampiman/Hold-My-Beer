@@ -1,5 +1,6 @@
 @import "color.less";
 @import "properties.less";
+@import "errorPopup.less";
 
 body {
   background-image: url("/images/Free-Tileable-Black-Wood-Textures-Patterns-For-3D-Mappin.jpg") !important;
@@ -42,74 +43,11 @@ form.auth-side {
     color: @color-text;
     white-space: nowrap;
   }
-  button {
-    background-color: @color-accent;
-    border-color: @color-accent;
-    color: @color-text;
-    .input-focus-action(@color-shade);
-    transition: box-shadow 0.2s;
-    &:hover {
-      .glow-shadow(@color-shade, 1px, 5px);
-      transition: box-shadow 0.2s;
-    }
-    &.validation-error {
-      background-color: @color-error;
-      border-color: @color-error;
-    }
-  }
-  .error-popup {
-    // Start hidden
-    opacity: 0;
-    transition: opacity 0.2s;
-    // Show up on error
-    &[data-show="true"] {
-      opacity: 1;
-      transition: opacity 0.2s;
-    }
-    display: block;
-    position: absolute;
-    top: @header-size + @header-margin;
-    right: 15px;
-    width: 20%;
-    font-size: 1em;
-    @media screen and (max-width: 768px) {
-      width: 30%;
-      font-size: 0.75em;
-    }
-    @media screen and (max-width: 320px) {
-      font-size: 0.6em;
-    }
-    @popup-height: 40px;
-    height: @popup-height;
-    line-height: @popup-height;
+  button.validation-error {
     background-color: @color-error;
-    color: @color-text;
-    white-space: nowrap;
-    &::after {
-      @media screen and (max-width: 320px) {
-        display: none;
-      }
-      @triangle-size: 20px;
-      display: block;
-      position: relative;
-      margin-top: -@triangle-size;
-      top: -50%;
-      left: -@triangle-size;
-      content: ' ';
-      width: 0;
-      height: 0;
-      border-top: @triangle-size solid transparent;
-      border-bottom: @triangle-size solid transparent;
-      border-right: @triangle-size solid @color-error;
-    }
+    border-color: @color-error;
   }
-  .error-popup.full {
-    position: initial;
-    width: 100%;
-    &::after {
-      display: none;
-    }
-  }
+  .error-popup-class(@header-size, @header-margin);
   & > * {
     // All direct children of a form should have some space under them
     margin-bottom: @child-margin;

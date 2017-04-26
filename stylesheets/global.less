@@ -21,9 +21,19 @@ button {
   .user-select-any(none);
   .input-border;
   .input-focus-action(@color-accent);
+  &[type="submit"] {
+    background-color: @color-accent;
+    border-color: @color-accent;
+    .input-focus-action(@color-shade);
+    transition: box-shadow 0.2s;
+    &:hover {
+      .glow-shadow(@color-shade, 1px, 5px);
+      transition: box-shadow 0.2s;
+    }
+  }
 }
 
-input {
+input, textarea {
   display: block;
   background-color: @color-text;
   color: @color-grey-text;

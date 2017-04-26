@@ -4,7 +4,8 @@
     "jquery": true
   },
   "globals": {
-    "i18n": false
+    "i18n": false,
+    "ErrorPopup": false
   },
   "extends": "../.eslintrc.json"
 }

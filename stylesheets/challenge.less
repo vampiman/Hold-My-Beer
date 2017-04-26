@@ -1,0 +1,44 @@
+@import "color.less";
+@import "properties.less";
+@import "errorPopup.less";
+
+main {
+  align-self: center;
+  text-align: center;
+  display: flex;
+  width: 100%;
+  padding: 0 35%;
+  @media screen and (max-width: 1024px) {
+    padding: 0 25%;
+  }
+  @media screen and (max-width: 480px) {
+    padding: 0 15%;
+  }
+  color: @color-text;
+  @header-size: 32px;
+  @child-margin: 10px;
+  position: relative;
+  header {
+    font-size: @header-size;
+    word-break: keep-all;
+    margin-bottom: @child-margin;
+  }
+  form {
+    // 1px == some borders
+    .error-popup-class(@header-size + @child-margin, @child-margin + 1px);
+    .error-popup {
+      left: 65%;
+      @media screen and (max-width: 1024px) {
+        left: 75%;
+      }
+      @media screen and (max-width: 480px) {
+        left: 75%;
+      }
+      right: initial;
+    }
+    & > * {
+      width: 100%;
+      margin-bottom: @child-margin;
+    }
+  }
+}

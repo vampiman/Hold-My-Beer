@@ -50,7 +50,7 @@ function insertChallenge(title, desc, userId) {
   return pgPool.query('insert into challenges values($1, $2, $3)', [
     escape.string(title),
     escape.string(desc),
-    escape.literal(userId)
+    escape.string(userId)
   ]).catch(err => {
     throw attachKind(err, 'pg-query');
   });
