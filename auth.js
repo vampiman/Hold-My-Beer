@@ -20,7 +20,13 @@ async function registerUser(req, res) {
     const hash = await hashPassword(req.body.password);
     const insertResult = await queries.insertUser(req.body.username, req.body.email, hash);
     logger.info('Successsful registration', req.body.username, req.body.email);
-    res.status(200).json({});
+    req.login({email: req.body.email}, err => {
+      if (err) {
+        logger.error('Could not auth registered user', err);
+        return res.status(200).json({}); // Sweep it under the rug
+      }
+      res.status(200).json({});
+    });
   } catch (e) {
     switch (e.kind) {
       case 'bcrypt': logger.error('Cannot hash password', req.body.password, e); break;
@@ -94,15 +100,15 @@ function authenticateUser(req, res, next) {
 }
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user.email);
 });
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (email, done) => {
   try {
-    const user = await queries.getUserById(id);
+    const user = await queries.getUser(email);
     done(null, user.rows[0]);
   } catch (e) {
-    logger.error('Cannot find user id', id, e);
+    logger.error('Cannot find user email', email, e);
     done(e, null);
   }
 });
