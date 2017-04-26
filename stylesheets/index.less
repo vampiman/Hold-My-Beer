@@ -52,15 +52,18 @@ aside.error-no-content {
   &[data-show="true"] {
     display: flex;
   }
-  padding: 10% 20%;
+  margin: 10% 20%;
   color: @color-text;
   background-color: @color-bg;
-  text-align: center;
-  font-size: 5em;
-  @media screen and (max-width: 768px) {
-    font-size: 3em;
-  }
-  @media screen and (max-width: 425px) {
-    font-size: 2em;
+  justify-content: center;
+  h1 {
+    font-size: 5em;
+    @media screen and (max-width: 768px) {
+      font-size: 3em;
+    }
+    @media screen and (max-width: 425px) {
+      font-size: 2em;
+    }
+    align-self: center;
   }
 }
