@@ -23,7 +23,7 @@
     "notEmail": "Not an email",
     "passShort": "Min 5 characters",
     "passLong": "Max 500 characters",
-    "passNoMatch": "Password mismatch",
+    "passNoMatch": "Not matching",
     "userShort": "Min 4 characters",
     "userLong": "Max 15 characters"
   }

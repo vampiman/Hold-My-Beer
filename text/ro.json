@@ -12,9 +12,19 @@
   "searchPlaceholder": "Cauta…",
   "welcomeHeader": "Bine ati venit pe Hold My Beer",
   "welcomeText": "Hold My Beer is a challenge-based social website where you can complete challenges from other users or even your friends. Any user has the capability of adding comments or liking any content they want. Hold My Beer introduces a new like-system, besides the Like button for the posts, the users will be able to vote with the Amazing button, each user can be Amazed only by 5 challenges per week. Each week, the greatest challenge responses which has the most Amazing number, will be placed on the weekly top. You can change the language option with this .",
+    
   "errorTexts": {
     "serverValidation": "Oops. Se pare ca a aparut o problema in primirea datelor.",
     "internalServerError": "Serverul nu a reusit sa processeze solicitarea dumneavoastra. Va rugam sa incercati din nou.",
+    "noContent": "Nu am putut afisa continutul. Ne pare rau!",
     "notFound": "Nu am putut gasi pagina ceruta."
+  },
+    "clientText": {
+    "notEmail": "Email invalid",
+    "passShort": "Min 5 caractere",
+    "passLong": "Max 500 caractere",
+    "passNoMatch": "Nu coincide",
+    "userShort": "Min 4 caractere",
+    "userLong": "Max 15 caractere"
   }
 }
