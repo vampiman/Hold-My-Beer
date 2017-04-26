@@ -20,13 +20,24 @@
           </div>
           <div class="modal-body">
             <div class="row">
-              <div class="col-sm-offset-1 col-sm-10"><p>{{welcomeText}}</p></div>
+              <div class="col-sm-offset-1 col-sm-10">
+                <p>{{welcomeText}}</p>
+              </div>
             </div>
             <div class="modal-footer">
               <div class="row">
                 <button type="button" class="btn btn-default col-sm-offset-1 col-sm-3" data-dismiss="modal">{{closeText}}</button>
-                <button type="button" class="btn btn-primary col-sm-4">{{loginFormTitle}}</button>
-                <button type="button" class="btn btn-primary col-sm-3">{{registerFormTitle}}</button>
+                <button type="button" class="btn btn-primary col-sm-4">{{loginOrRegister}}</button>
+                <div class="btn-group col-sm-3">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{language}} <span class="caret"></span>
+                </button>
+                    <ul class="dropdown-menu">
+                    <li><a href="#">{{english}}</a></li>
+                    <li><a href="#">{{romanian}}</a></li>
+                    <li><a href="#">{{french}}</a></li>
+                    </ul>
+                    </div>
               </div>
             </div>
           </div>
