@@ -1,18 +1,20 @@
 'use strict';
 const ErrorPopup = (function () {
   const errorPopups = {};
+  const fullErrPopups = {};
   // Remove stored popup from DOM and delete it from the map
   function deletePopup(formAction, whichInput) {
     errorPopups[formAction][whichInput].remove();
     delete errorPopups[formAction][whichInput];
   }
   const self = {};
-  self.create = function (form, whichInput, text) {
+  self.create = function (form, whichInput, text, alterPopup = () => {}) {
     const popup = document.createElement('div');
     // 40px input height + 10px input margin
     popup.style.marginTop = `${whichInput * (40 + 10)}px`;
     popup.className = 'error-popup';
     popup.dataset.show = 'false';
+    alterPopup(popup);
     popup.appendChild(document.createTextNode(text));
     $(form).append(popup);
     setTimeout(() => popup.dataset.show = 'true', 0);
@@ -26,6 +28,12 @@ const ErrorPopup = (function () {
     }
     // Store new popup in the map
     errorPopups[formAction][whichInput] = popup;
+  };
+  self.createFull = function (form, text) {
+    self.create(form, 'full', text, popup => {
+      popup.style.marginTop = '';
+      popup.className = 'error-popup full';
+    });
   };
   self.remove = function (form, whichInput) {
     const formAction = $(form).attr('action');
@@ -85,8 +93,7 @@ function sendPost(form) {
   $.post($(form).attr('action'), $(form).serialize(), json => {
     location.assign('/');
   }, 'json').fail(response => {
-    // FIXME handle auth errors
-    console.error(response);
+    ErrorPopup.createFull(form, i18n.serverValidation);
   });
 }
 

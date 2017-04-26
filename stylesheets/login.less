@@ -104,6 +104,13 @@ form.auth-side {
       border-right: @triangle-size solid @color-error;
     }
   }
+  .error-popup.full {
+    position: initial;
+    width: 100%;
+    &::after {
+      display: none;
+    }
+  }
   & > * {
     // All direct children of a form should have some space under them
     margin-bottom: @child-margin;
