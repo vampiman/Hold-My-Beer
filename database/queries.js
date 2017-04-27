@@ -56,6 +56,13 @@ function insertChallenge(title, desc, userId) {
   });
 }
 
+function latestChallenges() {
+  return pgPool.query('select * from challenges order by creation desc limit 5')
+  .catch(err => {
+    throw attachKind(err, 'pg-query');
+  });
+}
+
 function getUser(email) {
   return pgPool.query('select * from users where users.email = $1', [
     escape.string(email)
