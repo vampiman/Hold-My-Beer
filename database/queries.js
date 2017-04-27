@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const escape = require('pg-escape');
+const escape = require('sql-escape');
 const PGSession = require('connect-pg-simple')(require('express-session'));
 const pg = require('pg');
 
@@ -38,8 +38,8 @@ const pgSession = new PGSession({
 
 function insertUser(username, email, passwordHash) {
   return pgPool.query('insert into users values($1, $2, \'\', $3)', [
-    escape.string(username),
-    escape.string(email),
+    escape(username),
+    escape(email),
     passwordHash
   ]).catch(err => {
     throw attachKind(err, 'pg-query');
@@ -48,9 +48,9 @@ function insertUser(username, email, passwordHash) {
 
 function insertChallenge(title, desc, userId) {
   return pgPool.query('insert into challenges values($1, $2, $3)', [
-    escape.string(title),
-    escape.string(desc),
-    escape.string(userId)
+    escape(title),
+    escape(desc),
+    escape(userId)
   ]).catch(err => {
     throw attachKind(err, 'pg-query');
   });
@@ -65,7 +65,7 @@ function latestChallenges() {
 
 function getUser(email) {
   return pgPool.query('select * from users where users.email = $1', [
-    escape.string(email)
+    escape(email)
   ]).catch(err => {
     throw attachKind(err, 'pg-query');
   });
