@@ -72,8 +72,8 @@ function getUser(email) {
 }
 
 function getUsersById(ids) {
-  return pgPool.query('select * from users where users.id = any(array[$1])', [
-    ids.map(id => escape.string(id)).join(',')
+  return pgPool.query('select * from users where users.id = any($1::int[])', [
+    ids.map(id => Number(id))
   ]).catch(err => {
     throw attachKind(err, 'pg-query');
   });

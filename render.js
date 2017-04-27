@@ -56,10 +56,20 @@ function sendError(res, errorKey, errorStatus, langName) {
   res.send(renderedError);
 }
 
+function renderChallenges(challengeList, usersMap) {
+  return challengeList.reduce((accum, challengeObj) =>
+  accum + Mustache.render(components.challengeComponent, {
+    challengeTitle: challengeObj.title,
+    challengeDesc: challengeObj.description,
+    challengeAuthorName: usersMap[challengeObj.authorid].name
+  }), '');
+}
+
 module.exports = {
   components,
   views,
   languages,
   sendPage,
-  sendError
+  sendError,
+  renderChallenges
 };
