@@ -71,9 +71,9 @@ function getUser(email) {
   });
 }
 
-function getUserById(id) {
-  return pgPool.query('select * from users where users.id = $1', [
-    escape.string(id)
+function getUsersById(ids) {
+  return pgPool.query('select * from users where users.id = any(array[$1])', [
+    ids.map(id => escape.string(id)).join(',')
   ]).catch(err => {
     throw attachKind(err, 'pg-query');
   });
@@ -84,6 +84,7 @@ module.exports = {
   pgSession,
   insertUser,
   insertChallenge,
+  latestChallenges,
   getUser,
-  getUserById
+  getUsersById
 };
