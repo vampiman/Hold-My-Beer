@@ -37,6 +37,9 @@
     "titleLong": "Max 40 characters",
     "noDesc": "Required",
     "descLong": "Max 250 characters",
-    "serverValidation": "Oops. Looks like something went wrong receiving the data."
+    "serverValidation": "Oops. Looks like something went wrong receiving the data.",
+    "loadingMore": "Loading more…",
+    "loadingMoreFail": "Failed to load more content.",
+    "noMoreContent": "You've reached the end!"
   }
 }

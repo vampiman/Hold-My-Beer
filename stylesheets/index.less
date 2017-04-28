@@ -16,11 +16,14 @@ main.content-container {
   padding-top: 50px;
 }
 
-section.challenge {
+section {
   color: @color-text;
   background-color: @color-bg;
   margin-bottom: 15px;
   border-radius: 2px;
+}
+
+section.challenge {
   header {
     font-size: 3em;
     margin: 16px;
@@ -44,6 +47,14 @@ section.challenge {
       font-size: 1em;
     }
   }
+}
+
+section.loading {
+  font-size: 1.25rem;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 aside.sidebar {

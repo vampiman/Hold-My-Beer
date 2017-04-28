@@ -7,8 +7,13 @@ const render = require('../render');
 
 router.get('/homepage', async (req, res, next) => {
   try {
-    const challengeQuery = await queries.latestChallenges();
+    const time = decodeURIComponent(req.query.time);
+    const challengeQuery = await queries.latestChallenges(time, req.query.offset);
     const challenges = challengeQuery.rows;
+    if (challenges.length === 0) {
+      logger.info('No challenges match query');
+      return res.status(204).json({err: 'no content'});
+    }
     const authorIds = challenges.map(challenge => challenge.authorid);
     const usersQuery = await queries.getUsersById(authorIds);
     const userMap = {};
