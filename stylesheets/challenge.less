@@ -34,7 +34,7 @@ main {
         right: 1%;
       }
     }
-    & > * {
+    & > *, .error-popup.full {
       width: 50%;
       @media screen and (max-width: 1024px) {
         width: 70%;
@@ -43,6 +43,10 @@ main {
         width: 90%;
       }
       margin-bottom: @child-margin;
+    }
+    .error-popup.full {
+      // 8px + 1px border, to match the items
+      padding: 0 9px;
     }
   }
 }
