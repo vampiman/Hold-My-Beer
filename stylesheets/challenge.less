@@ -5,15 +5,9 @@
 main {
   align-self: center;
   text-align: center;
-  display: flex;
+  display: flex !important; // FIXME remove important
+  flex-direction: column;
   width: 100%;
-  padding: 0 35%;
-  @media screen and (max-width: 1024px) {
-    padding: 0 25%;
-  }
-  @media screen and (max-width: 480px) {
-    padding: 0 15%;
-  }
   color: @color-text;
   @header-size: 32px;
   @child-margin: 10px;
@@ -24,20 +18,30 @@ main {
     margin-bottom: @child-margin;
   }
   form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     // 1px == some borders
     .error-popup-class(@header-size + @child-margin, @child-margin + 1px);
     .error-popup {
-      left: 65%;
-      @media screen and (max-width: 1024px) {
-        left: 75%;
+      right: initial;
+      left: 75%;
+      @media screen and (max-width: 768px) {
+        width: 17.5%;
       }
       @media screen and (max-width: 480px) {
-        left: 75%;
+        left: initial;
+        right: 1%;
       }
-      right: initial;
     }
     & > * {
-      width: 100%;
+      width: 50%;
+      @media screen and (max-width: 1024px) {
+        width: 70%;
+      }
+      @media screen and (max-width: 480px) {
+        width: 90%;
+      }
       margin-bottom: @child-margin;
     }
   }
