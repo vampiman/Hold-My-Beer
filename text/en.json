@@ -22,7 +22,7 @@
   "french": "French",
   "welcomeHeader": "Welcome to Hold My Beer",
   "welcomeText": "Hold My Beer is a challenge-based social website where you can complete challenges from other users or even your friends. Any user has the capability of adding comments or liking any content they want. Hold My Beer introduces a new like-system, besides the Like button for the posts, the users will be able to vote with the Amazing button, each user can be Amazed only by 5 challenges per week. Each week, the greatest challenge responses which has the most Amazing number, will be placed on the weekly top. You can change the language option with this .",
-  "reply": "Reply",
+  "reply": "Respond",
   "errorTexts": {
     "internalServerError": "The server failed to complete the request, sorry. Please try again.",
     "noContent": "We couldn't load the content. Sorry!",
