@@ -1,5 +1,5 @@
 create table challenges (
-  title varchar(30) not null,
+  title varchar(40) not null,
   description text not null,
   authorid integer not null,
   upvotes integer default 0 not null,
