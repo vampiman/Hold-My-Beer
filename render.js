@@ -56,12 +56,14 @@ function sendError(res, errorKey, errorStatus, langName) {
   res.send(renderedError);
 }
 
-function renderChallenges(challengeList, usersMap) {
+function renderChallenges(challengeList, usersMap, langName) {
   return challengeList.reduce((accum, challengeObj) =>
   accum + Mustache.render(components.challengeComponent, {
     challengeTitle: challengeObj.title,
+    challengeTitleEncoded: encodeURIComponent(challengeObj.title),
     challengeDesc: challengeObj.description,
-    challengeAuthorName: usersMap[challengeObj.authorid].name
+    challengeAuthorName: usersMap[challengeObj.authorid].name,
+    reply: languages[langName].reply
   }), '');
 }
 

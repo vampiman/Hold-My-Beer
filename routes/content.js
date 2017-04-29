@@ -18,7 +18,7 @@ router.get('/homepage', async (req, res, next) => {
     const usersQuery = await queries.getUsersById(authorIds);
     const userMap = {};
     usersQuery.rows.map(row => userMap[row.id] = row);
-    const rendered = render.renderChallenges(challenges, userMap);
+    const rendered = render.renderChallenges(challenges, userMap, 'en');
     res.status(200).json({rendered});
   } catch (err) {
     if (err.kind === 'pg-query') {

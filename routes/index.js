@@ -25,6 +25,11 @@ router.get('/challenge', (req, res, next) => {
   else render.sendPage(req, res, 'challenge', 'en');
 });
 
+router.get('/response', (req, res, next) => {
+  if (!req.user) res.redirect('/login');
+  else render.sendPage(req, res, 'response', 'en');
+});
+
 router.get('/user/:name', (req, res, next) => {
   // FIXME add users page
   render.sendError(res, 'notFound', 501, 'en');
@@ -44,27 +49,26 @@ router.post('/register', (req, res, next) => {
   auth.registerUser(req, res);
 });
 
-router.post('/create/:what', (req, res, next) => {
+router.post('/create/challenge', (req, res, next) => {
   if (!req.user) return res.status(401).json({err: 'not authorized'});
-  if (req.params.what === 'challenge') {
-    if (req.body.title === undefined) return res.status(400).json({err: 'no title'});
-    if (req.body.title.length > 40) return res.status(400).json({err: 'long title'});
-    if (req.body.desc === undefined) return res.status(400).json({err: 'no desc'});
-    if (req.body.desc.length > 250) return res.status(400).json({err: 'long desc'});
-    queries.insertChallenge(req.body.title, req.body.desc, req.user.id)
-    .then(insertResult => {
-      logger.debug('Inserted challenge', insertResult);
-      res.status(200).json({});
-    }, err => {
-      logger.error('Can\'t insert challenge', err);
-      res.status(500).json({err: 'internal error'});
-    });
-  } else if (req.params.what === 'response') {
-    // FIXME creating video responses
-    res.status(501).json({err: 'FIXME'});
-  } else {
-    res.status(400).json({err: 'can\'t create this'});
-  }
+  if (req.body.title === undefined) return res.status(400).json({err: 'no title'});
+  if (req.body.title.length > 40) return res.status(400).json({err: 'long title'});
+  if (req.body.desc === undefined) return res.status(400).json({err: 'no desc'});
+  if (req.body.desc.length > 250) return res.status(400).json({err: 'long desc'});
+  queries.insertChallenge(req.body.title, req.body.desc, req.user.id)
+  .then(insertResult => {
+    logger.debug('Inserted challenge', insertResult);
+    res.status(200).json({});
+  }, err => {
+    logger.error('Can\'t insert challenge', err);
+    res.status(500).json({err: 'internal error'});
+  });
+});
+
+router.post('/create/response', (req, res, next) => {
+  if (!req.user) return res.status(401).json({err: 'not authorized'});
+  // FIXME creating video responses
+  res.status(501).json({err: 'FIXME'});
 });
 
 router.use('/content', require('./content'));

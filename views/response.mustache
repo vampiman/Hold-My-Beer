@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/stylesheets/challenge.css">
+    {{>headComponent}}
+  </head>
+  <body>
+    {{>navbarComponent}}
+    <main>
+      <header>{{newResponseText}}</header>
+      <form method="POST" action="/create/response" enctype="multipart/form-data">
+        <input type="text" name="title" placeholder="{{titlePlaceholder}}">
+        <input type="file" name="video">
+        <button type="submit">{{create}}</button>
+      </form>
+    </main>
+    <script src="/scripts/errorPopup.js"></script>
+    <script src="/scripts/response.js"></script>
+  </body>
+</html>
