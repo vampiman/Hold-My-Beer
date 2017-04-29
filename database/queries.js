@@ -17,7 +17,7 @@ const pgPass = fs.readFileSync(path.join(__dirname, 'password'), {encoding: 'utf
 const pgConfig = {
   host: 'localhost',
   user: process.env.PGUSER || 'hmbserver',
-  password: process.env.PGPASSWORD || pgPass,
+  password: process.env.PGPASSWORD || pgPass || '',
   database: process.env.PGDATABASE || 'hmb'
 };
 
