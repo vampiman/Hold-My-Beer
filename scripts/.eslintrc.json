@@ -5,7 +5,8 @@
   },
   "globals": {
     "i18n": false,
-    "ErrorPopup": false
+    "ErrorPopup": false,
+    "attachLiveContent": false
   },
   "extends": "../.eslintrc.json"
 }

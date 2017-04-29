@@ -33,17 +33,17 @@ router.get('/homepage', async (req, res, next) => {
 router.get('/user/:name', (req, res, next) => {
   // FIXME return rendered content for given user
   // req.params.name
-  render.sendError(res, 'notFound', 501, req.locale);
+  res.status(501).json({err: 'noimpl'});
 });
 
 router.get('/avatar/:username', (req, res, next) => {
   // FIXME return avatar for given user
-  render.sendError(res, 'notFound', 501, req.locale);
+  res.status(501).json({err: 'noimpl'});
 });
 
 router.get('/thumbnail/:video', (req, res, next) => {
   // FIXME return thumbnail for given video id
-  render.sendError(res, 'notFound', 501, req.locale);
+  res.status(501).json({err: 'noimpl'});
 });
 
 module.exports = router;

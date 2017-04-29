@@ -7,11 +7,18 @@
   </head>
   <body>
     {{>navbarComponent}}
-    <main class="content-container" data-error="false">
-      
-    </main>
-    <aside class="error-no-content" data-show="false">
-      <h1>{{errorTexts.noContent}}</h1>
-    </aside>
+    <div class="account-container">
+      <main class="content-container" data-error="false">
+        
+      </main>
+      <div class="error-no-content" data-show="false">
+        <h1>{{errorTexts.noContent}}</h1>
+      </div>
+      <section class="settings">
+        
+      </section>
+    </div>
+    <script src="/scripts/pageContent.js"></script>
+    <script src="/scripts/account.js"></script>
   </body>
 </html>
