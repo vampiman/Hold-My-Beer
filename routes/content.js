@@ -41,4 +41,9 @@ router.get('/avatar/:username', (req, res, next) => {
   render.sendError(res, 'notFound', 501, req.locale);
 });
 
+router.get('/thumbnail/:video', (req, res, next) => {
+  // FIXME return thumbnail for given video id
+  render.sendError(res, 'notFound', 501, req.locale);
+});
+
 module.exports = router;
