@@ -1,0 +1,88 @@
+@import "color.less";
+
+main.content-container {
+  flex-grow: 1;
+  display: flex;
+  &[data-error="true"] {
+    display: none;
+  }
+  flex-direction: column;
+  overflow-y: scroll;
+  padding: 0 20%;
+  @media screen and (max-width: 768px) {
+    padding: 0 10%;
+  }
+  padding-top: 50px;
+}
+
+section {
+  color: @color-text;
+  background-color: @color-bg;
+  margin-bottom: 15px;
+  border-radius: 2px;
+}
+
+section.challenge {
+  header {
+    font-size: 3em;
+    margin: 16px;
+    word-break: break-all;
+  }
+  div.content {
+    font-size: 1.25em;
+    margin: 16px;
+    word-break: break-all;
+    overflow: hidden;
+  }
+  footer {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin: 16px;
+    img.avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 100%;
+      margin-right: 8px;
+    }
+    a.author {
+      font-size: 1em;
+    }
+    a.reply {
+      padding: 8px;
+      margin-left: auto;
+      font-size: 2em;
+    }
+  }
+}
+
+section.loading {
+  font-size: 1.25rem;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+aside.error-no-content {
+  flex-grow: 1;
+  display: none;
+  &[data-show="true"] {
+    display: flex;
+  }
+  margin: 10% 20%;
+  color: @color-text;
+  background-color: @color-bg;
+  justify-content: center;
+  h1 {
+    font-size: 5em;
+    @media screen and (max-width: 1024px) {
+      font-size: 3em;
+    }
+    @media screen and (max-width: 425px) {
+      font-size: 2em;
+    }
+    align-self: center;
+    text-align: center;
+  }
+}
