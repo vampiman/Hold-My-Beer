@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const session = require('express-session');
+const locale = require('express-locale');
 const passport = require('passport');
 const queries = require('./database/queries');
 const fs = require('fs');
@@ -56,6 +57,29 @@ if (queries.hasDBAvailable) {
   app.use(passport.session());
 }
 
+app.use(locale({
+  // FIXME set 'locale' cookie if user decides to change language
+  priority: ['cookie', 'accept-language', 'default'],
+  'default': 'en_GB'
+}));
+
+// Do some locale normalization
+app.use((req, res, next) => {
+  switch (req.locale) {
+    case 'ro_RO':
+      req.locale = 'ro';
+      break;
+    case 'fr_FR':
+      req.locale = 'fr';
+      break;
+    case 'en_GB':
+    case 'en_US':
+    default:
+      req.locale = 'en';
+  }
+  next();
+});
+
 // Routes
 const index = require('./routes/index');
 app.use('/', index);
@@ -84,7 +108,7 @@ app.use((err, req, res, next) => {
   console.log(err);
   
   const errKey = err.status === 404 ? 'notFound' : 'internalServerError';
-  render.sendError(res, errKey, err.status || 500, 'en');
+  render.sendError(res, errKey, err.status || 500, req.locale);
 });
 
 module.exports = app;

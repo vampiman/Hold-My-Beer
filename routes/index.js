@@ -7,32 +7,32 @@ const queries = require('../database/queries');
 const auth = require('../auth');
 
 router.get('/', (req, res, next) => {
-  render.sendPage(req, res, 'index', 'en');
+  render.sendPage(req, res, 'index', req.locale);
 });
 
 router.get('/login', (req, res, next) => {
   if (req.user) res.redirect('/account');
-  else render.sendPage(req, res, 'login', 'en');
+  else render.sendPage(req, res, 'login', req.locale);
 });
 
 router.get('/account', (req, res, next) => {
   if (!req.user) res.redirect('/login');
-  else render.sendPage(req, res, 'account', 'en');
+  else render.sendPage(req, res, 'account', req.locale);
 });
 
 router.get('/challenge', (req, res, next) => {
   if (!req.user) res.redirect('/login');
-  else render.sendPage(req, res, 'challenge', 'en');
+  else render.sendPage(req, res, 'challenge', req.locale);
 });
 
 router.get('/response', (req, res, next) => {
   if (!req.user) res.redirect('/login');
-  else render.sendPage(req, res, 'response', 'en');
+  else render.sendPage(req, res, 'response', req.locale);
 });
 
 router.get('/user/:name', (req, res, next) => {
   // FIXME add users page
-  render.sendError(res, 'notFound', 501, 'en');
+  render.sendError(res, 'notFound', 501, req.locale);
 });
 
 router.post('/login', auth.authenticateUser);

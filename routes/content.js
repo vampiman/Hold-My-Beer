@@ -18,7 +18,7 @@ router.get('/homepage', async (req, res, next) => {
     const usersQuery = await queries.getUsersById(authorIds);
     const userMap = {};
     usersQuery.rows.map(row => userMap[row.id] = row);
-    const rendered = render.renderChallenges(challenges, userMap, 'en');
+    const rendered = render.renderChallenges(challenges, userMap, req.locale);
     res.status(200).json({rendered});
   } catch (err) {
     if (err.kind === 'pg-query') {
@@ -33,12 +33,12 @@ router.get('/homepage', async (req, res, next) => {
 router.get('/user/:name', (req, res, next) => {
   // FIXME return rendered content for given user
   // req.params.name
-  render.sendError(res, 'notFound', 501, 'en');
+  render.sendError(res, 'notFound', 501, req.locale);
 });
 
 router.get('/avatar/:username', (req, res, next) => {
   // FIXME return avatar for given user
-  render.sendError(res, 'notFound', 501, 'en');
+  render.sendError(res, 'notFound', 501, req.locale);
 });
 
 module.exports = router;
