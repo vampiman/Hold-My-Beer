@@ -3,14 +3,21 @@
 
 div.account-container {
   display: flex;
-  flex-grow: 1;
-  main {
-    width: 75%;
+  flex-direction: row-reverse;
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
   }
+  flex-grow: 1;
   div.error-no-content {
-    width: 75%;
+    font-size: 0.75em;
+    @media screen and (max-width: 1440px) {
+      margin: 10%;
+    }
   }
   section.settings {
-    width: 25%;
+    @media screen and (min-width: 1024px) {
+      min-width: 400px;
+    }
+    flex-grow: 1;
   }
 }
