@@ -1,5 +1,5 @@
 create table videos (
-  id integer primary key not null,
+  id uuid primary key not null,
   title varchar(15) not null,
   authorid integer not null,
   upvotes integer default 0 not null,
