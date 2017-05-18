@@ -5,6 +5,13 @@ const router = express.Router();
 const render = require('../render');
 const queries = require('../database/queries');
 const auth = require('../auth');
+const stream = require('stream');
+const streamToString = require('stream-to-string');
+const path = require('path');
+const fs = require('fs');
+const BusBoy = require('busboy');
+const crypto = require('crypto');
+const uuid = require('uuid/v4');
 
 router.get('/', (req, res, next) => {
   render.sendPage(req, res, 'index', req.locale);
@@ -67,8 +74,39 @@ router.post('/create/challenge', (req, res, next) => {
 
 router.post('/create/response', (req, res, next) => {
   if (!req.user) return res.status(401).json({err: 'not authorized'});
-  // FIXME creating video responses
-  res.status(501).json({err: 'FIXME'});
+  const video = {};
+  const busboy = new BusBoy({headers: req.headers});
+  busboy.on('field', (fieldname, val) => {
+    if ((fieldname !== 'title' && fieldname !== 'target') || !val) {
+      res.status(400).json({err: 'missing field'});
+      return;
+    }
+    video[fieldname] = val;
+  });
+  busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
+    if (fieldname !== 'video' || !mimetype.startsWith('video')) {
+      res.status(400).json({err: 'no video'});
+      return;
+    }
+    video.id = uuid();
+    const write = fs.createWriteStream(path.resolve(`data/videos/${video.id}`), {
+      flags: 'w',
+      defaultEncoding: 'binary'
+    });
+    file.pipe(write);
+  });
+  busboy.on('finish', () => {
+    if (res.headersSent) return;
+    // FIXME insert into db
+    logger.debug('Successful video');
+    res.status(200).json({});
+  });
+  busboy.on('error', err => {
+    logger.error(err);
+    if (res.headersSent) return;
+    res.status(500).json({err: 'internal error'});
+  });
+  req.pipe(busboy);
 });
 
 router.use('/content', require('./content'));
