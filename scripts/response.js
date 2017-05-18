@@ -38,6 +38,19 @@ form.submit(event => {
   data.append('video', file);
   data.append('target', targetChallenge());
   $.ajax({
+    xhr: () => {
+      const xhr = new XMLHttpRequest();
+      xhr.upload.addEventListener('progress', event => {
+        if (event.lengthComputable) {
+          // FIXME show progress to user
+          console.log(event.loaded / event.total);
+        } else {
+          // FIXME show user something if we cant give progress
+          console.log('?');
+        }
+      }, false);
+      return xhr;
+    },
     url: '/create/response',
     data,
     cache: false,
@@ -48,6 +61,7 @@ form.submit(event => {
       location.assign('/');
     },
     error: err => {
+      console.error(err);
       ErrorPopup.createFull(form, i18n.serverValidation);
     }
   });
