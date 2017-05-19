@@ -65,6 +65,25 @@ function latestChallenges(fromTime, offset) {
   });
 }
 
+function getChallengeByTitle(title) {
+  return pgPool.query('select * from challenges where challenges.title = $1', [
+    escape(title)
+  ]).catch(err => {
+    throw attachKind(err, 'pg-query');
+  });
+}
+
+function insertVideo(uuid, title, challengeid, authorid) {
+  return pgPool.query('insert into videos values($1, $2, $3, $4)', [
+    uuid,
+    escape(title),
+    challengeid,
+    authorid
+  ]).catch(err => {
+    throw attachKind(err, 'pg-query');
+  });
+}
+
 function getUser(email) {
   return pgPool.query('select * from users where users.email = $1', [
     escape(email)
@@ -87,6 +106,8 @@ module.exports = {
   insertUser,
   insertChallenge,
   latestChallenges,
+  getChallengeByTitle,
+  insertVideo,
   getUser,
   getUsersById
 };

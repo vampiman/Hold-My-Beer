@@ -74,7 +74,9 @@ router.post('/create/challenge', (req, res, next) => {
 
 router.post('/create/response', (req, res, next) => {
   if (!req.user) return res.status(401).json({err: 'not authorized'});
-  const video = {};
+  const video = {
+    id: uuid()
+  };
   const busboy = new BusBoy({headers: req.headers});
   busboy.on('field', (fieldname, val) => {
     if ((fieldname !== 'title' && fieldname !== 'target') || !val) {
@@ -88,17 +90,17 @@ router.post('/create/response', (req, res, next) => {
       res.status(400).json({err: 'no video'});
       return;
     }
-    video.id = uuid();
     const write = fs.createWriteStream(path.resolve(`data/videos/${video.id}`), {
       flags: 'w',
       defaultEncoding: 'binary'
     });
     file.pipe(write);
   });
-  busboy.on('finish', () => {
+  busboy.on('finish', async () => {
     if (res.headersSent) return;
-    // FIXME insert into db
-    logger.debug('Successful video');
+    const challengeid = (await queries.getChallengeByTitle(video.target)).rows[0].id;
+    await queries.insertVideo(video.id, video.title, challengeid, req.user.id);
+    logger.debug('Successful video insertion');
     res.status(200).json({});
   });
   busboy.on('error', err => {
