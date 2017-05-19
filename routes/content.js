@@ -2,8 +2,12 @@
 
 const express = require('express');
 const router = express.Router();
+const path = require('path');
 const queries = require('../database/queries');
 const render = require('../render');
+const bluebird = require('bluebird');
+const fs = bluebird.promisifyAll(require('fs'));
+const thumbnailer = require('video-thumb');
 
 router.get('/homepage', async (req, res, next) => {
   try {
@@ -41,9 +45,28 @@ router.get('/avatar/:username', (req, res, next) => {
   res.status(501).json({err: 'noimpl'});
 });
 
-router.get('/thumbnail/:video', (req, res, next) => {
-  // FIXME return thumbnail for given video id
-  res.status(501).json({err: 'noimpl'});
+router.get('/thumbnail/:videoid', async (req, res, next) => {
+  const thumbPath = path.resolve(`${__dirname}/../data/videos/${req.params.videoid}.thumb.png`);
+  fs.accessAsync(thumbPath, fs.constants.R_OK)
+  .then(() => {
+    res.sendFile(thumbPath);
+    return;
+  })
+  .catch(err => {
+    if (err.code === 'ENOENT') {
+      return;
+    } else {
+      logger.error(err);
+      res.status(500).json({err: 'internal error'});
+      throw err;
+    }
+  })
+  .then(bluebird.promisify(thumbnailer.extract)(
+    `${__dirname}/../data/videos/${req.params.videoid}`,
+    thumbPath,
+    '00:00:00',
+    '256x256'
+  ));
 });
 
 module.exports = router;
