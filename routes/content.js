@@ -47,26 +47,22 @@ router.get('/avatar/:username', (req, res, next) => {
 
 router.get('/thumbnail/:videoid', async (req, res, next) => {
   const thumbPath = path.resolve(`${__dirname}/../data/videos/${req.params.videoid}.thumb.png`);
-  fs.accessAsync(thumbPath, fs.constants.R_OK)
-  .then(() => {
-    res.sendFile(thumbPath);
-    return;
-  })
-  .catch(err => {
-    if (err.code === 'ENOENT') {
-      return;
-    } else {
+  try {
+    await fs.accessAsync(thumbPath, fs.constants.R_OK | fs.constants.F_OK);
+  } catch (err) {
+    if (err.code !== 'ENOENT') {
       logger.error(err);
       res.status(500).json({err: 'internal error'});
-      throw err;
+      return;
     }
-  })
-  .then(bluebird.promisify(thumbnailer.extract)(
-    `${__dirname}/../data/videos/${req.params.videoid}`,
-    thumbPath,
-    '00:00:00',
-    '256x256'
-  ));
+    await bluebird.promisify(thumbnailer.extract)(
+      `${__dirname}/../data/videos/${req.params.videoid}`,
+      thumbPath,
+      '00:00:00',
+      '256x256'
+    );
+  }
+  res.sendFile(thumbPath);
 });
 
 module.exports = router;
