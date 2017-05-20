@@ -35,7 +35,6 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "pg": "^6.1.5",
-    "pug": "~2.0.0-beta10",
     "serve-favicon": "~2.3.2",
     "sql-escape": "^1.0.1",
     "stream-to-string": "^1.1.0",
