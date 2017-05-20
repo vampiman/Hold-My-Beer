@@ -55,7 +55,7 @@
     "prefer-arrow-callback": ["warn", {"allowNamedFunctions": true}],
     "arrow-spacing": ["warn", {"before": true, "after": true}],
     "arrow-parens": ["warn", "as-needed"],
-    "arrow-body-style": ["warn", "as-needed"],
+    "arrow-body-style": ["warn", "as-needed", {"requireReturnForObjectLiteral": true}],
     "no-dupe-class-members": ["error"],
     "no-duplicate-imports": ["error"],
     "no-iterator": ["error"],

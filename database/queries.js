@@ -54,7 +54,8 @@ function insertChallenge(title, desc, userId) {
 
 function latestChallenges(fromTime, offset) {
   return pgPool.query(`
-  select challenges.*, users.name as username from challenges inner join users
+  select challenges.*, users.name as username
+    from challenges inner join users
     on challenges.authorid = users.id
     where challenges.creation < $1
     order by challenges.creation desc
@@ -62,6 +63,21 @@ function latestChallenges(fromTime, offset) {
     offset $2;
   `, [
     escape(fromTime),
+    escape(offset)
+  ]);
+}
+
+function videosForChallenge(challengeid, offset) {
+  return pgPool.query(`
+  select videos.*, users.name as username
+    from videos inner join users
+    on videos.authorid = users.id
+    where videos.challengeid = $1
+    order by videos.creation desc
+    limit 5
+    offset $2;
+  `, [
+    challengeid,
     escape(offset)
   ]);
 }
@@ -100,6 +116,7 @@ module.exports = {
   insertUser,
   insertChallenge,
   latestChallenges,
+  videosForChallenge,
   getChallengeByTitle,
   insertVideo,
   getUser,

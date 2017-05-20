@@ -63,6 +63,7 @@ function renderChallenges(challengeList, langName) {
     challengeTitleEncoded: encodeURIComponent(challengeObj.title),
     challengeDesc: challengeObj.description,
     challengeAuthorName: challengeObj.username,
+    challengeResponses: challengeObj.videos,
     reply: languages[langName].reply
   }), '');
 }

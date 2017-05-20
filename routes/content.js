@@ -18,6 +18,17 @@ router.get('/homepage', async (req, res, next) => {
       logger.info('No challenges match query');
       return res.status(204).json({err: 'no content'});
     }
+    const queryList = await Promise.all(
+      challenges.map(challenge => queries.videosForChallenge(challenge.id, '0'))
+    );
+    queryList.forEach((query, idx) => {
+      challenges[idx].videos = query.rows.map(row => {
+        return {
+          videoId: row.id,
+          videoTitle: row.title
+        };
+      });
+    });
     const rendered = render.renderChallenges(challenges, req.locale);
     res.status(200).json({rendered});
   } catch (err) {
