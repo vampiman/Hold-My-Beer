@@ -67,11 +67,20 @@ function renderChallenges(challengeList, langName) {
   })), '');
 }
 
+function renderVideos(videoList, langName) {
+  return videoList.reduce((accum, videoObj) =>
+  accum + Mustache.render(components.responselinkComponent, Object.assign(languages[langName], {
+    videoId: videoObj.id,
+    videoTitle: videoObj.title
+  })), '');
+}
+
 module.exports = {
   components,
   views,
   languages,
   sendPage,
   sendError,
-  renderChallenges
+  renderChallenges,
+  renderVideos
 };

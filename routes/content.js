@@ -15,7 +15,7 @@ router.get('/homepage', async (req, res, next) => {
     const challengeQuery = await queries.latestChallenges(time, req.query.offset);
     const challenges = challengeQuery.rows;
     if (challenges.length === 0) {
-      logger.info('No challenges match query');
+      logger.debug('No challenges match query');
       return res.status(204).json({err: 'no content'});
     }
     const queryList = await Promise.all(
@@ -33,6 +33,25 @@ router.get('/homepage', async (req, res, next) => {
     res.status(200).json({rendered});
   } catch (err) {
     logger.error('Failed to get challenge data for homepage', err);
+    return res.status(500).json({err: 'internal error'});
+  }
+});
+
+router.get('/responselist', async (req, res, next) => {
+  try {
+    const challengeQuery = await queries.getChallengeByTitle(
+      decodeURIComponent(req.query.challenge)
+    );
+    const challengeid = challengeQuery.rows[0].id;
+    const videoData = await queries.videosForChallenge(challengeid, req.query.offset);
+    if (videoData.rows.length === 0) {
+      logger.debug('No videos match query');
+      return res.status(204).json({err: 'no content'});
+    }
+    const rendered = render.renderVideos(videoData.rows, req.locale);
+    res.status(200).json({rendered});
+  } catch (err) {
+    logger.error('Failed to get video data for challenge', err);
     return res.status(500).json({err: 'internal error'});
   }
 });

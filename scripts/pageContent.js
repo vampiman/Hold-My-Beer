@@ -6,9 +6,35 @@ function attachLiveContent(path) {
     return loader.getBoundingClientRect().top >= 0 &&
       loader.getBoundingClientRect().bottom <= window.innerHeight;
   }
+  
+  const getVideoURI = (function () {
+    const offsetMap = {};
+    return function (challenge) {
+      if (offsetMap[challenge] === undefined) offsetMap[challenge] = 5;
+      const uri = `/content/responselist?challenge=${encodeURIComponent(challenge)}&offset=${offsetMap[challenge]}`;
+      offsetMap[challenge] += 5;
+      return uri;
+    };
+  })();
 
-  function appendLoading() {
+  function appendContent(renderedHtml) {
+    $('main').append(renderedHtml);
     $('main').append(`<section class="loading">${i18n.loadingMore}</section>`);
+    $('.responses-more').each((idx, element) => {
+      $(element).off('click');
+      $(element).click(event => {
+        $.get(getVideoURI(element.dataset.challengeName), (data, textStatus) => {
+          if (textStatus === 'nocontent') {
+            $(element).remove();
+            return;
+          }
+          $(element).before(data.rendered);
+        }).fail(response => {
+          console.error(response);
+          $(element).remove();
+        });
+      });
+    });
   }
 
   const getRequestURI = (function () {
@@ -22,8 +48,7 @@ function attachLiveContent(path) {
   })();
   
   $.get(getRequestURI(path), data => {
-    $('main').append(data.rendered);
-    appendLoading();
+    appendContent(data.rendered);
   }, 'json').fail(response => {
     console.error(response);
     $('main')[0].dataset.error = 'true';
@@ -41,8 +66,7 @@ function attachLiveContent(path) {
         return;
       }
       $('section.loading').remove();
-      $('main').append(data.rendered);
-      appendLoading();
+      appendContent(data.rendered);
     }, 'json').fail(response => {
       console.error(response);
       $('section.loading')[0].innerHtml = i18n.loadingMoreFail;
