@@ -16,7 +16,7 @@ gulp.task('default', sequence('build', 'start-server', 'watch'));
 
 gulp.task('watch', () => {
   gulp.watch(jsSrcGlob, ['build-js']);
-  gulp.watch(cssGlob, ['build-css']);
+  gulp.watch([cssGlob, './stylesheets/includes/*.less'], ['build-css']);
   gulp.watch(['./components/*', './views/*', './text/*'], ['start-server']);
 });
 
