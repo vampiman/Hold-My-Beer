@@ -87,4 +87,9 @@ router.get('/thumbnail/:videoid', async (req, res, next) => {
   res.sendFile(thumbPath);
 });
 
+router.get('/video/:videoid', (req, res, next) => {
+  // FIXME return streamable html5 video
+  res.status(501).json({err: 'noimpl'});
+});
+
 module.exports = router;
