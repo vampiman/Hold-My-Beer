@@ -28,7 +28,7 @@ function attachLiveContent(path) {
             $(element).remove();
             return;
           }
-          $(element).before(data.rendered);
+          $(element).parent().find('.responses').append(data.rendered);
         }).fail(response => {
           console.error(response);
           $(element).remove();

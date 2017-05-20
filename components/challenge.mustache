@@ -14,9 +14,9 @@
         </a></li>
       {{/challengeResponses}}
     </ul>
-    {{#challengeResponses}}
+    {{#challengeResponses.length}}
       <a href="#" class="responses-more" data-challenge-name="{{challengeTitleEncoded}}">{{more}}</a>
-    {{/challengeResponses}}
+    {{/challengeResponses.length}}
   </div>
   <footer>
     <img class="avatar" src="/content/avatar/{{challengeAuthorName}}">

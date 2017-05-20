@@ -41,6 +41,7 @@ section.challenge {
     a.responses-more {
       align-self: center;
       text-align: center;
+      margin-right: @item-margin;
     }
     span.no-responses {
       margin-left: @item-margin;
@@ -56,9 +57,7 @@ section.challenge {
     overflow-x: auto;
     li > a {
       // Don't double the margin for the last child
-      &:not(:last-child) {
-        margin-right: @item-margin;
-      }
+      margin-right: @item-margin;
       display: flex;
       flex-direction: column;
       img {
