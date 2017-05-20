@@ -20,7 +20,7 @@ let secret;
 
 try {
   secret = fs.readFileSync(path.join(__dirname, 'database', 'secret'), {encoding: 'utf8'});
-} catch (e) {
+} catch (err) {
   secret = 'iamsecret';
 }
 

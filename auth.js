@@ -2,22 +2,15 @@
 
 const queries = require('./database/queries');
 const render = require('./render');
+const bluebird = require('bluebird');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
-function hashPassword(password) {
-  return new Promise((resolve, reject) => {
-    bcrypt.hash(password, 10, (err, hash) => {
-      if (err) return reject(attachKind(err, 'bcrypt'));
-      resolve(hash);
-    });
-  });
-}
-
 async function registerUser(req, res) {
   try {
-    const hash = await hashPassword(req.body.password);
+    const hash = await bluebird.promisify(bcrypt.hash)(req.body.password, 10);
+    logger.debug('Successsful password hash', hash);
     const insertResult = await queries.insertUser(req.body.username, req.body.email, hash);
     logger.info('Successsful registration', req.body.username, req.body.email);
     req.login({email: req.body.email}, err => {
@@ -27,24 +20,10 @@ async function registerUser(req, res) {
       }
       res.status(200).json({});
     });
-  } catch (e) {
-    switch (e.kind) {
-      case 'bcrypt': logger.error('Cannot hash password', req.body.password, e); break;
-      case 'pg-query': logger.error('Cannot insert user', req.body.username, e); break;
-      default: logger.error('Unknown error', e);
-    }
+  } catch (err) {
+    logger.error('Registration error', err);
     res.status(500).json({err: 'internal error'});
   }
-}
-
-function loginUser(req, user) {
-  return new Promise((resolve, reject) => {
-    req.login(user, err => {
-      if (err) return reject(err);
-      logger.debug('Login success', user);
-      resolve('success');
-    });
-  });
 }
 
 passport.use(new LocalStrategy({
@@ -89,9 +68,9 @@ function authenticateUser(req, res, next) {
       res.status(401);
       return res.json({err: info.message});
     }
-    loginUser(req, user).then(successResponse => {
-      res.status(200);
-      res.json({});
+    bluebird.promisify(req.login)(user).then(successResponse => {
+      logger.debug('Login success', user);
+      res.status(200).json({});
     }, err => {
       logger.error('Login error', err);
       return next(err);

@@ -4,8 +4,7 @@
     "es6": true
   },
   "globals": {
-    "logger": false,
-    "attachKind": false
+    "logger": false
   },
   "parserOptions": {
     "ecmaVersion": 8
