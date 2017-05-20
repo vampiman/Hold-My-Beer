@@ -23,22 +23,43 @@ section {
 }
 
 section.challenge {
+  @item-padding: 16px;
   header {
     font-size: 3em;
-    margin: 16px;
+    margin: @item-padding;
     word-break: break-all;
   }
   div.content {
     font-size: 1.25em;
-    margin: 16px;
+    margin: @item-padding;
     word-break: break-all;
     overflow: hidden;
+  }
+  ul.responses {
+    margin: @item-padding;
+    padding-left: 0px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    li > a {
+      display: flex;
+      flex-direction: column;
+      img {
+        // Thumbnail sizes are fixed at 256px, but that's too big, so we only use half here
+        width: 128px;
+        height: 128px;
+        align-self: center;
+      }
+      span {
+        font-size: 1.25em;
+      }
+    }
   }
   footer {
     display: flex;
     align-items: center;
     flex-direction: row;
-    margin: 16px;
+    margin: @item-padding;
     img.avatar {
       width: 48px;
       height: 48px;

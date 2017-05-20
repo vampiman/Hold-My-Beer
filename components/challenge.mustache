@@ -1,6 +1,14 @@
 <section class="challenge">
   <header>{{challengeTitle}}</header>
   <div class="content">{{challengeDesc}}</div>
+  <ul class="response">
+    {{#challengeResponses}}
+      <li><a href="#">
+        <img src="/content/thumbnail/{{videoid}}">
+        <span>{{videoTitle}}</span>
+      </a></li>
+    {{/challengeResponses}}
+  </ul>
   <footer>
     <img class="avatar" src="/content/avatar/{{challengeAuthorName}}">
     <a href="/user/{{challengeAuthorName}}" class="author">{{challengeAuthorName}}</a>
