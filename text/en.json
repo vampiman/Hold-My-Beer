@@ -11,6 +11,8 @@
   "passwordConfirmPlaceholder": "Confirm Password",
   "usernamePlaceholder": "Username",
   "searchPlaceholder": "Search…",
+  "more": "More…",
+  "noResponses": "Looks like no one dared to try this. Be the first to respond!",
   "newChallengeText": "New Challenge",
   "create": "Create",
   "titlePlaceholder": "Title",

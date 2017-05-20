@@ -1,14 +1,22 @@
 <section class="challenge">
   <header>{{challengeTitle}}</header>
   <div class="content">{{challengeDesc}}</div>
-  <ul class="responses">
-    {{#challengeResponses}}
-      <li><a href="#">
-        <img src="/content/thumbnail/{{videoId}}">
-        <span>{{videoTitle}}</span>
-      </a></li>
+  <div class="responses-container">
+    {{^challengeResponses}}
+      <span class="no-responses">{{noResponses}}</span>
     {{/challengeResponses}}
-  </ul>
+    <ul class="responses">
+      {{#challengeResponses}}
+        <li><a href="#">
+          <img src="/content/thumbnail/{{videoId}}">
+          <span>{{videoTitle}}</span>
+        </a></li>
+      {{/challengeResponses}}
+    </ul>
+    {{#challengeResponses}}
+      <a href="#" class="responses-more" data-challenge-name="{{challengeTitleEncoded}}">{{more}}</a>
+    {{/challengeResponses}}
+  </div>
   <footer>
     <img class="avatar" src="/content/avatar/{{challengeAuthorName}}">
     <a href="/user/{{challengeAuthorName}}" class="author">{{challengeAuthorName}}</a>

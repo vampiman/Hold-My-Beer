@@ -23,25 +23,42 @@ section {
 }
 
 section.challenge {
-  @item-padding: 16px;
+  @item-margin: 16px;
   header {
     font-size: 3em;
-    margin: @item-padding;
+    margin: @item-margin;
     word-break: break-all;
   }
   div.content {
     font-size: 1.25em;
-    margin: @item-padding;
+    margin: @item-margin;
     word-break: break-all;
     overflow: hidden;
   }
+  div.responses-container {
+    display: flex;
+    flex-direction: row;
+    a.responses-more {
+      align-self: center;
+      text-align: center;
+    }
+    span.no-responses {
+      margin-left: @item-margin;
+      font-size: 1.25em;
+    }
+  }
   ul.responses {
-    margin: @item-padding;
+    margin: @item-margin;
     padding-left: 0px;
     list-style-type: none;
     display: flex;
     flex-direction: row;
+    overflow-x: auto;
     li > a {
+      // Don't double the margin for the last child
+      &:not(:last-child) {
+        margin-right: @item-margin;
+      }
       display: flex;
       flex-direction: column;
       img {
@@ -59,7 +76,7 @@ section.challenge {
     display: flex;
     align-items: center;
     flex-direction: row;
-    margin: @item-padding;
+    margin: @item-margin;
     img.avatar {
       width: 48px;
       height: 48px;
@@ -73,6 +90,9 @@ section.challenge {
       padding: 8px;
       margin-left: auto;
       font-size: 2em;
+      @media screen and (max-width: 425px) {
+        font-size: 1.5em;
+      }
     }
   }
 }

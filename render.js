@@ -58,14 +58,13 @@ function sendError(res, errorKey, errorStatus, langName) {
 
 function renderChallenges(challengeList, langName) {
   return challengeList.reduce((accum, challengeObj) =>
-  accum + Mustache.render(components.challengeComponent, {
+  accum + Mustache.render(components.challengeComponent, Object.assign(languages[langName], {
     challengeTitle: challengeObj.title,
     challengeTitleEncoded: encodeURIComponent(challengeObj.title),
     challengeDesc: challengeObj.description,
     challengeAuthorName: challengeObj.username,
-    challengeResponses: challengeObj.videos,
-    reply: languages[langName].reply
-  }), '');
+    challengeResponses: challengeObj.videos.length > 0 ? challengeObj.videos : undefined
+  })), '');
 }
 
 module.exports = {
