@@ -6,7 +6,7 @@ const render = require('../render');
 const queries = require('../database/queries');
 const auth = require('../auth');
 const stream = require('stream');
-const streamToString = require('stream-to-string');
+const limitStream = require('size-limit-stream');
 const path = require('path');
 const fs = require('fs');
 const BusBoy = require('busboy');
@@ -83,6 +83,10 @@ router.post('/create/response', (req, res, next) => {
       res.status(400).json({err: 'missing field'});
       return;
     }
+    if (fieldname === 'title' && val.length > 15) {
+      res.status(400).json({err: 'long title'});
+      return;
+    }
     video[fieldname] = val;
   });
   busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
@@ -90,11 +94,24 @@ router.post('/create/response', (req, res, next) => {
       res.status(400).json({err: 'no video'});
       return;
     }
+    const limit = limitStream(1024 * 1024 * 20); // max 20MiB
     const write = fs.createWriteStream(path.resolve(`data/videos/${video.id}`), {
       flags: 'w',
       defaultEncoding: 'binary'
     });
-    file.pipe(write);
+    try {
+      limit.on('error', err => {
+        if (err.message === 'Limit exceeded') {
+          logger.info('Attemptted large upload');
+          res.status(400).json({err: 'large video'});
+          return;
+        }
+        throw err;
+      });
+    } catch (err) {
+      throw err; // Pass to handler below
+    }
+    file.pipe(limit).pipe(write);
   });
   busboy.on('finish', async () => {
     if (res.headersSent) return;

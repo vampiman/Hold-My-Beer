@@ -36,8 +36,8 @@
     "passport-local": "^1.0.0",
     "pg": "^6.1.5",
     "serve-favicon": "~2.3.2",
+    "size-limit-stream": "^1.0.0",
     "sql-escape": "^1.0.1",
-    "stream-to-string": "^1.1.0",
     "uuid": "^3.0.1",
     "video-thumb": "0.0.3",
     "winston": "^2.3.1"

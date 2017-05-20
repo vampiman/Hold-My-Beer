@@ -16,9 +16,9 @@ form.submit(event => {
   if (!title) {
     isValid = false;
     ErrorPopup.create(form, 0, i18n.noTitle);
-  } else if (title && title.length > 40) {
+  } else if (title && title.length > 15) {
     isValid = false;
-    ErrorPopup.create(form, 0, i18n.titleLong);
+    ErrorPopup.create(form, 0, i18n.responseTitleLong);
   } else {
     ErrorPopup.remove(form, 0);
   }
@@ -29,6 +29,9 @@ form.submit(event => {
   } else if (file.type.indexOf('video') !== 0) {
     isValid = false;
     ErrorPopup.create(form, 1, i18n.notAVideo);
+  } else if (file.size > 1024 * 1024 * 20) {
+    isValid = false;
+    ErrorPopup.create(form, 1, i18n.videoLarge);
   } else {
     ErrorPopup.remove(form, 1);
   }
