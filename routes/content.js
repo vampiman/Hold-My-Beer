@@ -18,18 +18,10 @@ router.get('/homepage', async (req, res, next) => {
       logger.info('No challenges match query');
       return res.status(204).json({err: 'no content'});
     }
-    const authorIds = challenges.map(challenge => challenge.authorid);
-    const usersQuery = await queries.getUsersById(authorIds);
-    const userMap = {};
-    usersQuery.rows.map(row => userMap[row.id] = row);
-    const rendered = render.renderChallenges(challenges, userMap, req.locale);
+    const rendered = render.renderChallenges(challenges, req.locale);
     res.status(200).json({rendered});
   } catch (err) {
-    if (err.kind === 'pg-query') {
-      logger.error('Can\'t get challenge data', err);
-      return res.status(500).json({err: 'no data'});
-    }
-    logger.error('Unknown error', err);
+    logger.error('Failed to get challenge data for homepage', err);
     return res.status(500).json({err: 'internal error'});
   }
 });

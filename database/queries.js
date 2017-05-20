@@ -41,9 +41,7 @@ function insertUser(username, email, passwordHash) {
     escape(username),
     escape(email),
     passwordHash
-  ]).catch(err => {
-    throw attachKind(err, 'pg-query');
-  });
+  ]);
 }
 
 function insertChallenge(title, desc, userId) {
@@ -51,26 +49,27 @@ function insertChallenge(title, desc, userId) {
     escape(title),
     escape(desc),
     userId
-  ]).catch(err => {
-    throw attachKind(err, 'pg-query');
-  });
+  ]);
 }
 
 function latestChallenges(fromTime, offset) {
-  return pgPool.query('select * from challenges where creation < $1 order by creation desc limit 5 offset $2', [
+  return pgPool.query(`
+  select challenges.*, users.name as username from challenges inner join users
+    on challenges.authorid = users.id
+    where challenges.creation < $1
+    order by challenges.creation desc
+    limit 5
+    offset $2;
+  `, [
     escape(fromTime),
     escape(offset)
-  ]).catch(err => {
-    throw attachKind(err, 'pg-query');
-  });
+  ]);
 }
 
 function getChallengeByTitle(title) {
   return pgPool.query('select * from challenges where challenges.title = $1', [
     escape(title)
-  ]).catch(err => {
-    throw attachKind(err, 'pg-query');
-  });
+  ]);
 }
 
 function insertVideo(uuid, title, challengeid, authorid) {
@@ -79,25 +78,20 @@ function insertVideo(uuid, title, challengeid, authorid) {
     escape(title),
     challengeid,
     authorid
-  ]).catch(err => {
-    throw attachKind(err, 'pg-query');
-  });
+  ]);
 }
 
 function getUser(email) {
   return pgPool.query('select * from users where users.email = $1', [
     escape(email)
-  ]).catch(err => {
-    throw attachKind(err, 'pg-query');
-  });
+  ]);
 }
 
+// FIXME remove if unused
 function getUsersById(ids) {
   return pgPool.query('select * from users where users.id = any($1::int[])', [
     ids.map(id => Number(id))
-  ]).catch(err => {
-    throw attachKind(err, 'pg-query');
-  });
+  ]);
 }
 
 module.exports = {
