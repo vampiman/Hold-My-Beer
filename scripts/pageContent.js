@@ -16,10 +16,30 @@ function attachLiveContent(path) {
       return uri;
     };
   })();
-
+  
+  const videoviewer = $('.videoviewer')[0];
+  $(videoviewer).click(event => {
+    $(video).find('source').remove();
+    videoviewer.dataset.show = 'false';
+  });
+  const video = $(videoviewer).find('video')[0];
+  function attachResponseClicks() {
+    $('.responselink').each((idx, element) => {
+      $(element).off('click');
+      $(element).click(event => {
+        $(video).find('source').remove();
+        const source = document.createElement('source');
+        source.src = `/content/video/${element.dataset.id}`;
+        $(video).append(source);
+        videoviewer.dataset.show = 'true';
+      });
+    });
+  }
+  
   function appendContent(renderedHtml) {
     $('main').append(renderedHtml);
     $('main').append(`<section class="loading">${i18n.loadingMore}</section>`);
+    attachResponseClicks();
     $('.responses-more').each((idx, element) => {
       $(element).off('click');
       $(element).click(event => {
@@ -29,6 +49,7 @@ function attachLiveContent(path) {
             return;
           }
           $(element).parent().find('.responses').append(data.rendered);
+          attachResponseClicks();
         }).fail(response => {
           console.error(response);
           $(element).remove();

@@ -126,3 +126,22 @@ div.error-no-content {
     text-align: center;
   }
 }
+
+div.videoviewer {
+  display: none;
+  &[data-show="true"] {
+    display: flex;
+  }
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); // Fade the rest of the page
+  justify-content: center;
+  video {
+    align-self: center;
+    text-align: center;
+    background-color: white; // When the video doesn't load
+    max-width: 90%;
+    max-height: 90%;
+  }
+}
