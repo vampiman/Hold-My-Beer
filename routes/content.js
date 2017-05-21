@@ -87,9 +87,35 @@ router.get('/thumbnail/:videoid', async (req, res, next) => {
   res.sendFile(thumbPath);
 });
 
-router.get('/video/:videoid', (req, res, next) => {
-  // FIXME return streamable html5 video
-  res.status(501).json({err: 'noimpl'});
+router.get('/video/:videoid', async (req, res, next) => {
+  if (!req.headers.range) return res.status(416).json({err: 'no range'});
+  if (!req.headers.range.includes('bytes')) return res.status(416).json({err: 'wrong unit'});
+  const videoPath = `${__dirname}/../data/videos/${req.params.videoid}`;
+  try {
+    const stats = await fs.statAsync(videoPath);
+    const range = req.headers.range.replace('bytes=', '').split('-');
+    const start = parseInt(range[0], 10);
+    const end = range[1] ? parseInt(range[1], 10) : stats.size - 1;
+    res.status(206).set({
+      'Accept-Ranges': 'bytes',
+      'Content-Range': `bytes ${start}-${end}/${stats.size}`,
+      'Content-Length': end - start + 1
+    });
+    const stream = fs.createReadStream(videoPath, {start, end})
+      .on('open', () => stream.pipe(res))
+      .on('error', err => {
+        logger.error(err);
+        res.status(500).json({err: 'internal error'});
+      });
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      logger.info('No such video', req.params.videoid);
+      return res.status(404).json({err: 'no video'});
+    } else {
+      logger.error(err);
+      return res.status(500).json({err: 'internal error'});
+    }
+  }
 });
 
 module.exports = router;
