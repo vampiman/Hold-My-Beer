@@ -68,7 +68,8 @@ router.get('/avatar/:username', (req, res, next) => {
 });
 
 router.get('/thumbnail/:videoid', async (req, res, next) => {
-  const thumbPath = path.resolve(`${__dirname}/../data/videos/${req.params.videoid}.thumb.png`);
+  const videosPath = path.resolve(`${__dirname}/../data/videos`);
+  const thumbPath = `${videosPath}/${req.params.videoid}.thumb.png`;
   try {
     await fs.accessAsync(thumbPath, fs.constants.R_OK | fs.constants.F_OK);
   } catch (err) {
@@ -78,7 +79,7 @@ router.get('/thumbnail/:videoid', async (req, res, next) => {
       return;
     }
     await bluebird.promisify(thumbnailer.extract)(
-      `${__dirname}/../data/videos/${req.params.videoid}`,
+      `${videosPath}/${req.params.videoid}`,
       thumbPath,
       '00:00:00',
       '256x256'
@@ -90,7 +91,8 @@ router.get('/thumbnail/:videoid', async (req, res, next) => {
 router.get('/video/:videoid', async (req, res, next) => {
   if (!req.headers.range) return res.status(416).json({err: 'no range'});
   if (!req.headers.range.includes('bytes')) return res.status(416).json({err: 'wrong unit'});
-  const videoPath = `${__dirname}/../data/videos/${req.params.videoid}`;
+  const videosPath = path.resolve(`${__dirname}/../data/videos`);
+  const videoPath = `${videosPath}/${req.params.videoid}`;
   try {
     const stats = await fs.statAsync(videoPath);
     const range = req.headers.range.replace('bytes=', '').split('-');
