@@ -92,6 +92,9 @@ app.use('/stylesheets', express.static(path.join(__dirname, 'dist', 'stylesheets
 app.use('/images', express.static(path.join(__dirname, 'images'), {
   maxage: '28 days'
 }));
+app.use('/fonts', express.static(path.join(__dirname, 'dist', 'fonts'), {
+  maxage: '4 months'
+}));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

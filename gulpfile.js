@@ -35,7 +35,7 @@ process.on('uncaughtException', err => {
   if (serverChild !== null) serverChild.kill();
 });
 
-gulp.task('build', ['build-js', 'build-css', 'copy-deps']);
+gulp.task('build', ['build-js', 'build-css', 'copy-deps', 'copy-fonts']);
 
 gulp.task('build-js', () =>
   gulp.src(jsSrcGlob)
@@ -51,6 +51,11 @@ gulp.task('copy-deps', () =>
   gulp.src('node_modules/jquery/dist/jquery.min.js')
     .pipe(gulp.dest('./dist/scripts/'))
 );
+
+gulp.task('copy-fonts', () => {
+  gulp.src('node_modules/material-design-icons/iconfont/*')
+    .pipe(gulp.dest('./dist/fonts/'));
+});
 
 gulp.task('build-css', () =>
   gulp.src(cssGlob)

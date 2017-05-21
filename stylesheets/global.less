@@ -1,8 +1,39 @@
 @import "color.less";
 @import "properties.less";
 
-* {
-  box-sizing: content-box !important; // FIXME remove
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/MaterialIcons-Regular.eot'); // For IE6-8
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url('/fonts/MaterialIcons-Regular.woff2') format('woff2'),
+       url('/fonts/MaterialIcons-Regular.woff') format('woff'),
+       url('/fonts/MaterialIcons-Regular.ttf') format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; // Preferred icon size
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  // Support for all WebKit browsers
+  -webkit-font-smoothing: antialiased;
+  // Support for Safari and Chrome
+  text-rendering: optimizeLegibility;
+  // Support for Firefox
+  -moz-osx-font-smoothing: grayscale;
+  // Support for IE
+  font-feature-settings: 'liga';
 }
 
 html {
@@ -15,6 +46,7 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
+  margin: 0;
 }
 
 button {
@@ -51,13 +83,11 @@ a {
   color: @color-text;
   text-decoration: none;
   &:hover, &:focus {
-    text-decoration: none; // FIXME remove
     color: @color-accent;
   }
 }
 
 #navbar {
-  box-sizing: initial; // FIXME remove
   padding: @navbar-padding;
   height: @navbar-content-height;
   @media screen and (max-width: 767px) {
@@ -117,6 +147,10 @@ a {
     }
     
     button {
+      padding: 0;
+      // 4px is borders
+      height: @input-element-padding + @input-element-font-size + @input-element-padding + 4px;
+      width: 40px; // Arbitrary
       align-self: center;
       margin-left: 5px;
     }
