@@ -10,45 +10,6 @@
     <aside class="sidebar">
       <a href="/challenge">{{newChallengeText}}</a>
     </aside>
-    
-    <!-- FIXME aria labeledby -->
-    <div class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <!-- FIXME aria label -->
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <!-- FIXME id -->
-            <h4 class="modal-title" id="gridSystemModalLabel">{{welcomeHeader}}</h4>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-sm-offset-1 col-sm-10">
-                <p>{{welcomeText}}</p>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <!-- FIXME indentation -->
-              <div class="row">
-                <button type="button" class="btn btn-default col-sm-offset-1 col-sm-3" data-dismiss="modal">{{closeText}}</button>
-                <button type="button" class="btn btn-primary col-sm-4">{{loginOrRegister}}</button>
-                <div class="btn-group col-sm-3">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{language}} <span class="caret"></span>
-                </button>
-                    <ul class="dropdown-menu">
-                    <li><a href="#">{{english}}</a></li>
-                    <li><a href="#">{{romanian}}</a></li>
-                    <li><a href="#">{{french}}</a></li>
-                    </ul>
-                    </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
     <main class="content-container" data-error="false">
       {{^isLoggedIn}}
       <section class="challenge">
