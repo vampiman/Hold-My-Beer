@@ -68,12 +68,13 @@ function authenticateUser(req, res, next) {
       res.status(401);
       return res.json({err: info.message});
     }
-    bluebird.promisify(req.login)(user).then(successResponse => {
+    req.login(user, err => {
+      if (err) {
+        logger.error('Login error', err);
+        return next(err);
+      }
       logger.debug('Login success', user);
       res.status(200).json({});
-    }, err => {
-      logger.error('Login error', err);
-      return next(err);
     });
   })(req, res, next);
 }

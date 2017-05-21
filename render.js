@@ -28,11 +28,11 @@ function sendPage(req, res, viewName, langName) {
   if (req.user) {
     text.profileText = req.user.name;
     text.profileUrl = '/account';
-    text.isLoggedIn = 'true';
+    text.isLoggedIn = true;
   } else {
     text.profileText = text.loginOrRegister;
     text.profileUrl = '/login';
-    text.isLoggedIn = 'false';
+    text.isLoggedIn = false;
   }
   const renderedPage = Mustache.render(views[viewName], text, components);
   res.set({

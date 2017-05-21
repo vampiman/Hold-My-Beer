@@ -50,7 +50,12 @@
     </div>
     
     <main class="content-container" data-error="false">
-      
+      {{#isLoggedIn}}
+      <section class="challenge">
+        <header>{{welcomeHeader}}</header>
+        <div class="content">{{welcomeText}}</div>
+      </section>
+      {{/isLoggedIn}}
     </main>
     <div class="error-no-content" data-show="false">
       <h1>{{errorTexts.noContent}}</h1>
