@@ -10,26 +10,16 @@ const fs = bluebird.promisifyAll(require('fs'));
 const thumbnailer = require('video-thumb');
 
 router.get('/homepage', async (req, res, next) => {
+  if (!req.query.time) return res.status(400).json({err: 'no time'});
+  if (!req.query.offset) return res.status(400).json({err: 'no offset'});
   try {
     const time = decodeURIComponent(req.query.time);
     const challengeQuery = await queries.latestChallenges(time, req.query.offset);
-    const challenges = challengeQuery.rows;
-    if (challenges.length === 0) {
+    if (challengeQuery.rows.length === 0) {
       logger.debug('No challenges match query');
       return res.status(204).json({err: 'no content'});
     }
-    const queryList = await Promise.all(
-      challenges.map(challenge => queries.videosForChallenge(challenge.id, '0'))
-    );
-    queryList.forEach((query, idx) => {
-      challenges[idx].videos = query.rows.map(row => {
-        return {
-          videoId: row.id,
-          videoTitle: row.title
-        };
-      });
-    });
-    const rendered = render.renderChallenges(challenges, req.locale);
+    const rendered = render.renderChallenges(challengeQuery.rows, req.locale);
     res.status(200).json({rendered});
   } catch (err) {
     logger.error('Failed to get challenge data for homepage', err);
@@ -38,12 +28,16 @@ router.get('/homepage', async (req, res, next) => {
 });
 
 router.get('/responselist', async (req, res, next) => {
+  if (!req.query.time) return res.status(400).json({err: 'no time'});
+  if (!req.query.challenge) return res.status(400).json({err: 'no challenge'});
+  if (!req.query.offset) return res.status(400).json({err: 'no offset'});
   try {
+    const time = decodeURIComponent(req.query.time);
     const challengeQuery = await queries.getChallengeByTitle(
       decodeURIComponent(req.query.challenge)
     );
     const challengeid = challengeQuery.rows[0].id;
-    const videoData = await queries.videosForChallenge(challengeid, req.query.offset);
+    const videoData = await queries.videosForChallenge(challengeid, time, req.query.offset);
     if (videoData.rows.length === 0) {
       logger.debug('No videos match query');
       return res.status(204).json({err: 'no content'});
@@ -56,10 +50,23 @@ router.get('/responselist', async (req, res, next) => {
   }
 });
 
-router.get('/user/:name', (req, res, next) => {
-  // FIXME return rendered content for given user
-  // req.params.name
-  res.status(501).json({err: 'noimpl'});
+router.get('/user/:name/challenges', async (req, res, next) => {
+  if (!req.query.time) return res.status(400).json({err: 'no time'});
+  if (!req.query.offset) return res.status(400).json({err: 'no offset'});
+  try {
+    const time = decodeURIComponent(req.query.time);
+    const user = (await queries.getUserByName(req.params.name)).rows[0];
+    const challenges = await queries.challengesForUser(user.id, time, req.query.offset);
+    if (challenges.rows.length === 0) {
+      logger.debug('No challenges for user', user.name);
+      return res.status(204).json({err: 'no content'});
+    }
+    const rendered = render.renderChallenges(challenges.rows, req.locale);
+    res.status(200).json({rendered});
+  } catch (err) {
+    logger.error(err);
+    return res.status(500).json({err: 'internal error'});
+  }
 });
 
 router.get('/avatar/:username', (req, res, next) => {

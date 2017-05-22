@@ -71,6 +71,7 @@
     "comma-dangle": ["warn", "only-multiline"],
     "radix": ["warn"],
     "no-underscore-dangle": ["warn"],
-    "no-var": "error"
+    "no-var": "error",
+    "no-constant-condition": ["warn", {"checkLoops": false}]
   }
 }

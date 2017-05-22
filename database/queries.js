@@ -67,17 +67,54 @@ function latestChallenges(fromTime, offset) {
   ]);
 }
 
-function videosForChallenge(challengeid, offset) {
+function videosForChallenge(challengeId, time, offset) {
   return pgPool.query(`
   select videos.*, users.name as username
     from videos inner join users
     on videos.authorid = users.id
-    where videos.challengeid = $1
+    where
+      videos.challengeid = $1
+      and videos.creation < $2
     order by videos.creation desc
     limit 5
-    offset $2;
+    offset $3;
   `, [
-    challengeid,
+    challengeId,
+    escape(time),
+    escape(offset)
+  ]);
+}
+
+function challengesForUser(userId, fromTime, offset) {
+  return pgPool.query(`
+  select challenges.*, users.name as username
+    from challenges inner join users
+    on
+      challenges.authorid = $1
+      and users.id = $1
+    where challenges.creation < $2
+    order by challenges.creation desc
+    limit 5
+    offset $3;
+  `, [
+    userId,
+    escape(fromTime),
+    escape(offset)
+  ]);
+}
+
+function videosForUser(userId, fromTime, offset) {
+  return pgPool.query(`
+  select videos.*, users.name as username
+    from videos inner join users
+    on videos.authorid = $1
+    where videos.creation < $2
+    order by videos.creation desc
+    limit 5
+    offset $3;
+  `, [
+    userId,
+    escape(fromTime),
     escape(offset)
   ]);
 }
@@ -88,12 +125,18 @@ function getChallengeByTitle(title) {
   ]);
 }
 
-function insertVideo(uuid, title, challengeid, authorid) {
+function insertVideo(uuid, title, challengeId, authorId) {
   return pgPool.query('insert into videos values($1, $2, $3, $4)', [
     uuid,
     escape(title),
-    challengeid,
-    authorid
+    challengeId,
+    authorId
+  ]);
+}
+
+function getUserByName(username) {
+  return pgPool.query('select * from users where users.name = $1', [
+    escape(username)
   ]);
 }
 
@@ -120,5 +163,8 @@ module.exports = {
   getChallengeByTitle,
   insertVideo,
   getUser,
-  getUsersById
+  getUserByName,
+  getUsersById,
+  challengesForUser,
+  videosForUser
 };

@@ -62,8 +62,7 @@ function renderChallenges(challengeList, langName) {
     challengeTitle: challengeObj.title,
     challengeTitleEncoded: encodeURIComponent(challengeObj.title),
     challengeDesc: challengeObj.description,
-    challengeAuthorName: challengeObj.username,
-    challengeResponses: challengeObj.videos.length > 0 ? challengeObj.videos : undefined
+    challengeAuthorName: challengeObj.username
   })), '');
 }
 

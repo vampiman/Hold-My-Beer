@@ -1,22 +1,10 @@
-<section class="challenge">
+<section class="challenge" data-challenge-name="{{challengeTitleEncoded}}">
   <header>{{challengeTitle}}</header>
   <div class="content">{{challengeDesc}}</div>
   <div class="responses-container">
-    {{^challengeResponses}}
-      <span class="no-responses">{{noResponses}}</span>
-    {{/challengeResponses}}
-    <ul class="responses">
-      {{#challengeResponses}}
-        <!-- FIXME use the partial here -->
-        <li><a class="responselink" href="#" data-id="{{videoId}}">
-          <img src="/content/thumbnail/{{videoId}}">
-          <span>{{videoTitle}}</span>
-        </a></li>
-      {{/challengeResponses}}
-    </ul>
-    {{#challengeResponses.length}}
-      <a href="#" class="responses-more" data-challenge-name="{{challengeTitleEncoded}}">{{more}}</a>
-    {{/challengeResponses.length}}
+    <span class="no-responses">{{noResponses}}</span>
+    <ul class="responses"></ul>
+    <a href="#" class="responses-more">{{more}}</a>
   </div>
   <footer>
     <img class="avatar" src="/content/avatar/{{challengeAuthorName}}">

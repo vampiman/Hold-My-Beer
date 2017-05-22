@@ -2,4 +2,4 @@
 
 const username = $('nav > a[href="/account"]')[0].innerText;
 
-attachLiveContent(`user/${username}`);
+attachLiveContent(`user/${username}/challenges`);
