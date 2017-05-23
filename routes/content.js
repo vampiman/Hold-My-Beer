@@ -87,6 +87,7 @@ router.get('/avatar/:name', async (req, res, next) => {
       return res.redirect('/images/hodgepodge.png');
     }
     res.set('Cache-Control', `public, max-age=${60 * 60 * 24}`); // Cache for 1 day
+    // FIXME security
     res.sendFile(path.resolve(`${__dirname}/../data/avatars/${user.avatar}`));
   } catch (err) {
     logger.error(err);
@@ -95,6 +96,7 @@ router.get('/avatar/:name', async (req, res, next) => {
 });
 
 router.get('/thumbnail/:videoid', async (req, res, next) => {
+  // FIXME security
   const videosPath = path.resolve(`${__dirname}/../data/videos`);
   const thumbPath = `${videosPath}/${req.params.videoid}.thumb.png`;
   try {
@@ -119,6 +121,7 @@ router.get('/thumbnail/:videoid', async (req, res, next) => {
 router.get('/video/:videoid', async (req, res, next) => {
   if (!req.headers.range) return res.status(416).json({err: 'no range'});
   if (!req.headers.range.includes('bytes')) return res.status(416).json({err: 'wrong unit'});
+  // FIXME security
   const videosPath = path.resolve(`${__dirname}/../data/videos`);
   const videoPath = `${videosPath}/${req.params.videoid}`;
   try {
