@@ -7,7 +7,11 @@
   </head>
   <body>
     {{>navbarComponent}}
-    <section class="navbar-extension">
+    <!--
+      Chrome + nested flex stuff => messed up layout
+      Remove this surrounding div when upstream fixes bug
+    -->
+    <div class="chrome-flex-fix"><section class="navbar-extension">
       <div class="settings">
         <h1>{{profileText}}</h1>
         <span class="em-dash"></span>
@@ -27,7 +31,7 @@
         <ul class="responses"></ul>
         <a href="#" class="responses-more">{{more}}</a>
       </div>
-    </section>
+    </section></div>
     <main class="content-container" data-error="false">
       
     </main>
