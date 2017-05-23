@@ -85,16 +85,16 @@ app.use((req, res, next) => {
 const index = require('./routes/index');
 app.use('/', index);
 app.use('/scripts', express.static(path.join(__dirname, 'dist', 'scripts'), {
-  maxage: '14 days'
+  maxage: '1y'
 }));
 app.use('/stylesheets', express.static(path.join(__dirname, 'dist', 'stylesheets'), {
-  maxage: '14 days'
+  maxage: '1y'
 }));
 app.use('/images', express.static(path.join(__dirname, 'images'), {
-  maxage: '28 days'
+  maxage: '1y'
 }));
 app.use('/fonts', express.static(path.join(__dirname, 'dist', 'fonts'), {
-  maxage: '4 months'
+  maxage: '1y'
 }));
 
 // catch 404 and forward to error handler
