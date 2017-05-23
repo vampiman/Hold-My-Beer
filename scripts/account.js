@@ -35,3 +35,30 @@ const getVideos = (function () {
 })();
 
 getVideos();
+
+$('#change-avatar').click(event => $('#avatar-file-input').click());
+$('#avatar-file-input').on('change', event => {
+  const avatar = $('#avatar-file-input')[0].files[0];
+  if (avatar.size > 1024 * 1024 * 1) {
+    // FIXME show avatar too big error
+    return;
+  }
+  const data = new FormData();
+  data.append('avatar', avatar);
+  data.append('username', username);
+  $.ajax({
+    url: '/create/avatar',
+    data,
+    cache: false,
+    contentType: false,
+    processData: false,
+    type: 'POST',
+    success: data => {
+      location.assign('/account');
+    },
+    error: err => {
+      console.error(err);
+      // FIXME show error somewhere
+    }
+  });
+});

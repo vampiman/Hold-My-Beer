@@ -29,6 +29,7 @@
   "change": "Schimba…",
   "accountCreatedOn": "Cont creat pe: ",
   "noUserVideos": "Nici un video gasit",
+  "avatarFileSelectTitle": "Selecteaza avatar",
   "errorTexts": {
     "internalServerError": "Serverul nu a reusit sa processeze solicitarea dumneavoastra. Va rugam sa incercati din nou.",
     "noContent": "Nu am putut afisa continutul. Ne pare rau!",

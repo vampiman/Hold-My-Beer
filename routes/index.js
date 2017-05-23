@@ -72,6 +72,27 @@ router.post('/create/challenge', (req, res, next) => {
   });
 });
 
+function pipeToLimitedWriteStream(res, fileObj, pathToWrite, limitBytes) {
+  const limit = limitStream(limitBytes); // max 20MiB
+  const write = fs.createWriteStream(pathToWrite, {
+    flags: 'w',
+    defaultEncoding: 'binary'
+  });
+  try {
+    limit.on('error', err => {
+      if (err.message === 'Limit exceeded') {
+        logger.info('Attemptted large upload');
+        res.status(400).json({err: 'large file'});
+        return;
+      }
+      throw err;
+    });
+  } catch (err) {
+    throw err; // Pass to handler outside
+  }
+  fileObj.pipe(limit).pipe(write);
+}
+
 router.post('/create/response', (req, res, next) => {
   if (!req.user) return res.status(401).json({err: 'not authorized'});
   const video = {
@@ -94,30 +115,50 @@ router.post('/create/response', (req, res, next) => {
       res.status(400).json({err: 'no video'});
       return;
     }
-    const limit = limitStream(1024 * 1024 * 20); // max 20MiB
-    const write = fs.createWriteStream(path.resolve(`data/videos/${video.id}`), {
-      flags: 'w',
-      defaultEncoding: 'binary'
-    });
-    try {
-      limit.on('error', err => {
-        if (err.message === 'Limit exceeded') {
-          logger.info('Attemptted large upload');
-          res.status(400).json({err: 'large video'});
-          return;
-        }
-        throw err;
-      });
-    } catch (err) {
-      throw err; // Pass to handler below
-    }
-    file.pipe(limit).pipe(write);
+    // max 20MiB
+    pipeToLimitedWriteStream(res, file, path.resolve(`data/videos/${video.id}`), 1024 * 1024 * 20);
   });
   busboy.on('finish', async () => {
     if (res.headersSent) return;
     const challengeid = (await queries.getChallengeByTitle(video.target)).rows[0].id;
     await queries.insertVideo(video.id, video.title, challengeid, req.user.id);
     logger.debug('Successful video insertion');
+    res.status(200).json({});
+  });
+  busboy.on('error', err => {
+    logger.error(err);
+    if (res.headersSent) return;
+    res.status(500).json({err: 'internal error'});
+  });
+  req.pipe(busboy);
+});
+
+router.post('/create/avatar', (req, res, next) => {
+  if (!req.user) return res.status(401).json({err: 'not logged in'});
+  const avatar = {
+    id: uuid()
+  };
+  const busboy = new BusBoy({headers: req.headers});
+  busboy.on('field', (fieldname, val) => {
+    if (fieldname !== 'username' || !val) {
+      res.status(400).json({err: 'missing field'});
+      return;
+    }
+    if (val !== req.user.name) return res.status(401).json({err: 'not authorized'});
+    avatar.username = val;
+  });
+  busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
+    if (fieldname !== 'avatar' || !mimetype.startsWith('image')) {
+      res.status(400).json({err: 'no image'});
+      return;
+    }
+    // max 1MiB
+    pipeToLimitedWriteStream(res, file, path.resolve(`data/avatars/${avatar.id}`), 1024 * 1024 * 1);
+  });
+  busboy.on('finish', async () => {
+    if (res.headersSent) return;
+    await queries.updateAvatar(avatar.username, avatar.id);
+    logger.debug('Successful avatar update');
     res.status(200).json({});
   });
   busboy.on('error', err => {

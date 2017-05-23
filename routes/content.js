@@ -79,9 +79,19 @@ function userContentCallbackFactory(dataType) {
 router.get('/user/:name/videos', userContentCallbackFactory('videos'));
 router.get('/user/:name/challenges', userContentCallbackFactory('challenges'));
 
-router.get('/avatar/:username', (req, res, next) => {
-  // FIXME return avatar for given user
-  res.status(501).json({err: 'noimpl'});
+router.get('/avatar/:name', async (req, res, next) => {
+  try {
+    const user = (await queries.getUserByName(req.params.name)).rows[0];
+    if (user.avatar === '00000000-0000-0000-0000-000000000000') {
+      // Default avatar
+      return res.redirect('/images/hodgepodge.png');
+    }
+    res.set('Cache-Control', `public, max-age=${60 * 60 * 24}`); // Cache for 1 day
+    res.sendFile(path.resolve(`${__dirname}/../data/avatars/${user.avatar}`));
+  } catch (err) {
+    logger.error(err);
+    return res.status(500).json({err: 'internal error'});
+  }
 });
 
 router.get('/thumbnail/:videoid', async (req, res, next) => {
