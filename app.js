@@ -65,6 +65,7 @@ app.use(locale({
 
 // Do some locale normalization
 app.use((req, res, next) => {
+  req.rawLocale = req.locale;
   switch (req.locale) {
     case 'ro_RO':
       req.locale = 'ro';

@@ -29,6 +29,7 @@ function sendPage(req, res, viewName, langName) {
     text.profileText = req.user.name;
     text.profileUrl = '/account';
     text.isLoggedIn = true;
+    text.accountCreationLocalDate = new Date(req.user.creation).toLocaleString(req.rawLocale);
   } else {
     text.profileText = text.loginOrRegister;
     text.profileUrl = '/login';

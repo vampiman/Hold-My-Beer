@@ -26,6 +26,9 @@
   "welcomeText": "FIXME!!!!!!!!!!!!!!!",
   "reply": "Raspunde",
   "videoNotSupportedText": "Browserul nu poate reda videoul",
+  "change": "Schimba…",
+  "accountCreatedOn": "Cont creat pe: ",
+  "noUserVideos": "Nici un video gasit",
   "errorTexts": {
     "internalServerError": "Serverul nu a reusit sa processeze solicitarea dumneavoastra. Va rugam sa incercati din nou.",
     "noContent": "Nu am putut afisa continutul. Ne pare rau!",

@@ -1,28 +1,51 @@
 @import "color.less";
+@import "properties.less";
 @import "page-content.less";
 
-div.account-container {
+section.navbar-extension {
+  padding: 0 @navbar-padding @navbar-padding @navbar-padding;
+  margin-bottom: 0px; // Usual section margin replaced by padding
   display: flex;
-  flex-direction: row-reverse;
-  @media screen and (max-width: 1024px) {
+  flex-direction: row;
+  height: 125%;
+  @media screen and (max-width: 425px) {
+    // Move response list lower on small screens
     flex-direction: column;
+    height: 500%;
   }
+}
+
+section.navbar-extension > div.settings {
+  h1 {
+    display: inline-block;
+  }
+  span.em-dash::after {
+    content: '—';
+  }
+  #change-username {
+    font-size: 1em;
+  }
+  @avatar-img-height: 128px;
+  img {
+    height: @avatar-img-height;
+    width: @avatar-img-height;
+    display: inline-block;
+  }
+  div.avatar-text-container {
+    line-height: @avatar-img-height;
+    vertical-align: top;
+    display: inline-block;
+  }
+}
+
+section.navbar-extension > div.user-videos {
+  margin-left: 16px; // Leave some space from the settings
   flex-grow: 1;
-  div.error-no-content {
-    font-size: 0.75em;
-    @media screen and (max-width: 1440px) {
-      margin: 10%;
-    }
+  flex-shrink: 1;
+  @media screen and (max-width: 768px) {
+    flex-shrink: 2;
   }
-  section.settings {
-    @media screen and (min-width: 1024px) {
-      min-width: 400px;
-    }
-    flex-grow: 1;
-  }
-  main.content-container {
-    // The account page has a narrower space for content, so the padding must be reduced as well
-    padding-left: 10%;
-    padding-right: 10%;
-  }
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
 }

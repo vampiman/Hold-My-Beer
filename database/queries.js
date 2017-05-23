@@ -107,7 +107,9 @@ function videosForUser(userId, fromTime, offset) {
   return pgPool.query(`
   select videos.*, users.name as username
     from videos inner join users
-    on videos.authorid = $1
+    on
+      videos.authorid = $1
+      and users.id = $1
     where videos.creation < $2
     order by videos.creation desc
     limit 5

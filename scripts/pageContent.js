@@ -1,6 +1,37 @@
 'use strict';
 
-function attachLiveContent(path) {
+const VideoViewer = window.VideoViewer = (function () {
+  const self = {};
+  const videoviewer = $('.videoviewer')[0];
+  const video = $(videoviewer).find('video')[0];
+  
+  self.hide = () => {
+    $(video).find('source').remove();
+    videoviewer.dataset.show = 'false';
+  };
+  
+  self.show = videoId => {
+    $(video).find('source').remove();
+    const source = document.createElement('source');
+    source.src = `/content/video/${videoId}`;
+    $(video).append(source);
+    videoviewer.dataset.show = 'true';
+  };
+  
+  $(videoviewer).click(self.hide);
+  return self;
+})();
+
+window.attachResponseClicks = function () {
+  $('.responselink').each((idx, element) => {
+    $(element).off('click'); // Ensure we only have one click event
+    $(element).click(event => {
+      VideoViewer.show(element.dataset.id);
+    });
+  });
+};
+
+window.attachLiveContent = function (path) {
   function isLoadingVisible() {
     const loader = $('section.loading')[0];
     return loader.getBoundingClientRect().top >= 0 &&
@@ -17,7 +48,7 @@ function attachLiveContent(path) {
     };
   })();
   
-  const getVideoURI = (function () {
+  const getResponseListURI = (function () {
     const startTime = new Date().toISOString();
     const offsetMap = {};
     return function (challenge) {
@@ -28,27 +59,8 @@ function attachLiveContent(path) {
     };
   })();
   
-  const videoviewer = $('.videoviewer')[0];
-  $(videoviewer).click(event => {
-    $(video).find('source').remove();
-    videoviewer.dataset.show = 'false';
-  });
-  const video = $(videoviewer).find('video')[0];
-  function attachResponseClicks() {
-    $('.responselink').each((idx, element) => {
-      $(element).off('click'); // Ensure we only have one click event
-      $(element).click(event => {
-        $(video).find('source').remove();
-        const source = document.createElement('source');
-        source.src = `/content/video/${element.dataset.id}`;
-        $(video).append(source);
-        videoviewer.dataset.show = 'true';
-      });
-    });
-  }
-  
   function getVideos(challengeElement, moreElement) {
-    $.get(getVideoURI(challengeElement.dataset.challengeName), (data, textStatus) => {
+    $.get(getResponseListURI(challengeElement.dataset.challengeName), (data, textStatus) => {
       if (textStatus === 'nocontent') {
         $(moreElement).remove();
         return;
@@ -100,6 +112,4 @@ function attachLiveContent(path) {
       $('section.loading')[0].innerHtml = i18n.loadingMoreFail;
     });
   });
-}
-
-window.attachLiveContent = attachLiveContent;
+};

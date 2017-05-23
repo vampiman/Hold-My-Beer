@@ -9,10 +9,11 @@ main.content-container {
   flex-direction: column;
   overflow-y: scroll;
   padding: 0 20%;
-  @media screen and (max-width: 768px) {
-    padding: 0 10%;
-  }
   padding-top: 50px;
+  @media screen and (max-width: 768px) {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
 }
 
 section {
@@ -22,8 +23,9 @@ section {
   border-radius: 2px;
 }
 
+@item-margin: 16px;
+
 section.challenge {
-  @item-margin: 16px;
   header {
     font-size: 3em;
     margin: @item-margin;
@@ -48,30 +50,6 @@ section.challenge {
       font-size: 1.25em;
     }
   }
-  ul.responses {
-    margin: @item-margin;
-    padding-left: 0px;
-    list-style-type: none;
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
-    li > a {
-      // Don't double the margin for the last child
-      margin-right: @item-margin;
-      display: flex;
-      flex-direction: column;
-      img {
-        // Thumbnail sizes are fixed at 256px, but that's too big, so we only use half here
-        width: 128px;
-        height: 128px;
-        align-self: center;
-      }
-      span {
-        text-align: center;
-        font-size: 1.25em;
-      }
-    }
-  }
   footer {
     display: flex;
     align-items: center;
@@ -93,6 +71,33 @@ section.challenge {
       @media screen and (max-width: 425px) {
         font-size: 1.5em;
       }
+    }
+  }
+}
+
+ul.responses {
+  @thumbnail-size: 128px;
+  margin: @item-margin;
+  padding-left: 0px;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  min-height: @thumbnail-size;
+  li > a {
+    // Don't double the margin for the last child
+    margin-right: @item-margin;
+    display: flex;
+    flex-direction: column;
+    img {
+      // Thumbnail sizes are fixed at 256px, but that's too big, so we only use half here
+      width: @thumbnail-size;
+      height: @thumbnail-size;
+      align-self: center;
+    }
+    span {
+      text-align: center;
+      font-size: 1.25em;
     }
   }
 }

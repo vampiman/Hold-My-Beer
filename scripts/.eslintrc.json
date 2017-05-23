@@ -6,7 +6,9 @@
   "globals": {
     "i18n": false,
     "ErrorPopup": false,
-    "attachLiveContent": false
+    "VideoViewer": false,
+    "attachLiveContent": false,
+    "attachResponseClicks": false
   },
   "extends": "../.eslintrc.json"
 }

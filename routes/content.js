@@ -50,24 +50,34 @@ router.get('/responselist', async (req, res, next) => {
   }
 });
 
-router.get('/user/:name/challenges', async (req, res, next) => {
-  if (!req.query.time) return res.status(400).json({err: 'no time'});
-  if (!req.query.offset) return res.status(400).json({err: 'no offset'});
-  try {
-    const time = decodeURIComponent(req.query.time);
-    const user = (await queries.getUserByName(req.params.name)).rows[0];
-    const challenges = await queries.challengesForUser(user.id, time, req.query.offset);
-    if (challenges.rows.length === 0) {
-      logger.debug('No challenges for user', user.name);
-      return res.status(204).json({err: 'no content'});
+function userContentCallbackFactory(dataType) {
+  if (dataType !== 'videos' && dataType !== 'challenges') throw Error(
+    'No such data type'
+  );
+  const queryFunc = dataType === 'videos' ? queries.videosForUser : queries.challengesForUser;
+  const renderFunc = dataType === 'videos' ? render.renderVideos : render.renderChallenges;
+  return async (req, res, next) => {
+    if (!req.query.time) return res.status(400).json({err: 'no time'});
+    if (!req.query.offset) return res.status(400).json({err: 'no offset'});
+    try {
+      const time = decodeURIComponent(req.query.time);
+      const user = (await queries.getUserByName(req.params.name)).rows[0];
+      const data = await queryFunc(user.id, time, req.query.offset);
+      if (data.rows.length === 0) {
+        logger.debug(`No ${dataType} for user`, user.name);
+        return res.status(204).json({err: 'no content'});
+      }
+      const rendered = renderFunc(data.rows, req.locale);
+      res.status(200).json({rendered});
+    } catch (err) {
+      logger.error(err);
+      return res.status(500).json({err: 'internal error'});
     }
-    const rendered = render.renderChallenges(challenges.rows, req.locale);
-    res.status(200).json({rendered});
-  } catch (err) {
-    logger.error(err);
-    return res.status(500).json({err: 'internal error'});
-  }
-});
+  };
+}
+
+router.get('/user/:name/videos', userContentCallbackFactory('videos'));
+router.get('/user/:name/challenges', userContentCallbackFactory('challenges'));
 
 router.get('/avatar/:username', (req, res, next) => {
   // FIXME return avatar for given user
