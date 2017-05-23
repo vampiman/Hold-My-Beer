@@ -38,7 +38,7 @@ function sendPage(req, res, viewName, langName) {
   const renderedPage = Mustache.render(views[viewName], text, components);
   res.set({
     'Content-Language': langName,
-    'Cache-Control': `max-age=${60 * 2}`,
+    'Cache-Control': `public, max-age=${60 * 60 * 24 * 30}`, // Cache for 30 days
     'Content-Type': 'text/html'
   });
   res.send(renderedPage);
@@ -50,7 +50,7 @@ function sendError(res, errorKey, errorStatus, langName) {
   }), components);
   res.set({
     'Content-Language': langName,
-    'Cache-Control': `max-age=${60 * 60 * 24 * 7}`, // These should not change very often
+    'Cache-Control': `max-age=${60 * 60 * 24 * 120}`, // Cache for 120 days
     'Content-Type': 'text/html'
   });
   res.status(errorStatus);
