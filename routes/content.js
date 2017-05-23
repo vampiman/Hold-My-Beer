@@ -119,7 +119,8 @@ router.get('/video/:videoid', async (req, res, next) => {
     res.status(206).set({
       'Accept-Ranges': 'bytes',
       'Content-Range': `bytes ${start}-${end}/${stats.size}`,
-      'Content-Length': end - start + 1
+      'Content-Length': end - start + 1,
+      'Cache-Control': `public, max-age=${31536000}`, // Cache for 1 year
     });
     const stream = fs.createReadStream(videoPath, {start, end})
       .on('open', () => stream.pipe(res))
