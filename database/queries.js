@@ -37,7 +37,7 @@ const pgSession = new PGSession({
 });
 
 function insertUser(username, email, passwordHash) {
-  return pgPool.query('insert into users values($1, $2, \'\', $3)', [
+  return pgPool.query('insert into users values($1, $2, $3)', [
     escape(username),
     escape(email),
     passwordHash

@@ -2,8 +2,8 @@ create extension citext;
 create table users (
   name varchar(15) unique not null,
   email citext unique not null,
-  avatar varchar(32), -- MD5 hash of the image for deduping and storage on filesystem
   hash varchar(60) not null, -- bcrypt hash
+  avatar uuid not null default (uuid('00000000-0000-0000-0000-000000000000')),
   creation timestamp default (now() at time zone 'utc') not null,
   id serial primary key
 );
