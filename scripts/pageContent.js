@@ -7,6 +7,7 @@ const VideoViewer = window.VideoViewer = (function () {
   
   self.hide = () => {
     $(video).find('source').remove();
+    video.pause();
     videoviewer.dataset.show = 'false';
   };
   
