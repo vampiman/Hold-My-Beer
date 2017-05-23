@@ -133,7 +133,7 @@ router.post('/create/response', (req, res, next) => {
   req.pipe(busboy);
 });
 
-router.post('/create/avatar', (req, res, next) => {
+router.put('/update/avatar', (req, res, next) => {
   if (!req.user) return res.status(401).json({err: 'not logged in'});
   const avatar = {
     id: uuid()

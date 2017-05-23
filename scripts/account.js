@@ -47,12 +47,12 @@ $('#avatar-file-input').on('change', event => {
   data.append('avatar', avatar);
   data.append('username', username);
   $.ajax({
-    url: '/create/avatar',
+    url: '/update/avatar',
     data,
     cache: false,
     contentType: false,
     processData: false,
-    type: 'POST',
+    type: 'PUT',
     success: data => {
       location.assign('/account');
     },
