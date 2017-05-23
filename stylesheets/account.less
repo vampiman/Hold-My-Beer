@@ -7,11 +7,12 @@ section.navbar-extension {
   margin-bottom: 0px; // Usual section margin replaced by padding
   display: flex;
   flex-direction: row;
-  height: 125%;
+  @extension-height: 900px; // Arbitrary
+  height: @extension-height;
   @media screen and (max-width: 425px) {
     // Move response list lower on small screens
     flex-direction: column;
-    height: 500%;
+    height: @extension-height * 5;
   }
 }
 
