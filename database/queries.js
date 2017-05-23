@@ -52,6 +52,15 @@ function insertChallenge(title, desc, userId) {
   ]);
 }
 
+function insertVideo(uuid, title, challengeId, authorId) {
+  return pgPool.query('insert into videos values($1, $2, $3, $4)', [
+    uuid,
+    escape(title),
+    challengeId,
+    authorId
+  ]);
+}
+
 function updateAvatar(username, avatarUuid) {
   return pgPool.query('update users set avatar = $1 where users.name = $2', [
     avatarUuid,
@@ -63,6 +72,13 @@ function updateUsername(oldUsername, newUsername) {
   return pgPool.query('update users set name = $1 where users.name = $2', [
     escape(newUsername),
     escape(oldUsername)
+  ]);
+}
+
+function updateLocale(username, locale) {
+  return pgPool.query('update users set language = $1 where users.name = $2', [
+    escape(locale),
+    escape(username)
   ]);
 }
 
@@ -141,15 +157,6 @@ function getChallengeByTitle(title) {
   ]);
 }
 
-function insertVideo(uuid, title, challengeId, authorId) {
-  return pgPool.query('insert into videos values($1, $2, $3, $4)', [
-    uuid,
-    escape(title),
-    challengeId,
-    authorId
-  ]);
-}
-
 function getUserByName(username) {
   return pgPool.query('select * from users where users.name = $1', [
     escape(username)
@@ -174,15 +181,16 @@ module.exports = {
   pgSession,
   insertUser,
   insertChallenge,
+  insertVideo,
   updateAvatar,
+  updateUsername,
+  updateLocale,
   latestChallenges,
   videosForChallenge,
   getChallengeByTitle,
-  insertVideo,
   getUser,
   getUserByName,
   getUsersById,
   challengesForUser,
-  videosForUser,
-  updateUsername
+  videosForUser
 };

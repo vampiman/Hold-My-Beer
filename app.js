@@ -58,7 +58,6 @@ if (queries.hasDBAvailable) {
 }
 
 app.use(locale({
-  // FIXME set 'locale' cookie if user decides to change language
   priority: ['cookie', 'accept-language', 'default'],
   'default': 'en_GB'
 }));
@@ -77,6 +76,11 @@ app.use((req, res, next) => {
     case 'en_US':
     default:
       req.locale = 'en';
+  }
+  if (!req.user) return next();
+  // User has overridden the language
+  if (req.user.language) {
+    req.locale = req.user.language;
   }
   next();
 });

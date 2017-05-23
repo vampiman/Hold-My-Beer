@@ -183,6 +183,31 @@ router.put('/update/username/:oldusername/:newusername', async (req, res, next) 
   }
 });
 
+router.put('/update/language/:username/:lang', async (req, res, next) => {
+  if (!req.user) return res.status(401).json({err: 'not logged in'});
+  const username = decodeURIComponent(req.params.username);
+  if (req.user.name !== username) return res.status(401).json({err: 'not authorized'});
+  const lang = decodeURIComponent(req.params.lang);
+  if (!Object.keys(render.languages).includes(lang)) return res.statuss(400).json({err: 'bad lang'});
+  try {
+    await queries.updateLocale(username, lang);
+  } catch (err) {
+    logger.error(err);
+    res.status(500).json({err: 'internal error'});
+  }
+  req.user.language = lang;
+  req.login(req.user, err => {
+    if (err) {
+      logger.error('Re-login error', err);
+      return next(err);
+    }
+    logger.debug('Re-login success', req.user.name);
+    logger.debug('Successful lang update');
+    console.log(req.user);
+    res.status(200).json({});
+  });
+});
+
 router.use('/content', require('./content'));
 
 module.exports = router;

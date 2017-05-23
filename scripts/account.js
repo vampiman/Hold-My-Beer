@@ -73,7 +73,7 @@ $('#username-display').on('keydown', event => {
   if (event.keyCode === 13) {
     event.preventDefault();
     $.ajax({
-      url: `/update/username/${username}/${$('#username-display')[0].innerText}`,
+      url: `/update/username/${encodeURIComponent(username)}/${encodeURIComponent($('#username-display')[0].innerText)}`,
       type: 'PUT',
       success: data => {
         location.assign('/account');
@@ -84,4 +84,22 @@ $('#username-display').on('keydown', event => {
       }
     });
   }
+});
+
+// Set selected language option to current setting
+const lang = $('html').attr('lang');
+$(`option[value="${lang}"]`).attr('selected', 'true');
+
+$('#language-select').on('change', event => {
+  $.ajax({
+    url: `/update/language/${encodeURIComponent(username)}/${encodeURIComponent($('#language-select')[0].value)}`,
+    type: 'PUT',
+    success: data => {
+      location.assign('/account');
+    },
+    error: err => {
+      console.error(err);
+      // FIXME show error somewhere
+    }
+  });
 });
