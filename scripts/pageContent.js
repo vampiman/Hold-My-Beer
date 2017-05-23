@@ -97,7 +97,7 @@ window.attachLiveContent = function (path) {
   });
 
   let noContent = false;
-  $('main').scroll(() => {
+  $('main')[0].addEventListener('scroll', () => {
     if (noContent) return;
     if (!isLoadingVisible()) return;
     $.get(getRequestURI(path), (data, textStatus) => {
@@ -112,5 +112,7 @@ window.attachLiveContent = function (path) {
       console.error(response);
       $('section.loading')[0].innerHtml = i18n.loadingMoreFail;
     });
+  }, {
+    passive: true
   });
 };
