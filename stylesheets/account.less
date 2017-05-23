@@ -17,6 +17,11 @@ section.navbar-extension > div.settings {
   h1 {
     display: inline-block;
   }
+  h1[contenteditable="true"] {
+    border: inset 3px @color-grey-bg;
+    background-color: @color-grey-bg;
+    color: @color-grey-text;
+  }
   span.em-dash::after {
     content: '—';
   }

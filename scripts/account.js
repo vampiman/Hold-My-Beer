@@ -62,3 +62,16 @@ $('#avatar-file-input').on('change', event => {
     }
   });
 });
+
+$('#change-username').click(event => {
+  $('#username-display').attr('contenteditable', true);
+  $('#username-display').focus();
+});
+
+$('#username-display').on('keydown', event => {
+  // Catch enter
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    // FIXME send new name
+  }
+});
