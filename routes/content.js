@@ -102,6 +102,7 @@ router.get('/thumbnail/:videoid', async (req, res, next) => {
       '256x256'
     );
   }
+  res.set('Cache-Control', `public, max-age=${31536000}`); // Cache for 1 year
   res.sendFile(thumbPath);
 });
 
