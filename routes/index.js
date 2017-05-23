@@ -169,6 +169,20 @@ router.put('/update/avatar', (req, res, next) => {
   req.pipe(busboy);
 });
 
+router.put('/update/username/:oldusername/:newusername', async (req, res, next) => {
+  if (!req.user) return res.status(401).json({err: 'not logged in'});
+  const oldUsername = decodeURIComponent(req.params.oldusername);
+  if (req.user.name !== oldUsername) return res.status(401).json({err: 'not authorized'});
+  try {
+    await queries.updateUsername(oldUsername, decodeURIComponent(req.params.newusername));
+    logger.debug('Successful username update');
+    res.status(200).json({});
+  } catch (err) {
+    logger.error(err);
+    res.status(500).json({err: 'internal error'});
+  }
+});
+
 router.use('/content', require('./content'));
 
 module.exports = router;

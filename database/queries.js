@@ -59,6 +59,13 @@ function updateAvatar(username, avatarUuid) {
   ]);
 }
 
+function updateUsername(oldUsername, newUsername) {
+  return pgPool.query('update users set name = $1 where users.name = $2', [
+    escape(newUsername),
+    escape(oldUsername)
+  ]);
+}
+
 function latestChallenges(fromTime, offset) {
   return pgPool.query(`
   select challenges.*, users.name as username
@@ -176,5 +183,6 @@ module.exports = {
   getUserByName,
   getUsersById,
   challengesForUser,
-  videosForUser
+  videosForUser,
+  updateUsername
 };

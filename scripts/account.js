@@ -69,9 +69,19 @@ $('#change-username').click(event => {
 });
 
 $('#username-display').on('keydown', event => {
-  // Catch enter
+  // Catch enter and send update
   if (event.keyCode === 13) {
     event.preventDefault();
-    // FIXME send new name
+    $.ajax({
+      url: `/update/username/${username}/${$('#username-display')[0].innerText}`,
+      type: 'PUT',
+      success: data => {
+        location.assign('/account');
+      },
+      error: err => {
+        console.error(err);
+        // FIXME show error somewhere
+      }
+    });
   }
 });
