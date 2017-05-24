@@ -169,13 +169,6 @@ function getUser(email) {
   ]);
 }
 
-// FIXME remove if unused
-function getUsersById(ids) {
-  return pgPool.query('select * from users where users.id = any($1::int[])', [
-    ids.map(id => Number(id))
-  ]);
-}
-
 module.exports = {
   hasDBAvailable,
   pgSession,
@@ -190,7 +183,6 @@ module.exports = {
   getChallengeByTitle,
   getUser,
   getUserByName,
-  getUsersById,
   challengesForUser,
   videosForUser
 };
