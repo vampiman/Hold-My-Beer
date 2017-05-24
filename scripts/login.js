@@ -52,6 +52,8 @@ function sendPost(form) {
     let msg = i18n.serverValidation;
     if (response.responseJSON.err === 'bad password') msg = i18n.passwordBad;
     if (response.responseJSON.err === 'no such email') msg = i18n.noSuchEmail;
+    if (response.responseJSON.err === 'duplicate email') msg = i18n.duplicateEmail;
+    if (response.responseJSON.err === 'duplicate name') msg = i18n.duplicateName;
     ErrorPopup.createFull(form, msg);
   });
 }

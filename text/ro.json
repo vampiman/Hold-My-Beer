@@ -56,6 +56,8 @@
     "loadingMoreFail": "Nu am reusit sa incaracam continut.",
     "noMoreContent": "Ai ajuns la final!",
     "passwordBad": "Parola nu se potriveste.",
-    "noSuchEmail": "Acest email nu este inregistrat."
+    "noSuchEmail": "Acest email nu este inregistrat.",
+    "duplicateEmail": "Acest email este deja inregistrat.",
+    "duplicateName": "Acest nume este deja utilizat."
   }
 }

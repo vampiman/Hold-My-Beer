@@ -56,6 +56,8 @@
     "loadingMoreFail": "Failed to load more content.",
     "noMoreContent": "You've reached the end!",
     "passwordBad": "The password doesn't match.",
-    "noSuchEmail": "This email isn't registered."
+    "noSuchEmail": "This email isn't registered.",
+    "duplicateEmail": "Email already in use.",
+    "duplicateName": "Name already in use."
   }
 }

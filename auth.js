@@ -21,6 +21,13 @@ async function registerUser(req, res) {
       res.status(200).json({});
     });
   } catch (err) {
+    if (err.message.includes('duplicate key value violates unique constraint "users_email_key')) {
+      logger.info('Duplicate email registration attempt');
+      return res.status(500).json({err: 'duplicate email'});
+    } else if (err.message.includes('duplicate key value violates unique constraint "users_name_key')) {
+      logger.info('Duplicate name registration attempt');
+      return res.status(500).json({err: 'duplicate name'});
+    }
     logger.error('Registration error', err);
     res.status(500).json({err: 'internal error'});
   }
