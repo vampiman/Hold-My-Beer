@@ -5,7 +5,7 @@ create table users (
   hash varchar(60) not null, -- bcrypt hash
   avatar uuid not null default (uuid('00000000-0000-0000-0000-000000000000')),
   creation timestamp default (now() at time zone 'utc') not null,
-  id serial primary key,
+  id serial primary key unique,
   language varchar(20)
 );
 create table user_sessions (
