@@ -47,13 +47,8 @@ passport.use(new LocalStrategy({
       done(null, false, {message: 'bad password'});
     }
   } catch (err) {
-    if (err.kind === 'pg-query') {
-      logger.error('Cannot find user', err);
-      done(null, false, {message: 'bad email'});
-    } else {
-      logger.error('Unknown error', err);
-      done(err);
-    }
+    logger.error('Unknown error', err);
+    done(err);
   }
 }));
 

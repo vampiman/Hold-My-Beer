@@ -54,6 +54,8 @@
     "serverValidation": "Oops. Looks like something went wrong receiving the data.",
     "loadingMore": "Loading more…",
     "loadingMoreFail": "Failed to load more content.",
-    "noMoreContent": "You've reached the end!"
+    "noMoreContent": "You've reached the end!",
+    "passwordBad": "The password doesn't match.",
+    "noSuchEmail": "This email isn't registered."
   }
 }

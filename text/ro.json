@@ -54,6 +54,8 @@
     "serverValidation": "Oops. Se pare ca a aparut o problema in primirea datelor.",
     "loadingMore": "Incarca…",
     "loadingMoreFail": "Nu am reusit sa incaracam continut.",
-    "noMoreContent": "Ai ajuns la final!"
+    "noMoreContent": "Ai ajuns la final!",
+    "passwordBad": "Parola nu se potriveste.",
+    "noSuchEmail": "Acest email nu este inregistrat."
   }
 }

@@ -49,7 +49,10 @@ function sendPost(form) {
   $.post($(form).attr('action'), $(form).serialize(), json => {
     location.assign('/');
   }, 'json').fail(response => {
-    ErrorPopup.createFull(form, i18n.serverValidation);
+    let msg = i18n.serverValidation;
+    if (response.responseJSON.err === 'bad password') msg = i18n.passwordBad;
+    if (response.responseJSON.err === 'no such email') msg = i18n.noSuchEmail;
+    ErrorPopup.createFull(form, msg);
   });
 }
 
