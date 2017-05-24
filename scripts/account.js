@@ -103,3 +103,17 @@ $('#language-select').on('change', event => {
     }
   });
 });
+
+$('#logout').click(event => {
+  $.ajax({
+    url: `/logout/${encodeURIComponent(username)}`,
+    type: 'DELETE',
+    success: data => {
+      location.assign('/');
+    },
+    error: err => {
+      console.error(err);
+      alert(i18n.serverError);
+    }
+  });
+});

@@ -193,7 +193,7 @@ router.put('/update/language/:username/:lang', async (req, res, next) => {
     await queries.updateLocale(username, lang);
   } catch (err) {
     logger.error(err);
-    res.status(500).json({err: 'internal error'});
+    return res.status(500).json({err: 'internal error'});
   }
   req.user.language = lang;
   req.login(req.user, err => {
@@ -203,7 +203,19 @@ router.put('/update/language/:username/:lang', async (req, res, next) => {
     }
     logger.debug('Re-login success', req.user.name);
     logger.debug('Successful lang update');
-    console.log(req.user);
+    res.status(200).json({});
+  });
+});
+
+router.delete('/logout/:username', async (req, res, next) => {
+  if (!req.user) return res.status(401).json({err: 'not logged in'});
+  const username = decodeURIComponent(req.params.username);
+  if (req.user.name !== username) return res.status(401).json({err: 'not authorized'});
+  req.session.destroy(err => {
+    if (err) {
+      logger.error(err);
+      return res.status(500).json({err: 'internal error'});
+    }
     res.status(200).json({});
   });
 });
