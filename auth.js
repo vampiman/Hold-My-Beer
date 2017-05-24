@@ -65,8 +65,7 @@ function authenticateUser(req, res, next) {
     }
     if (!user) {
       logger.info('Login attempt failed', user, info.message);
-      res.status(401);
-      return res.json({err: info.message});
+      return res.status(401).json({err: info.message});
     }
     req.login(user, err => {
       if (err) {
