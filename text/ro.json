@@ -52,12 +52,14 @@
     "notAVideo": "Nu e video",
     "videoLarge": "Max 20MiB",
     "serverValidation": "Oops. Se pare ca a aparut o problema in primirea datelor.",
+    "serverError": "Oops. Se pare ca a aparut o problema in procesarea datelor.",
     "loadingMore": "Incarca…",
     "loadingMoreFail": "Nu am reusit sa incaracam continut.",
     "noMoreContent": "Ai ajuns la final!",
     "passwordBad": "Parola nu se potriveste.",
     "noSuchEmail": "Acest email nu este inregistrat.",
     "duplicateEmail": "Acest email este deja inregistrat.",
-    "duplicateName": "Acest nume este deja utilizat."
+    "duplicateName": "Acest nume este deja utilizat.",
+    "avatarTooBig": "Imaginea de profil poate avea max 1 MiB."
   }
 }

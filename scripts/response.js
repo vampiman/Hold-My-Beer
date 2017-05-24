@@ -45,11 +45,11 @@ form.submit(event => {
       const xhr = new XMLHttpRequest();
       xhr.upload.addEventListener('progress', event => {
         if (event.lengthComputable) {
-          // FIXME show progress to user
+          // FIXME show progress to user?
           console.log(event.loaded / event.total);
         } else {
-          // FIXME show user something if we cant give progress
-          console.log('?');
+          console.error('Progress error?');
+          alert(i18n.serverError);
         }
       }, false);
       return xhr;

@@ -52,12 +52,14 @@
     "notAVideo": "Not a video",
     "videoLarge": "Max 20MiB",
     "serverValidation": "Oops. Looks like something went wrong receiving the data.",
+    "serverError": "Oops. Looks like something went wrong processing the data.",
     "loadingMore": "Loading more…",
     "loadingMoreFail": "Failed to load more content.",
     "noMoreContent": "You've reached the end!",
     "passwordBad": "The password doesn't match.",
     "noSuchEmail": "This email isn't registered.",
     "duplicateEmail": "Email already in use.",
-    "duplicateName": "Name already in use."
+    "duplicateName": "Name already in use.",
+    "avatarTooBig": "Avatar image has a 1MiB max."
   }
 }

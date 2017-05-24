@@ -40,7 +40,7 @@ $('#change-avatar').click(event => $('#avatar-file-input').click());
 $('#avatar-file-input').on('change', event => {
   const avatar = $('#avatar-file-input')[0].files[0];
   if (avatar.size > 1024 * 1024 * 1) {
-    // FIXME show avatar too big error
+    alert(i18n.avatarTooBig);
     return;
   }
   const data = new FormData();
@@ -58,7 +58,7 @@ $('#avatar-file-input').on('change', event => {
     },
     error: err => {
       console.error(err);
-      // FIXME show error somewhere
+      alert(i18n.serverError);
     }
   });
 });
@@ -80,7 +80,7 @@ $('#username-display').on('keydown', event => {
       },
       error: err => {
         console.error(err);
-        // FIXME show error somewhere
+        alert(i18n.serverError);
       }
     });
   }
@@ -99,7 +99,7 @@ $('#language-select').on('change', event => {
     },
     error: err => {
       console.error(err);
-      // FIXME show error somewhere
+      alert(i18n.serverError);
     }
   });
 });
