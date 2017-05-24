@@ -81,13 +81,12 @@ router.get('/user/:name/challenges', userContentCallbackFactory('challenges'));
 
 router.get('/avatar/:name', async (req, res, next) => {
   try {
-    const user = (await queries.getUserByName(req.params.name)).rows[0];
+    const user = (await queries.getUserByName(decodeURIComponent(req.params.name))).rows[0];
     if (user.avatar === '00000000-0000-0000-0000-000000000000') {
       // Default avatar
       return res.redirect('/images/hodgepodge.png');
     }
     res.set('Cache-Control', `public, max-age=${60 * 60 * 24}`); // Cache for 1 day
-    // FIXME security
     res.sendFile(path.resolve(`${__dirname}/../data/avatars/${user.avatar}`));
   } catch (err) {
     logger.error(err);
@@ -95,12 +94,15 @@ router.get('/avatar/:name', async (req, res, next) => {
   }
 });
 
+function escapeUUID(uriComponent) {
+  return decodeURIComponent(uriComponent).replace(/\./g, '');
+}
+
 router.get('/thumbnail/:videoid', async (req, res, next) => {
-  // FIXME security
-  const videosPath = path.resolve(`${__dirname}/../data/videos`);
-  const thumbPath = `${videosPath}/${req.params.videoid}.thumb.png`;
+  const uuid = escapeUUID(req.params.videoid);
+  const videoPath = path.resolve(`${__dirname}/../data/videos/${uuid}`);
   try {
-    await fs.accessAsync(thumbPath, fs.constants.R_OK | fs.constants.F_OK);
+    await fs.accessAsync(`${videoPath}.thumb.png`, fs.constants.R_OK | fs.constants.F_OK);
   } catch (err) {
     if (err.code !== 'ENOENT') {
       logger.error(err);
@@ -108,22 +110,21 @@ router.get('/thumbnail/:videoid', async (req, res, next) => {
       return;
     }
     await bluebird.promisify(thumbnailer.extract)(
-      `${videosPath}/${req.params.videoid}`,
-      thumbPath,
+      videoPath,
+      `${videoPath}.thumb.png`,
       '00:00:00',
       '256x256'
     );
   }
   res.set('Cache-Control', `public, max-age=${31536000}`); // Cache for 1 year
-  res.sendFile(thumbPath);
+  res.sendFile(`${videoPath}.thumb.png`);
 });
 
 router.get('/video/:videoid', async (req, res, next) => {
   if (!req.headers.range) return res.status(416).json({err: 'no range'});
   if (!req.headers.range.includes('bytes')) return res.status(416).json({err: 'wrong unit'});
-  // FIXME security
-  const videosPath = path.resolve(`${__dirname}/../data/videos`);
-  const videoPath = `${videosPath}/${req.params.videoid}`;
+  const uuid = escapeUUID(req.params.videoid);
+  const videoPath = path.resolve(`${__dirname}/../data/videos/${uuid}`);
   try {
     const stats = await fs.statAsync(videoPath);
     const range = req.headers.range.replace('bytes=', '').split('-');
