@@ -38,8 +38,8 @@ router.get('/response', (req, res, next) => {
 });
 
 router.get('/user/:name', (req, res, next) => {
-  // FIXME add users page
-  render.sendError(res, 'notFound', 501, req.locale);
+  req.username = decodeURIComponent(req.params.name);
+  render.sendPage(req, res, 'user', req.locale);
 });
 
 router.post('/login', auth.authenticateUser);

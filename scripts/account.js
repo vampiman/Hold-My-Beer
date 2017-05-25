@@ -1,6 +1,6 @@
 'use strict';
 
-const username = $('nav > a[href="/account"]')[0].innerText;
+const username = $('#navbar')[0].dataset.username;
 
 attachLiveContent(`user/${username}/challenges`);
 

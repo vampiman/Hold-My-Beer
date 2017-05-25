@@ -102,6 +102,7 @@ window.attachLiveContent = function (path) {
     if (!isLoadingVisible()) return;
     $.get(getRequestURI(path), (data, textStatus) => {
       if (textStatus === 'nocontent') {
+        // FIXME this doesn't trigger when content < page height
         noContent = true;
         $('section.loading')[0].innerHTML = i18n.noMoreContent;
         return;

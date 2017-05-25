@@ -27,7 +27,7 @@ function sendPage(req, res, viewName, langName) {
   text.userLanguage = langName;
   text.clientJSON = JSON.stringify(text.clientText);
   if (req.user) {
-    text.profileText = req.user.name;
+    text.usernameData = text.profileText = req.user.name;
     text.profileUrl = '/account';
     text.isLoggedIn = true;
     text.accountCreationLocalDate = new Date(req.user.creation).toLocaleString(req.rawLocale);
@@ -36,6 +36,7 @@ function sendPage(req, res, viewName, langName) {
     text.profileUrl = '/login';
     text.isLoggedIn = false;
   }
+  if (req.username) text.usernameData = req.username;
   const renderedPage = Mustache.render(views[viewName], text, components);
   res.set({
     'Content-Language': langName,
