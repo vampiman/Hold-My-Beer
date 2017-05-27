@@ -66,7 +66,8 @@ function renderChallenges(challengeList, langName) {
     challengeTitle: challengeObj.title,
     challengeTitleEncoded: encodeURIComponent(challengeObj.title),
     challengeDesc: challengeObj.description,
-    challengeAuthorName: challengeObj.username
+    challengeAuthorName: challengeObj.username,
+    challengeVoteCount: Number(challengeObj.upvotes) - Number(challengeObj.downvotes)
   })), '');
 }
 

@@ -61,6 +61,7 @@
     "noSuchEmail": "This email isn't registered.",
     "duplicateEmail": "Email already in use.",
     "duplicateName": "Name already in use.",
-    "avatarTooBig": "Avatar image has a 1MiB max."
+    "avatarTooBig": "Avatar image has a 1MiB max.",
+    "failedVote": "Failed to register the vote, sorry!"
   }
 }

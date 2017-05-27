@@ -224,6 +224,10 @@ router.delete('/logout/:username', async (req, res, next) => {
   });
 });
 
+router.put('/vote/challenge/:which', async (req, res, next) => {
+  res.status(501).json({err: 'noimpl'});
+});
+
 router.use('/content', require('./content'));
 
 module.exports = router;

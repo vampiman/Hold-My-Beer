@@ -61,6 +61,7 @@
     "noSuchEmail": "Acest email nu este inregistrat.",
     "duplicateEmail": "Acest email este deja inregistrat.",
     "duplicateName": "Acest nume este deja utilizat.",
-    "avatarTooBig": "Imaginea de profil poate avea max 1 MiB."
+    "avatarTooBig": "Imaginea de profil poate avea max 1 MiB.",
+    "failedVote": "Nu am reusit sa inregistram votul!"
   }
 }

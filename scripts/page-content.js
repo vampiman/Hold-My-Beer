@@ -30,6 +30,32 @@ window.attachResponseClicks = function () {
       VideoViewer.show(element.dataset.id);
     });
   });
+  function triggerVoteAction(element, upOrDown) {
+    const chName = $(element).closest('section.challenge')[0].dataset.challengeName;
+    $(element).toggleClass('active');
+    $.ajax({
+      type: 'PUT',
+      url: `/vote/challenge/${upOrDown}?challenge=${chName}`,
+      success: data => {},
+      error: err => {
+        $(element).toggleClass('active');
+        console.error(err);
+        alert(i18n.failedVote);
+      }
+    });
+  }
+  $('.upvote').each((idx, element) => {
+    $(element).off('click');
+    $(element).click(event => {
+      triggerVoteAction(element, 'up');
+    });
+  });
+  $('.downvote').each((idx, element) => {
+    $(element).off('click');
+    $(element).click(event => {
+      triggerVoteAction(element, 'down');
+    });
+  });
 };
 
 window.attachLiveContent = function (path) {
