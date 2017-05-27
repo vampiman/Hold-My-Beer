@@ -4,13 +4,13 @@ const VideoViewer = window.VideoViewer = (function () {
   const self = {};
   const videoviewer = $('.videoviewer')[0];
   const video = $(videoviewer).find('video')[0];
-  
+
   self.hide = () => {
     $(video).find('source').remove();
     video.pause();
     videoviewer.dataset.show = 'false';
   };
-  
+
   self.show = videoId => {
     $(video).find('source').remove();
     const source = document.createElement('source');
@@ -18,7 +18,7 @@ const VideoViewer = window.VideoViewer = (function () {
     $(video).append(source);
     videoviewer.dataset.show = 'true';
   };
-  
+
   $(videoviewer).click(self.hide);
   return self;
 })();
@@ -33,33 +33,28 @@ window.attachResponseClicks = function () {
 };
 
 window.attachLiveContent = function (path) {
-  function isLoadingVisible() {
-    const loader = $('section.loading')[0];
-    return loader.getBoundingClientRect().top >= 0 &&
-      loader.getBoundingClientRect().bottom <= window.innerHeight;
-  }
-  
+  const startTime = encodeURIComponent(new Date().toISOString());
+
   const getRequestURI = (function () {
-    const startTime = new Date().toISOString();
     let postOffset = 0;
     return function (path) {
-      const uri = `/content/${path}?time=${encodeURIComponent(startTime)}&offset=${postOffset}`;
+      const uri = `/content/${path}?time=${startTime}&offset=${postOffset}`;
       postOffset += 5;
       return uri;
     };
   })();
-  
+
   const getResponseListURI = (function () {
-    const startTime = new Date().toISOString();
     const offsetMap = {};
     return function (challenge) {
       if (offsetMap[challenge] === undefined) offsetMap[challenge] = 0;
-      const uri = `/content/responselist?challenge=${encodeURIComponent(challenge)}&time=${encodeURIComponent(startTime)}&offset=${offsetMap[challenge]}`;
+      const encChallenge = encodeURIComponent(challenge);
+      const uri = `/content/responselist?challenge=${encChallenge}&time=${startTime}&offset=${offsetMap[challenge]}`;
       offsetMap[challenge] += 5;
       return uri;
     };
   })();
-  
+
   function getVideos(challengeElement, moreElement) {
     $.get(getResponseListURI(challengeElement.dataset.challengeName), (data, textStatus) => {
       if (textStatus === 'nocontent') {
@@ -73,7 +68,7 @@ window.attachLiveContent = function (path) {
       console.error(response);
     });
   }
-  
+
   let lastIdx = 0;
   function appendContent(renderedHtml) {
     $('main').append(renderedHtml);
@@ -95,6 +90,12 @@ window.attachLiveContent = function (path) {
     $('main')[0].dataset.error = 'true';
     $('div.error-no-content')[0].dataset.show = 'true';
   });
+
+  function isLoadingVisible() {
+    const loader = $('section.loading')[0];
+    return loader.getBoundingClientRect().top >= 0 &&
+      loader.getBoundingClientRect().bottom <= window.innerHeight;
+  }
 
   let noContent = false;
   $('main')[0].addEventListener('scroll', () => {
