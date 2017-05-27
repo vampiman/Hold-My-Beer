@@ -153,4 +153,23 @@ router.get('/video/:videoid', async (req, res, next) => {
   }
 });
 
+router.get('/search/:query', async (req, res, next) => {
+  if (!req.query.time) return res.status(400).json({err: 'no time'});
+  if (!req.query.offset) return res.status(400).json({err: 'no offset'});
+  const query = decodeURIComponent(req.params.query);
+  try {
+    const time = decodeURIComponent(req.query.time);
+    const search = await queries.queryChallenges(query, time, req.query.offset);
+    if (search.rows.length === 0) {
+      logger.debug('No search results');
+      return res.status(204).json({err: 'no content'});
+    }
+    const rendered = render.renderChallenges(search.rows, req.locale);
+    res.status(200).json({rendered});
+  } catch (err) {
+    logger.error('Failed to get search results', err, query);
+    return res.status(500).json({err: 'internal error'});
+  }
+});
+
 module.exports = router;

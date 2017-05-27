@@ -37,6 +37,7 @@ function sendPage(req, res, viewName, langName) {
     text.isLoggedIn = false;
   }
   if (req.username) text.usernameData = req.username;
+  if (viewName === 'search') text.searchTerm = req.body.query;
   const renderedPage = Mustache.render(views[viewName], text, components);
   res.set({
     'Content-Language': langName,

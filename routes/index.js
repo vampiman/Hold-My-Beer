@@ -42,6 +42,10 @@ router.get('/user/:name', (req, res, next) => {
   render.sendPage(req, res, 'user', req.locale);
 });
 
+router.post('/search', (req, res, next) => {
+  render.sendPage(req, res, 'search', req.locale);
+});
+
 router.post('/login', auth.authenticateUser);
 
 router.post('/register', (req, res, next) => {

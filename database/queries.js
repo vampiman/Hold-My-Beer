@@ -151,6 +151,27 @@ function videosForUser(userId, fromTime, offset) {
   ]);
 }
 
+function queryChallenges(query, fromTime, offset) {
+  return pgPool.query(`
+    select * from
+      (select
+          users.name as username,
+          challenges.*,
+          to_tsvector(challenges.title) || to_tsvector(challenges.description) as document
+        from challenges inner join users
+        on challenges.authorid = users.id
+        where challenges.creation < $1
+      ) search
+      where search.document @@ to_tsquery($2)
+      limit 5
+      offset $3
+  `, [
+    escape(fromTime),
+    escape(query),
+    escape(offset)
+  ]);
+}
+
 function getChallengeByTitle(title) {
   return pgPool.query('select * from challenges where challenges.title = $1', [
     escape(title)
@@ -184,5 +205,6 @@ module.exports = {
   getUser,
   getUserByName,
   challengesForUser,
-  videosForUser
+  videosForUser,
+  queryChallenges
 };
