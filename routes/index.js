@@ -225,7 +225,40 @@ router.delete('/logout/:username', async (req, res, next) => {
 });
 
 router.put('/vote/challenge/:which', async (req, res, next) => {
-  res.status(501).json({err: 'noimpl'});
+  if (!req.query.challenge) return res.status(400).json({err: 'no challenge'});
+  if (!req.user) return res.status(401).json({err: 'not logged in'});
+  if (req.params.which !== 'up' && req.params.which !== 'down') return res.status(400).json({err: 'which data'});
+  const chName = decodeURIComponent(req.query.challenge);
+  const userId = req.user.id;
+  try {
+    const isVoted = await (Promise.all([
+      queries.isVoted('up', userId, chName),
+      queries.isVoted('down', userId, chName)
+    ]));
+    const wasUpvoted = isVoted[0].rows.length > 0;
+    const wasDownvoted = isVoted[1].rows.length > 0;
+    if (wasUpvoted) {
+      await queries.removeVote('up', userId, isVoted[0].rows[0].id);
+    }
+    if (wasDownvoted) {
+      await queries.removeVote('down', userId, isVoted[1].rows[0].id);
+    }
+    // Was upvoted, request was upvote removal, done
+    if (req.params.which === 'up' && wasUpvoted) {
+      return res.status(200).json({});
+    }
+    // Was downvoted, request was downvote removal, done
+    if (req.params.which === 'down' && wasDownvoted) {
+      return res.status(200).json({});
+    }
+    // Requested new vote state (nothing -> up, nothing -> down, up -> down, down -> up)
+    // Any prev votes are removed; adding new vote
+    await queries.voteChallenge(req.params.which, userId, chName);
+    return res.status(200).json({});
+  } catch (err) {
+    logger.error(err);
+    res.status(500).json({err: 'internal error'});
+  }
 });
 
 router.use('/content', require('./content'));

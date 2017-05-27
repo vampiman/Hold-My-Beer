@@ -6,7 +6,9 @@ create table users (
   avatar uuid not null default (uuid('00000000-0000-0000-0000-000000000000')),
   creation timestamp default (now() at time zone 'utc') not null,
   id serial primary key unique,
-  language varchar(20)
+  language varchar(20),
+  upvoted integer[] not null default '{}',
+  downvoted integer[] not null default '{}'
 );
 create table user_sessions (
   "sid" varchar not null collate "default",

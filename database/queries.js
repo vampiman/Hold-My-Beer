@@ -190,6 +190,53 @@ function getUser(email) {
   ]);
 }
 
+function voteChallenge(upOrDown, userId, challengeTitle) {
+  if (upOrDown !== 'up' && upOrDown !== 'down') throw Error('Bad call');
+  const updateChallenge = pgPool.query(`
+    update challenges set ${upOrDown}votes = ${upOrDown}votes + 1 where title = $1
+  `, [
+    escape(challengeTitle)
+  ]);
+  const updateUser = pgPool.query(`
+    update users set ${upOrDown}voted = array_append(${upOrDown}voted, (select id from challenges where title = $2)) where id = $1
+  `, [
+    userId,
+    escape(challengeTitle)
+  ]);
+  return Promise.all([updateChallenge, updateUser]);
+}
+
+function removeVote(upOrDown, userId, challengeId) {
+  if (upOrDown !== 'up' && upOrDown !== 'down') throw Error('Bad call');
+  const updateChallenge = pgPool.query(`
+    update challenges set ${upOrDown}votes = ${upOrDown}votes - 1 where id = $1
+  `, [
+    challengeId
+  ]);
+  const updateUser = pgPool.query(`
+    update users set ${upOrDown}voted = array_remove(${upOrDown}voted, $2) where id = $1
+  `, [
+    userId,
+    challengeId
+  ]);
+  return Promise.all([updateChallenge, updateUser]);
+}
+
+function isVoted(upOrDown, userId, challengeTitle) {
+  if (upOrDown !== 'up' && upOrDown !== 'down') throw Error('Bad call');
+  return pgPool.query(`
+    select * from
+      (select * from
+        (select unnest(${upOrDown}voted) as challengeid from users where id = $1) as ${upOrDown}voted inner join challenges
+        on ${upOrDown}voted.challengeid = challenges.id
+      ) as ${upOrDown}voted_challenges
+    where title = $2
+  `, [
+    userId,
+    escape(challengeTitle)
+  ]);
+}
+
 module.exports = {
   hasDBAvailable,
   pgSession,
@@ -206,5 +253,8 @@ module.exports = {
   getUserByName,
   challengesForUser,
   videosForUser,
-  queryChallenges
+  queryChallenges,
+  voteChallenge,
+  removeVote,
+  isVoted,
 };
