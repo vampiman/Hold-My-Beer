@@ -44,6 +44,7 @@ window.attachResponseClicks = function () {
       }
     });
   }
+  if ($('#navbar')[0].dataset.loggedin === 'false') return;
   $('.upvote').each((idx, element) => {
     $(element).off('click');
     $(element).click(event => {

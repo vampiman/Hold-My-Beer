@@ -8,8 +8,8 @@
   </div>
   <div class="vote-container">
     <span>{{challengeVoteCount}}</span>
-    <a href="#" class="upvote material-icons">thumb_up</a>
-    <a href="#" class="downvote material-icons">thumb_down</a>
+    <a href="{{^isLoggedIn}}/login{{/isLoggedIn}}#" class="upvote material-icons">thumb_up</a>
+    <a href="{{^isLoggedIn}}/login{{/isLoggedIn}}#" class="downvote material-icons">thumb_down</a>
   </div>
   <footer>
     <img class="avatar" src="/content/avatar/{{challengeAuthorName}}">
