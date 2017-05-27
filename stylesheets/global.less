@@ -41,7 +41,7 @@ html {
 }
 
 body {
-  background-image: url("/images/h.jpg");
+  background-image: url("/images/default-bg.jpg");
   background-repeat: repeat;
   height: 100%;
   display: flex;
@@ -98,7 +98,7 @@ a {
   letter-spacing: 1px;
   font-size: 1.5em;
   background-color: @color-bg;
-  
+
   header {
     color: @color-text;
     display: inline;
@@ -108,13 +108,13 @@ a {
     }
     margin-left: 10px;
   }
-  
+
   #logo {
     width: 50px;
     height: @navbar-content-height;
     border-radius: 100%;
   }
-  
+
   a {
     display: flex;
     height: @navbar-content-height;
@@ -126,12 +126,12 @@ a {
       float: left;
     }
   }
-  
+
   form {
     display: flex;
     flex-wrap: nowrap;
     height: @navbar-content-height;
-    
+
     @media screen and (max-width: 767px) {
       padding: 0;
       // Push searchbar on next line
@@ -141,12 +141,12 @@ a {
       float: left;
       padding: 0 @navbar-padding;
     }
-    
+
     input {
       align-self: center;
       width: 100%;
     }
-    
+
     button {
       padding: 0;
       // 4px is borders

@@ -84,7 +84,7 @@ router.get('/avatar/:name', async (req, res, next) => {
     const user = (await queries.getUserByName(decodeURIComponent(req.params.name))).rows[0];
     if (user.avatar === '00000000-0000-0000-0000-000000000000') {
       // Default avatar
-      return res.redirect('/images/hodgepodge.png');
+      return res.redirect('/images/default-avatar.png');
     }
     res.set('Cache-Control', `public, max-age=${60 * 60 * 24}`); // Cache for 1 day
     res.sendFile(path.resolve(`${__dirname}/../data/avatars/${user.avatar}`));
