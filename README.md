@@ -22,5 +22,5 @@ sudo systemctl start postgresql
 ```
 Start up the server:
 ```
-DB=true PORT=443 NODE_ENV=production npm start
+DB=true PORT=80 NODE_ENV=production node bin/www
 ```
