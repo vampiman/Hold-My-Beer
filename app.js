@@ -50,7 +50,7 @@ if (queries.hasDBAvailable) {
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000,
       sameSite: true,
-      secure: false, // FIXME set to true after adding https
+      secure: true
     }
   }));
   app.use(passport.initialize());
@@ -114,7 +114,7 @@ app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   console.log(err);
-  
+
   const errKey = err.status === 404 ? 'notFound' : 'internalServerError';
   render.sendError(res, errKey, err.status || 500, req.locale);
 });
