@@ -192,7 +192,7 @@ router.put('/update/language/:username/:lang', async (req, res, next) => {
   const username = decodeURIComponent(req.params.username);
   if (req.user.name !== username) return res.status(401).json({err: 'not authorized'});
   const lang = decodeURIComponent(req.params.lang);
-  if (!Object.keys(render.languages).includes(lang)) return res.statuss(400).json({err: 'bad lang'});
+  if (!Object.keys(render.languages).includes(lang)) return res.status(400).json({err: 'bad lang'});
   try {
     await queries.updateLocale(username, lang);
   } catch (err) {
