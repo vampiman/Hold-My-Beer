@@ -16,6 +16,11 @@ body {
   @media screen and (min-width: 1201px) {
     flex-direction: row;
   }
+  @media screen and (max-height: 690px) {
+    // Little screens are funny
+    display: block;
+    overflow-y: scroll;
+  }
 }
 
 @input-field-height: 40px;
@@ -41,6 +46,9 @@ form.auth-side {
     color: @color-text;
     white-space: nowrap;
   }
+  button[type="submit"] {
+    min-height: @input-field-height;
+  }
   button.validation-error {
     background-color: @color-error;
     border-color: @color-error;
@@ -55,6 +63,7 @@ form.auth-side {
 div.input-field {
   display: flex;
   height: @input-field-height;
+  min-height: @input-field-height;
   span.material-icons {
     width: 50px;
     height: inherit;
