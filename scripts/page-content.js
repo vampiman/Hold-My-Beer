@@ -95,6 +95,7 @@ window.attachLiveContent = function (path) {
       $(challengeElement).find('.responses').append(data.rendered);
       $(challengeElement).find('.no-responses').remove();
     }).fail(response => {
+      attachResponseClicks();
       console.error(response);
     });
   }
