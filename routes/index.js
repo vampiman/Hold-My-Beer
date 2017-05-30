@@ -124,7 +124,7 @@ router.post('/create/response', (req, res, next) => {
   });
   busboy.on('finish', async () => {
     if (res.headersSent) return;
-    const challengeid = (await queries.getChallengeByTitle(video.target)).rows[0].id;
+    const challengeid = (await queries.getChallengeByTitle(decodeURIComponent(video.target))).rows[0].id;
     await queries.insertVideo(video.id, video.title, challengeid, req.user.id);
     logger.debug('Successful video insertion');
     res.status(200).json({});
