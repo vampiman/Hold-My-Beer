@@ -22,5 +22,6 @@ sudo systemctl start postgresql
 ```
 Start up the server:
 ```
-DB=true PORT=80 NODE_ENV=production node bin/www
+sudo CERTPATH="path/to/it" DB=true PORT=443 HTTPPORT=80 NODE_ENV=production node bin/www
 ```
+`CERTPATH` must be a path to a folder and it must contain `privkey.pem`, `fullchain.pem` and `chain.pem`.
