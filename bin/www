@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
+const express = require('express');
 const app = require('../app');
 const debug = require('debug')('hold-my-beer:server');
 const http = require('http');
@@ -41,15 +42,16 @@ try {
   console.error(err);
 }
 
-const serverHttp = http.createServer(app);
-
-serverHttp.listen(port);
-serverHttp.on('error', onError);
-serverHttp.on('listening', onListening);
-
-serverHttps.listen(443);
+serverHttps.listen(port);
 serverHttps.on('error', onError);
 serverHttps.on('listening', onListening);
+
+const httpToHttps = express();
+httpToHttps.get('*', (req, res) => {
+  res.redirect(`https://${req.get('Host')}${req.url}`);
+});
+const serverHttp = http.createServer(httpToHttps);
+serverHttp.listen(normalizePort(process.env.HTTPPORT || '8080'));
 
 function normalizePort(val) {
   const port = parseInt(val, 10);
