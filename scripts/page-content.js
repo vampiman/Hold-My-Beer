@@ -16,6 +16,7 @@ const VideoViewer = window.VideoViewer = (function () {
     const source = document.createElement('source');
     source.src = `/content/video/${videoId}`;
     $(video).append(source);
+    video.load();
     videoviewer.dataset.show = 'true';
   };
 
