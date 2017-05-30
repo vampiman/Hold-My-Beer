@@ -84,13 +84,13 @@ window.attachLiveContent = function (path) {
 
   function getVideos(challengeElement, moreElement) {
     $.get(getResponseListURI(challengeElement.dataset.challengeName), (data, textStatus) => {
+      attachResponseClicks();
       if (textStatus === 'nocontent') {
         $(moreElement).remove();
         return;
       }
       $(challengeElement).find('.responses').append(data.rendered);
       $(challengeElement).find('.no-responses').remove();
-      attachResponseClicks();
     }).fail(response => {
       console.error(response);
     });
