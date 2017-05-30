@@ -153,6 +153,11 @@ router.get('/video/:videoid', async (req, res, next) => {
   }
 });
 
+router.get('/search//', (req, res, next) => {
+  // Empty query, don't bother
+  res.status(204).json({err: 'no content'});
+});
+
 router.get('/search/:query', async (req, res, next) => {
   if (!req.query.time) return res.status(400).json({err: 'no time'});
   if (!req.query.offset) return res.status(400).json({err: 'no offset'});
