@@ -36,7 +36,10 @@ window.attachResponseClicks = function () {
     $.ajax({
       type: 'PUT',
       url: `/vote/challenge/${upOrDown}?challenge=${chName}`,
-      success: data => {},
+      success: data => {
+        const countElement = $(element).parent().find('.vote-count')[0];
+        countElement.innerText = Number(countElement.innerText) + (upOrDown === 'up' ? 1 : -1);
+      },
       error: err => {
         $(element).toggleClass('active');
         console.error(err);
