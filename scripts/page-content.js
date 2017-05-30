@@ -111,6 +111,7 @@ window.attachLiveContent = function (path) {
       $(moreElement).click(event => getVideos(challengeElement, moreElement));
       lastIdx = idx;
     });
+    attachResponseClicks();
     $('main').append(`<section class="loading">${i18n.loadingMore}</section>`);
   }
 
