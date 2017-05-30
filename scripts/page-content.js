@@ -63,6 +63,8 @@ window.attachResponseClicks = function () {
   });
 };
 
+setInterval(attachResponseClicks, 1000);
+
 window.attachLiveContent = function (path) {
   const startTime = encodeURIComponent(new Date().toISOString());
 
