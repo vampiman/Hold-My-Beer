@@ -30,7 +30,7 @@ const render = require('../render');
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-let serverHttps;
+let serverHttps = http.createServer(app); // HTTP fallback
 
 try {
   const options = {};
