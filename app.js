@@ -89,13 +89,13 @@ app.use((req, res, next) => {
 const index = require('./routes/index');
 app.use('/', index);
 app.use('/scripts', express.static(path.join(__dirname, 'dist', 'scripts'), {
-  maxage: '1y'
+  maxage: '1 day'
 }));
 app.use('/stylesheets', express.static(path.join(__dirname, 'dist', 'stylesheets'), {
-  maxage: '1y'
+  maxage: '1 day'
 }));
 app.use('/images', express.static(path.join(__dirname, 'images'), {
-  maxage: '1y'
+  maxage: '1 day'
 }));
 app.use('/fonts', express.static(path.join(__dirname, 'dist', 'fonts'), {
   maxage: '1y'
