@@ -35,7 +35,7 @@ process.on('uncaughtException', err => {
   if (serverChild !== null) serverChild.kill();
 });
 
-gulp.task('build', ['build-js', 'build-css', 'copy-deps', 'copy-fonts']);
+gulp.task('build', ['build-js', 'build-css', 'copy-deps1', 'copy-deps2', 'copy-fonts']);
 
 gulp.task('build-js', () =>
   gulp.src(jsSrcGlob)
@@ -47,8 +47,13 @@ gulp.task('build-js', () =>
     .pipe(gulp.dest('./dist/scripts/'))
 );
 
-gulp.task('copy-deps', () =>
+gulp.task('copy-deps1', () =>
   gulp.src('node_modules/jquery/dist/jquery.min.js')
+    .pipe(gulp.dest('./dist/scripts/'))
+);
+
+gulp.task('copy-deps2', () =>
+  gulp.src('node_modules/animate.css/animate.min.css')
     .pipe(gulp.dest('./dist/scripts/'))
 );
 

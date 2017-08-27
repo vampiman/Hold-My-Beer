@@ -11,9 +11,10 @@
 <i class="material-icons md-24" id="headline" onclick="openNav()">view_headline</i>
 
   <a href="/" class="left">
-    <img id="logo" src="/images/logo.png">
+    <img class="animated infinite rubberBand" id="logo" src="/images/logo.png">
     <header>{{title}}</header>
   </a>
+
   <form action="/search" method="POST">
     <input name="query" type="text" placeholder="{{searchPlaceholder}}" value="{{searchTerm}}">
     <button type="submit">
