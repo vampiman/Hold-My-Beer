@@ -32,6 +32,7 @@
   "noUserVideos": "No videos found",
   "avatarFileSelectTitle": "Select avatar",
   "languageText": "Language: ",
+  "homepageText": "Homepage",
   "errorTexts": {
     "internalServerError": "The server failed to complete the request, sorry. Please try again.",
     "noContent": "We couldn't load the content. Sorry!",

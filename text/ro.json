@@ -32,6 +32,7 @@
   "noUserVideos": "Nici un video gasit",
   "avatarFileSelectTitle": "Selecteaza avatar",
   "languageText": "Limba: ",
+  "homepageText": "Acasa",
   "errorTexts": {
     "internalServerError": "Serverul nu a reusit sa processeze solicitarea dumneavoastra. Va rugam sa incercati din nou.",
     "noContent": "Nu am putut afisa continutul. Ne pare rau!",

@@ -13,58 +13,6 @@
        url('/fonts/MaterialIcons-Regular.ttf') format('truetype');
 }
 
-.overlay {
-    height: 0%;
-    width: 100%;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0, 0.9);
-    overflow-y: hidden;
-    transition: 0.5s;
-}
-
-.overlay-content {
-    position: relative;
-    top: 25%;
-    width: 100%;
-    text-align: center;
-    margin-top: 30px;
-}
-
-.overlay a {
-    padding: 8px;
-    text-decoration: none;
-    font-size: 36px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-
-.overlay a:hover, .overlay a:focus {
-    color: #f1f1f1;
-}
-
-.overlay .closebtn {
-    position: absolute;
-    top: 20px;
-    right: 45px;
-    font-size: 60px;
-}
-
-@media screen and (max-height: 450px) {
-  .overlay {overflow-y: auto;}
-  .overlay a {font-size: 20px}
-  .overlay .closebtn {
-    font-size: 40px;
-    top: 15px;
-    right: 35px;
-  }
-}
-
-
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
@@ -135,14 +83,13 @@ input, textarea {
 a {
   color: @color-text;
   text-decoration: none;
+  transition: 0.3s;
   &:hover, &:focus {
     color: @color-accent;
   }
 }
 
-
-
-#navbarContent {
+nav {
   padding: @navbar-padding;
   height: @navbar-content-height;
   @media screen and (max-width: 767px) {
@@ -153,6 +100,59 @@ a {
   font-size: 1.5em;
   background-color: @color-bg;
 
+  i.open-btn {
+    float: right;
+    cursor: pointer;
+    color: @color-text;
+    transition: 0.3s;
+    @media screen and (max-width: 425px) {
+      padding-right: 0px;
+      padding-top: 0px;
+    }
+    font-size: @navbar-content-height;
+    &:hover, &:focus {
+      color: @color-accent;
+    }
+  }
+
+  .overlay {
+    height: 0%;
+    width: 100%;
+    display: flex;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    background-color: @color-bg;
+    overflow-y: hidden;
+    transition: 0.5s;
+
+    .overlay-content {
+      width: 100%;
+      height: fit-content;
+      display: flex;
+      flex-flow: column;
+      align-self: center;
+      align-items: center;
+      a {
+        flex-basis: 100%;
+      }
+    }
+
+    i.close-btn {
+      cursor: pointer;
+      position: absolute;
+      top: @navbar-padding;
+      right: @navbar-padding;
+      color: @color-text;
+      font-size: @navbar-content-height;
+      transition: 0.3s;
+      &:hover, &:focus {
+        color: @color-accent;
+      }
+    }
+  }
+
   header {
     color: @color-text;
     display: inline;
@@ -161,22 +161,6 @@ a {
       display: none;
     }
     margin-left: 10px;
-  }
-
-  #headline{
-    float: right;
-    cursor: pointer;
-    color: white;
-    padding-right: 40px;
-    @media screen and (max-width: 425px) {
-      padding-right: 0px;
-      padding-top: 0px;
-    }
-    font-size: 50px;
-    &:hover, &:focus {
-      color: @color-accent;
-    }
-
   }
 
   #logo {

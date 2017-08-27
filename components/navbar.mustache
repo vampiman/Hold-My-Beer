@@ -1,24 +1,23 @@
-<div id="myNav" class="overlay">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <div class="overlay-content">
-    <a href="/">Homepage</a>
-    <a id="navbar" data-loggedin="{{isLoggedIn}}" data-username="{{usernameData}}"><a href="{{profileUrl}}" class="right">{{profileText}}</a></a>
-    <a href="/challenge">{{newChallengeText}}</a>
-  </div>
-</div>
-
-<div id="navbarContent">
-<i class="material-icons md-24" id="headline" onclick="openNav()">view_headline</i>
-
+<nav id="navbar" data-loggedin="{{isLoggedIn}}" data-username="{{usernameData}}">
   <a href="/" class="left">
-    <img class="animated infinite rubberBand" id="logo" src="/images/logo.png">
+    <img id="logo" src="/images/logo.png" class="animated rubberBand">
     <header>{{title}}</header>
   </a>
+
+  <i class="open-btn material-icons">view_headline</i>
+  <div class="overlay">
+    <i class="close-btn material-icons">close</i>
+    <div class="overlay-content">
+      <a href="/">{{homepageText}}</a>
+      <a href="{{profileUrl}}">{{profileText}}</a>
+      <a href="/challenge">{{newChallengeText}}</a>
+    </div>
+  </div>
 
   <form action="/search" method="POST">
     <input name="query" type="text" placeholder="{{searchPlaceholder}}" value="{{searchTerm}}">
     <button type="submit">
-      <span class="material-icons" aria-hidden="true">search</span>
+      <span class="material-icons">search</span>
     </button>
   </form>
-</div>
+</nav>

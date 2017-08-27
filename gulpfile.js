@@ -52,7 +52,7 @@ gulp.task('copy-deps', () => {
     .pipe(gulp.dest('./dist/scripts/'));
 
   gulp.src('node_modules/animate.css/animate.min.css')
-    .pipe(gulp.dest('./dist/scripts/'));
+    .pipe(gulp.dest('./dist/stylesheets/'));
 });
 
 gulp.task('copy-fonts', () => {

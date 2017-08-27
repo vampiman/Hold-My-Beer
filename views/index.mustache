@@ -7,9 +7,6 @@
   </head>
   <body>
     {{>navbarComponent}}
-    <aside class="sidebar">
-      <a href="/challenge">{{newChallengeText}}</a>
-    </aside>
     <main class="content-container" data-error="false">
       {{^isLoggedIn}}
       <section class="challenge">
@@ -23,7 +20,6 @@
     </div>
     {{>videoviewerComponent}}
     <script src="/scripts/page-content.js"></script>
-    <script src="/scripts/navbar.js"></script>
     <script src="/scripts/index.js"></script>
   </body>
 </html>

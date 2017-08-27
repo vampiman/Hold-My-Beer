@@ -1,9 +1,7 @@
 'use strict';
 
-function openNav() {
-    document.getElementById("myNav").style.height = "100%";
-}
+$('#navbar .close-btn').on('click',
+  () => $('.overlay')[0].style.height = '0%');
 
-function closeNav() {
-    document.getElementById("myNav").style.height = "0%";
-}
+$('#navbar .open-btn').on('click',
+  () => $('.overlay')[0].style.height = '100%');
