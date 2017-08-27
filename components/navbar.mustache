@@ -1,13 +1,23 @@
-<nav id="navbar" data-loggedin="{{isLoggedIn}}" data-username="{{usernameData}}">
+<div id="myNav" class="overlay">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <div class="overlay-content">
+    <a href="/">Homepage</a>
+    <a id="navbar" data-loggedin="{{isLoggedIn}}" data-username="{{usernameData}}"><a href="{{profileUrl}}" class="right">{{profileText}}</a></a>
+    <a href="/challenge">{{newChallengeText}}</a>
+  </div>
+</div>
+
+<div id="navbarContent">
+<i class="material-icons md-24" id="headline" onclick="openNav()">view_headline</i>
+
   <a href="/" class="left">
     <img id="logo" src="/images/logo.png">
     <header>{{title}}</header>
   </a>
-  <a href="{{profileUrl}}" class="right">{{profileText}}</a>
   <form action="/search" method="POST">
     <input name="query" type="text" placeholder="{{searchPlaceholder}}" value="{{searchTerm}}">
     <button type="submit">
       <span class="material-icons" aria-hidden="true">search</span>
     </button>
   </form>
-</nav>
+</div>
