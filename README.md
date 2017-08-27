@@ -14,7 +14,7 @@ Create a database called `hmb`, then run `users-init.sql`, `challenges-init.sql`
 
 Optionally create a file named `secret` in the `database` folder with a secret value.
 
-Create a 'morgan.log' document inside a 'logs' folder.
+Create a `morgan.log` document inside a `logs` folder.
 
 ### Usage
 
